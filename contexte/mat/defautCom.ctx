@@ -1,0 +1,11 @@
+// Contexte d'exploitation d'une matrice de commutation
+// ****************************************************
+P00=COMMUTATION_MATRIX
+// Noms des entrées.
+P01=E-1,E-2,E-3,E-4,Entrée-5,E-6,E-7,E-8
+// Noms des sorties.
+P02=Sortie-1,S-2,S-3,S-4,S-5,S-6,S-7,Sortie-8
+// Connections d'emission.
+P03=0,0,0,0,5,0,0,1
+// Connections d'emission.
+P04=0,0,0,0,7,0,0,8

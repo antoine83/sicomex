@@ -1,0 +1,22 @@
+La configuration du simulateur permet de :
+- dimensionner le simulateur (définir le nombre de liaisons utilisables et celles que l'on veut réserver pour d'autres utilisations que la simulation),
+- définir la taille des journaux,
+- définir les tops de synchronisation. 
+
+Nombre de liaisons série : 
+Indique le nombre de liaisons série dont dispose le simulateur. Pour une configuration de base : 2 ports série + 16 ports (boîtier Digiboard), il faut saisir le nombre "18". La modification de ce champ entraîne le rafraîchissement dynamique de la liste "Sélection des liaisons".
+Sélection des liaisons : Affiche toutes les liaisons du simulateur et, pour chacune d'elle, un indicateur précisant si elle est affectable par le simulateur ou réservée à d'autres utilisations.
+Ex :
+ 	COM1: - réservée
+	COM2: - réservée
+	COM3: - Affectable
+	COM4: - Affectable
+			...
+Lorsqu'une de ces lignes est sélectionnée, elle affiche ses informations dans la zone "Déclaration logique". Un double click sur une de ces lignes modifie l'état réservé de celle-ci.
+Déclaration logique : Cette zone affiche, pour la liaison sélectionnée, l'état de réservation pour une autre utilisation.
+
+Taille des journaux :  
+Cette zone limite la taille des journaux du simulateur et des équipements. Lorsque le nombre d'événements atteint cette limite, un purge du plus ancien message est automatiquement effectué.
+
+Top de synchronisation : 
+Cette fonction permet de générer cycliquement un événement qui synchronise l'envoi des séquences de messages de l'ensemble des équipements affectés. Ce top peut être géré localement, dans ce cas c'est le simulateur qui a la charge de générer l'événement à partir d'une heure de déclenchement et avec une période définie dans cette grille. Lorsque le champs externe a été sélectionné, le top de synchronisation est défini par une autre instance du simulateur (sur une autre machine par exemple).

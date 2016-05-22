@@ -1,0 +1,28 @@
+Cette fenêtre principale permet :
+- de visualiser le journal du simulateur,
+- de charger un environnement d'utilisation,
+- de sauvegarder un environnement d'utilisation,
+- de dimensionner le simulateur (déclaration des liaisons série disponibles),
+- de paramétrer les liaisons série en les affectant à un type d'équipement,
+- de purger le journal de simulateur,
+- d'archiver le journal du simulateur,
+- d'afficher ou masquer une barre d'outil,
+- de quitter l'application.
+
+L'accès à chacune de ces fonctionnalités se fait par la barre de menu de l'écran d'accueil :
+- Fichier/Nouveau : Réinitialisation de l'environnement du simulateur (les affectations Liaisons/Equipements sont supprimées)
+- Fichier/Ouvrir : Ouvre une fenêtre permettant de sélectionner le fichier d'environnement à utiliser
+- Fichier/Sauver : Ouvre une fenêtre permettant d'entrer le nom d'un fichier recevant la sauvegarde de l'environnement courant
+- Fichier/Quitter : Quitte l'application simulateur
+
+- Paramétrage/Configuration : Ouvre une fenêtre permettant de déclarer le nombre de liaisons série disponibles sur le simulateur et celles qui sont utilisables/affectables par le logiciel du simulateur. 
+- Paramétrage/Liaison : Ouvre une fenêtre permettant de paramétrer les liaisons (affectation à un équipement)
+
+- Journal/Effacer : Purge les messages sélectionnés
+- Journal/Effacer tout : Purge tous les messages du journal
+- Journal/Enregistrer : Archive le contenu du journal dans un fichier ASCII
+
+- Affichage/Barre d'outil : Affiche ou masque la barre d'outil
+
+- ?/Aide : Aide sur le paramétrage du simulateur
+- ?/A propos : Affiche une fenêtre d'information sur le logiciel du simulateur (version, nom de la société qui a développé le logiciel, date de conception, ...)

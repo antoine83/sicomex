@@ -1,0 +1,11 @@
+// Contexte d'exploitation d'une carte TOR
+// ************************************************
+P00=TOR_ANDVT
+// Etats des entrées.
+P01=000000
+// Etats des masques des entrées.
+P02=000000
+// Etats des sorties.
+P03=00000000
+// Valeur de la dernière clé transférée.
+P04=0

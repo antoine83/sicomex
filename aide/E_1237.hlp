@@ -1,0 +1,113 @@
+L'écran de contrôle est compsé des éléments suivant :
+- une barre de menu,
+- une face avant symbolisée permettant d'effectuer des configurations manuellement,
+- un journal des événements retraçant l'activité de la communication avec le terminal d'exploitation relié,
+- une zone de gestion d'erreur, de communication,
+- une zone permettant de créer une séquence de messages et de les envoyer unitairement, cycliquement, synchronisé ou non sur le top synchro choisi dans la fenêtre de configuration.
+
+Les fonctionnalités accessibles par le menu  :
+- Fichier/Ouvrir : Ouvre une fenêtre permettant de sélectionner le fichier de contexte d'exploitation à utiliser
+- Fichier/Sauver : Ouvre une fenêtre permettant de rentrer le nom du fichier recevant la sauvegarde du contexte courant
+
+- Journal/Effacer : Supprime les messages du journal sélectionnés du journal des événements
+- Journal/Tout effacer : Supprime tous les messages des événements
+- Journal/Enregistrer sous : Effectue un archivage du journal vers un fichier ASCII. La sélection du fichier est exécutée au travers d'une fenêtre de sélection semblable à celle de la sauvegarde de l'environnement du simulateur.
+
+- Affichage/Masquage écran : Masque l'écran de contrôle de l'équipement
+
+- ?/Aide : Affiche une boite de dialogue contenant une aide sur le fonctionnement de l'écran de contrôle.
+
+Contexte d'exploitation :
+***************************
+ Un contexte d'exploitation correspond à un état des paramètres internes de l'équipement et à une programmation de la séquence de messages à envoyer et de ses caractéristiques (messages, Tempo, cycle, ...).
+- Sauvegarde : permet de sauvegardé le contexte d'exploitation courant dans un fichier en vue d'une restauration ultérieure.
+- Chargement : permet de réinitialiser un équipement avec les caractéristiques précédemment sauvegardées
+
+Journal d'événement :
+*************************
+Le journal des événements de chaque équipement retrace l'activité de la communication de l'équipement avec un horodatage des trames échangées.
+La taille de ces journaux est configurable par la fenêtre de configuration du simulateur. Lorsque le nombre maximum de messages autorisé est atteint, l'ajout d'un nouveau message purge automatiquement le plus ancien message.
+- Purge partielle : Elle peut être effectuée en sélectionnant un à un les messages choisis, puis en utilisant l'option "Effacer" du menu "Journal".
+- Purge Totale : Elle peut être effectuée par l'option "Effacer tout" du menu "Journal".
+- Archivage : Le contenu du journal peut être archivé dans un fichier ASCII par l'option "Enregistrer sous ..." du menu "Journal".
+- Recherche sur mot clé : Il est possible de saisir dans la zone approprié un mot clé, puis par l'appui sur les touches "<<" ou ">>" de se placer respectivement sur des messages précédents ou suivants contenant l'occurrence du mot clé.
+
+Mise en route de l'équipement :
+************************************
+La mise en route de l'équipement est actionné par l'interrupteur "Power" de la face avant qui a pour effet :
+- l'établissement de la communication et la mise en œuvre des dialoques débutant par l'envoi éventuel des diverses TS informant le terminal d'exploitation de son état. Chacune des TC reçue est lors traitée puis acquitée. Chaque action sur la face avant peut générer l'envoi d'une TS signalant le nouvel état du paramètre modifié,
+- l'autorisation d'envoyer des séquences de messages.
+
+Face avant :
+**************
+Cette zone symbolise la face avant de l'équipement. Les états des paramètres internes de l'équipement sont visualisés en temps réel. 
+Lorsqu'une modification de ces paramètres est effectuée, manuellement à l’initiative de l’opérateur (paramétrage) ou par un ordre de télécommande reçu du terminal d’exploitation TESTR, le simulateur modifie l’aspect (forme, valeur et/ou couleur) des symboles correspondant en fonction du nouvel état.
+L'opérateur peut accéder à certains paramètres et les modifier de la façon suivante :
+- en sélectionnant un autre élément dans les contrôles de type "liste",
+- en cliquant sur un autre élément pour les objet de type "bouton" ou "interrupteur",
+- en sélectionnant ou désélectionnant l'objet pour les objet de type "case à cocher",
+- en modifiant la valeur pour les objet de type "zone de texte".
+
+Les contrôles accessibles manuellement peuvent être interdis dans certains modes de fonctionnement (ex : mode télécommande). Dans ce cas ils apparaissent en grisé.
+Certains paramètres peuvent évoluer d'eux même (ex : niveau HF reçu). Cette variation peut être générée automatiquement par la sélection de la case à cocher qui lui est associée.
+
+Sequence de message :
+***************************
+Une séquence de messages peut être composée par l'ajout de messages sélectionnés dans zone "liste des messages" vers la zone "Séquence à envoyer" par l'appui de la touche ">>". 
+Une séquence peut être purgée du message sélectionné par appui sur la touche "<<".
+
+Une temporisation peut être insérée dans une séquence par l'ajout du message particulier "Temporisation". Lors de l'envoi de la séquence de message, la procédure sera suspendue d'une durée égale à la valeur du champs "Tempo" exprimé en milli-seconde.
+
+La séquence peut être envoyée de manière unitaire ou cyclique sur sélection de la case à cocher "Cycle".
+Le cycle éventuelle peut être géré localement par l'équipement ou globalement sur le top de synchronisation du simulateur (configuration du simulateur) sur sélection de la case à cocher "Top synchro".
+
+Si le cycle est géré localement (champs "Externe" non sélectionnée), sa période est définie dans le champs "Cycle" exprimée en seconde Le minimum autorisé est 1 seconde. Sinon le top est déclaré en "Externe", les caractéristiques de ce Top sont définie dans une autre instance du simulateur.
+
+L'envoi de la séquence est effectif par l'appui sur le bouton "Envoi" qui reste alors en grisé jusqu'à ce que la procédure soit terminée (envoi unitaire) ou avortée par le bouton "Arrêt" (envoi cyclique).
+
+Lorsqu'une séquence est en cours d'envoi, les modifications des caractéristiques de la séquence (cycle, tempo,...) sont interdites.
+
+Les messages TS composant la séquence sont envoyés en prenant comme état de paramètres la valeur instantanée au moment de leur envoi.
+
+Génération d'erreurs de communication :
+*********************************************
+Les différentes erreurs de communications susceptibles d'interagir dans le protocole de la communication sont présentées dans des zones à cocher. Dès leurs sélections, elles interagissent sur les échanges de 
+trames suivant et ce jusqu'à leur désélection. 
+
+Seule la caractéristique de retard dans la réponse des acquittements est modifiée via une zone de texte. Sa valeur est exprimée en milli-secondes.
+
+Il est possible d'envoyer un message spécifique en saisissant dans la zone appropriée la succession des codes hexadécimaux des caractères composant le message, en les séparant d'une virgule.
+Ex : pour envoyer le message "CR L O C LF", on doit saisir : 0D,4C,4F,43,0A.
+
+Spécificités des faces avant des TRC 1237 (FF, L11 et Spin):
+*********************************************************************
+Les particularités des paramètres et contrôles associés sont :
+· Power : Active le protocole de communication et autorise l'envoi de séquence de messages.
+· Mode d'exploitation : la sélection du mode commande (Cde) interdit la modification des autres paramètres (leurs contrôles apparaissent en grisé).
+· Couplage : Couplage de l'émetteur (Maître ou Esclave).
+· Canal : la modification de ce champs effectue un positionnement sur le nouveau canal saisi pour une plage autorisée de [0 à 99].
+· Mémorisation d'un canal : cette opération s'effectue par un click sur le bouton "Canal". Le canal mémorisé est celui affiché dans le champ correspondant.
+· Mode Trafic : mode de trafic à choisir parmi (CW, AM, USB, LSB, ISB/MP, FSK).
+· Mode Fonct. : mode de fonctionnement à choisir parmi (veille, PR, PN, PN -3dB, PN -6dB, PN -12dB, PN -15dB, PN-18dB, PN -21dB.
+· Compresseur : Sélectionne ou désélectionne le compresseur BF.
+· Info : présence HF. Lorsque le niveau analogique est supérieur à 25, cette diode s'allume en rouge.
+· Fréquence : fréquence d'émission exprimée en Hertz dans la plage autorisée [400000 à 29999990].
+· Niveau anal. : choix du niveaux analogique à afficher, à choisir parmi (Aucune demande, Niveau FI 1, Taux de Compression, RF Exciteur, Valeur du ROS, Niveau HF émetteur, Voie A, Voie B).
+· Auto : déclenche la variation automatique du niveau analogique. Le système de génération automatique d'un paramètre est une fonction qui déclenche périodiquement des modifications aléatoires de ce paramètre en vue de simuler des fluctuations réelles de ce paramètre.
+· Le champ suivant représente le Niveau analogique. Les valeurs autorisées appartiennent au segment [0, 255]. Lorsque la valeur est supérieure à un seuil de 25, la diode "présence info" est allumée.
+· Incident : les valeurs autorisées sont -1 pour envoi permanent, 0 si pas d'incident, 1 à 999 pour code incident. La diode associée s'éclaire sur une valeur non nulle.
+· Code test : les valeurs autorisées sont : 0, 10, 20, 29, 30; 35; 40; 50; 55; 62; 64; 66; 70; 71; 72; 73; 74; 76; 80; 81; 84; 85; 86; 87; 91; 92; 93; 94; 95; 96; 97. Toute valeur saisie hors de cet ensemble est forcée à la valeur autorisée inférieure.
+
+Les changements de certains paramètres (fréquence, mode de fonctionnement, ...) engendrent la succession des phases de positionnement, à savoir : 
+· préchauffe en cours (indice <)
+· modification en cours (indice ?),
+· fin de modification (indice >) ou incident (indice =) sur présence d'incident (champ incident non nul).
+
+Spécificités des faces avant des TRC 1237 (L11 et Spin):
+*****************************************************************
+aucune.
+
+Spécificités des faces avant des TRC 1237 Spin:
+*******************************************************
+Les particularités des paramètres et contrôles associés sont celle du TRC1237 en L11 avec en plus :
+· Spin : Active/désactive le mode SPIN.

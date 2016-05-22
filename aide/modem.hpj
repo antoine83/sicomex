@@ -1,0 +1,8 @@
+[OPTIONS]
+LCID=0x40c 0x0 0x0 ; Français (France)
+REPORT=Yes
+CONTENTS=Accueil
+HLP=modem.hlp
+
+[FILES]
+trc1752.rtf

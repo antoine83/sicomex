@@ -1,0 +1,13 @@
+// Contexte d'exploitation d'un standard HF
+// ****************************************
+P00=STANDARD
+P01=0
+P02=1
+P03=1
+P04=1
+P05=0
+P06=0
+P07=0
+P08=0
+P09=0
+P10=0

@@ -1,0 +1,228 @@
+La commande "REMOTECTRL/LF DIG" est sur [REMOTE].
+Mise sou tension de l'équipement.
+		Affichage "STATUS OFFLINE".
+		
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+Demande d'un RST0
+		Affichage de la séquence d'initialisation puis "STATUS OFFLINE".
+		
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+		
+Demande d'un INI?
+		Réponse : INI4,#12
+		
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+		
+Demande d'un TAK0PWCHK#37fcd993
+		Réponse : RES0,0,2
+		Affichage "STATUS OFFLINE"/R [REMOTE]
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52000200
+
+Demande depuis l'équipement le passage an local
+		Affichage "STATUS OFFLINE"
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52010200
+		
+Demande d'un S?OPS?
+		Réponse : S#00OPS255
+		
+Demande d'un S?ONL8
+		Réponse : S#10RES0,0,2
+		
+Demande d'un S?CVLR?
+		Réponse : S#00CVLR#0000000f,#00000000,#00000000
+		
+Demande d'un INI?
+		Réponse : INI4,#12
+		
+Demande d'un TAK0PWCHK#37fcd993
+		Réponse : RES0,0,2
+		Affichage "STATUS OFFLINE"/R [REMOTE]
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#50000200
+		
+Demande d'un S?CES?
+		Réponse : S#00CES#12,#02
+		
+Demande depuis l'équipement le passage an local
+		Affichage "STATUS OFFLINE"
+		
+Demande d'un S?CES?
+		Réponse : S#00CES#12,#02
+		
+Demande d'un S?CES?
+		Réponse : S#00CES#12,#02
+				
+Demande d'un S?ALM?
+		Réponse : S#00ALM0,00000000
+
+Demande d'un RST0
+		Affichage de la séquence d'initialisation puis "STATUS OFFLINE".
+
+Demande d'un S?ALM?
+		Réponse : S#00ALM0,0
+
+Demande d'un S?CES?
+		Réponse : S#10RES0,0
+
+Demande d'un INI?
+		Réponse : INI4,#12
+		
+Demande d'un TAK0PWCHK#37fcd993
+		Réponse : RES0,0,2
+		Affichage "STATUS OFFLINE"/R [REMOTE]
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52000200
+
+Demande d'un S?CVLR?
+		Réponse : S#00CVLR#0000000f,#00000000,#00000000
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#50000200
+
+Demande d'un S?ONL8
+		Réponse : S#00RES0,0,2
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#72200201
+
+Demande d'un S?CES?
+		Réponse : S#00CES#12,#02
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#62200201
+
+Demande d'un S?ACV?
+		Réponse : S#00ACV4,#00,#01,5,0,0000,000000
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40200201
+
+Demande d'un S?OPS?
+		Réponse : S#00OPS8
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40000201
+
+Demande depuis l'équipement le passage an local
+		Affichage ""/"     R"
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40010201
+
+
+Demande d'un S?OPS?
+		Réponse : S#00OPS8
+
+Demande d'un S?ACV?
+		Réponse : S#00ACV4,#00,#01,5,0,0000,000000
+
+Demande d'un S?CVTAG1,15
+		Réponse : S#10RES0,0,2
+
+Demande d'un S?CVTAG1,15
+		Réponse : S#10RES0,0,2
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40010201
+		
+Demande d'un S?OFL0
+		Réponse : S#10RES0,0,2
+		
+Demande d'un TAK0
+		Réponse : RES0,0,1
+		
+Demande d'un S?TAK0
+		Réponse : S#00RES0,0,2
+		
+Demande d'un S?OFL0
+		Réponse : S#00RES0,0,2
+		Affichage "STATUS OFFLINE"/R [REMOTE]
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#62200200
+
+Demande d'un S?ACV?
+		Réponse : S#00ACV255,#ff,#ff,255,0,0000,000000
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#42200200
+
+Demande d'un S?CVLR?
+		Réponse : S#00CVLR#0000000f,#00000000,#00000000
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40200200
+
+Demande d'un S?OPS?
+		Réponse : S#00OPS255
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40000200
+		
+Demande depuis l'équipement le passage an local
+		Affichage "STATUS OFFLINE"/""
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#40010200		
+
+Demande d'un RST0
+		Affichage de la séquence d'initialisation puis "STATUS OFFLINE".
+
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+
+La commande "REMOTECTRL/LF DIG" est sur [LF DIG].
+		Affichage de "STATUS OFFLINE".
+
+		
+Demande d'un S?SYS?
+		Réponse : pas de réponse
+		
+La commande "REMOTECTRL/LF DIG" est sur [REMOTE].
+		Affichage de "STATUS OFFLINE".
+		
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+		
+Demande d'un RST0
+		Affichage de la séquence d'initialisation puis "STATUS OFFLINE".
+		
+Demande d'un INI?
+		Réponse : INI4,#12
+		
+Demande d'un S?SYS?
+		Réponse : S#10RES0,0,2
+		
+Demande d'un S?TAK0
+		Réponse : S#00RES0,0,2
+		
+Demande d'un S?SYS?
+		Réponse : S#20RES0,0,2
+
+Demande d'un PWCHK#37fcd993
+		Réponse : RES0,0,1		
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52000200
+		
+Passage en LOCAL depuis la face avant de l'équipement
+		Affichage de "STATUS OFFLINE".
+		
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52010200
+
+Demande d'un S?TAK0
+		Réponse : S#00RES0,0,2
+
+Demande d'un S?SYS?
+		Réponse : S#00SYS#52000200		
+

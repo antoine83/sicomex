@@ -1,0 +1,11 @@
+// Contexte d'exploitation d'une carte TOR
+// ************************************************
+P00=TOR_KY58
+// Etats des entrees.
+P01=000000
+// Etats des masques des entrees.
+P02=000000
+// Etats des sorties.
+P03=10000000
+// Valeur de la derniere cle transferee.
+P04=0

@@ -1,0 +1,19 @@
+Un équipement choisi parmi une liste de types prédéfinis peut être associé à une liaison affectable (configurée comme affectable) et lui permettre de réagir face aux sollicitation d'un terminal d'exploitation comme l'équipement réel.
+
+N° de port : 
+Sélection d'un port de communication (seul les ports configurés comme affectable pour le simulateur sont affichés)
+
+Type d'équipement : 
+Sélection d'un d'équipement parmi les types prédéfinis
+
+Repère : 
+Identification d'un équipement par rapport à d'autres du même type, mais aussi titre de l'écran de contrôle
+
+Format de transmission : 
+Détermine le format de transmission à utiliser dans les dialogues avec le terminal d'exploitation
+
+Ecran de contrôle : 
+Affiche ou masque l'écran de contrôle correspondant à la ligne sélectionnée à l'issue de la validation du paramétrage.
+
+Activité : 
+Affiche l'état de mise en route de l'équipement associé à la liaison sélectionnée (si ce champ est coché, aucune modification n'est autorisée). Pour désélectionner ce champ, utiliser l'écran de contrôle de l'équipement

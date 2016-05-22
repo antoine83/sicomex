@@ -1,0 +1,1105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{68c4863a-cd55-438f-80a4-fa434bc4a31f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Ihm">
+      <UniqueIdentifier>{6e06dec6-da57-4061-a7f9-21e3c9dcc392}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Ihm\TRC1752">
+      <UniqueIdentifier>{1d96e9ec-e8b7-4ef0-b7fc-9a2578ae4ec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ihm Custom">
+      <UniqueIdentifier>{b08983f5-4520-4be1-ad02-79fd497dd641}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Equipement">
+      <UniqueIdentifier>{7848778b-6dff-45a0-92b8-4b1c82906e78}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Communication">
+      <UniqueIdentifier>{791aa6c3-d1f3-4d02-a4dc-487f98071f7d}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Divers">
+      <UniqueIdentifier>{3d1c69bd-c5e9-47f2-aeef-8e2f7234cfa9}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{84b39bca-715f-4414-96f9-43293d65a40d}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{c6935a37-772d-46a4-8b3d-d29f517e2561}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="IDD_Mode_Operationnel.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="sicomex.CPP">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="STDAFX.CPP">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ALE.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ARQ.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_CONF.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ENV.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_RDO.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_CONF_STST.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_OPS.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_CALL.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_LP.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_SYS.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_TAB.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_CONF.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ENV.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_ASS.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_BF.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_LIAS.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_PIL.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_TC.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_A1.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_A2.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_B1.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_B2.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_TST.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STST.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752_MOD_PROG_TC.cpp">
+      <Filter>Ihm\TRC1752</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG1236.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1236l.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1236s.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1237.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1237l.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1237s.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG1241.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG1241L.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg1241s.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg18C.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlg251.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGaad_20_4.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGaad_20_8.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGACCOR.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlgaccue.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGAFFEC.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGAIDE.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGAPROP.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGAUDIO.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGCA150.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlgCommutationMatrix.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGCONFI.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGCV24Card.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42AnalogDCE.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42AnalogDTE.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Bit.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42CikSystem.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42DigitalDCE.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42DigitalDTE.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42ERR.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42ERRPANNE.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42GeneralParameter.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Info.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42KeyDisplay.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42KeyManagement.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42KeyManagementTab.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42KeyTag.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Pannes.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Parametres.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Password.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Presets.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42PresetsTab.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42SecurityTab.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42StatusERR.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgED42Tab.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGEMHF.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="dlgemrec.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGEQUIP.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGmatL11.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGmatSPIN.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgModeOperationnel.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGOUTIL.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGSTDHF.CPP">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGtemp.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGTest1.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGTORCard.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgTRC1752.cpp">
+      <Filter>Ihm</Filter>
+    </ClCompile>
+    <ClCompile Include="CUSTOM\DIODE.CPP">
+      <Filter>Ihm Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="CUSTOM\ICONE.CPP">
+      <Filter>Ihm Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="CUSTOM\INTER.CPP">
+      <Filter>Ihm Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="CUSTOM\OUTIL.CPP">
+      <Filter>Ihm Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="XTabCtrl.cpp">
+      <Filter>Ihm Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\AppelAle.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1225.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1236.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1236L.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1236S.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1237.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1237L.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1237S.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1241.Cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1241L.Cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp1241S.Cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp18A.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp18C.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\Eqp251.Cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EqpAAD.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EqpAcco.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EqpAudi.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EqpCA150.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EqpCV24Card.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EqpMAT.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\eqpMATCOM.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EqpStd.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EqpTemp.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EqpTORCard.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\EQUIP.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EquipED42.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EquipM1752.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="equip\EquipTest.cpp">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\PARAMSIM.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\SEQUENCE.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="EQUIP\SYNCHRO.CPP">
+      <Filter>Equipement</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\p_1225.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\P_1236.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\P_1237.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\P_1241.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\P_18A.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\P_251.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_AAD.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\p_CA150.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_CV24Card.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_ED42.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\p_MAT.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_MatCom.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_temp.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\p_Test.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_TORCard.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="comm\p_TRC1752.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\PORT.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\PROT_ACC.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\PROT_AUD.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\PROT_STD.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="COMM\PROTO.CPP">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="DIVERS\DIV_FIC.CPP">
+      <Filter>Divers</Filter>
+    </ClCompile>
+    <ClCompile Include="DIVERS\DIV_TMP.CPP">
+      <Filter>Divers</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEdit.cpp">
+      <Filter>Divers</Filter>
+    </ClCompile>
+    <ClCompile Include="MyListCtrl.cpp">
+      <Filter>Divers</Filter>
+    </ClCompile>
+    <ClCompile Include="DIVERS\TABLE.CPP">
+      <Filter>Divers</Filter>
+    </ClCompile>
+    <ClCompile Include="DIVERS\TACHE.CPP">
+      <Filter>Divers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README.TXT">
+      <Filter>Application</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sicomex.RC">
+      <Filter>Application</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="equip\AppelAle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUSTOM\DIODE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIVERS\DIV_FIC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIVERS\DIV_TMP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1236.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1236l.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1236s.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1237.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1237l.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1237s.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG1241.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG1241L.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg1241s.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg18c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlg251.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGaad_20_4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGaad_20_8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGACCOR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlgaccue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGAFFEC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGAIDE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGAPROP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGAUDIO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGCA150.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlgCommutationMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGCONFI.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGCV24Card.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42AnalogDCE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42AnalogDTE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Bit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42CikSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42DigitalDCE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42DigitalDTE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42ERR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42ERRPANNE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42GeneralParameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42KeyDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42KeyManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42KeyManagementTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42KeyTag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Pannes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Parametres.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Password.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Presets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42PresetsTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42SecurityTab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42StatusERR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgED42Tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGEMHF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dlgemrec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGEQUIP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGmatL11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGmatSPIN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgModeOperationnel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGOUTIL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGSTDHF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGtemp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGTest1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGTORCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ALE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ARQ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_CONF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ENV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_RDO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_CONF_STST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_OPS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_CALL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_LP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_SYS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_TAB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_CONF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ENV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_ASS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_BF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_LIAS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_PIL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_TC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_A1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_A2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_B1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_B2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_TST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTRC1752_MOD_PROG_TC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1225.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1236.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1236L.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1236S.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1237.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1237L.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1237S.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1241.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1241L.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp1241S.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp18A.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp18C.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\Eqp251.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EqpAAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EqpAcco.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EqpAudi.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EqpCA150.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EqpCV24Card.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EqpMAT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\eqpMATCOM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EqpStd.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EqpTemp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\eqpTORCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EQUIP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EquipED42.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EquipM1752.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\EquipTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="equip\EquipXT4410.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLOBAL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUSTOM\ICONE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDD_Mode_Operationnel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUSTOM\INTER.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyListCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUSTOM\OUTIL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\p_1225.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\P_1236.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\P_1237.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\P_1241.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\P_18A.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\P_251.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_AAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\p_CA150.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_CV24Card.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_ED42.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\p_MAT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_MatCom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_temp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\p_Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_TORCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm\p_TRC1752.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\PARAMSIM.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\PORT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\PROT_ACC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\PROT_AUD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\PROT_STD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMM\PROTO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\SEQUENCE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sicomex.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STDAFX.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EQUIP\SYNCHRO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIVERS\TABLE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DIVERS\TACHE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TYP_GLOB.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XTabCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\AAD20_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\AAD20_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\andvt.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\atos.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\atoslogo_rgb.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\black.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ca_150.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cik_off.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cik_on.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ComMat.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\DIODE_ER.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\DIODE_OF.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\DIODE_ON.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ED42.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EM_HF.ICO">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_ACCO.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_AUDI.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_EMET.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_EMRE.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_RECE.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\EQP_STD_.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\INTER_OF.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\INTER_ON.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\IOS.ICO">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ky58.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\matl11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\matspin.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\mdm_1752.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\REC_HF.ICO">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\red.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\sicomex.ICO">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\tor.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\white.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="RES\sicomex.RC2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

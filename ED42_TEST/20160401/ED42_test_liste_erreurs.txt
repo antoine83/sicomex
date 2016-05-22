@@ -1,0 +1,200 @@
+echo ">A01S?SYS?<" > /dev/ttyUSB0
+>a01S#00SYS#53000200<
+
+echo ">A0S?SYS?<" > /dev/ttyUSB0
+....pas de réponse
+
+echo ">S?SYS?<" > /dev/ttyUSB0
+....pas de réponse
+
+echo ">A01N100S?SYS?<" > /dev/ttyUSB0
+>a01N100S#00SYS#53000200<
+
+echo ">A01N100S?CES?<" > /dev/ttyUSB0
+>a01N100S#00SYS#53000200<
+
+echo ">A01NS?SYS?<" > /dev/ttyUSB0
+>a01S#08<
+
+echo ">A01N1000S?SYS?<" > /dev/ttyUSB0
+>a01S#80<
+
+echo ">A01N101S?SYS?<" > /dev/ttyUSB0
+<>a01N101S#00SYS#53000200<
+
+echo ">A01S?ACV<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01S?ACV?<" > /dev/ttyUSB0
+>a01S#00ACV255,#ff,#ff,255,3,0000,000000<
+
+
+echo ">A01S?SYS?ACV<" > /dev/ttyUSB0
+>a01S#40SYS#53000200<
+
+
+echo ">A01S?SYS?ACV?<" > /dev/ttyUSB0
+>a01S#00SYS#53000200ACV255,#ff,#ff,255,3,0000,000000<
+
+
+echo ">A01ALM<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01ALM?<" > /dev/ttyUSB0
+>a01ALM0,0<
+
+echo ">A01ALM#<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CES<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CES?<" > /dev/ttyUSB0
+>a01CES#12,#02<
+
+echo ">A01CV?<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CV1<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CV1?<" > /dev/ttyUSB0
+>a01CV1,#01,#0f,255,2,0000,000000<
+
+echo ">A01CV97?<" > /dev/ttyUSB0
+>a01S#80<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#41000200<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#52000200<
+
+echo ">A01CV1?<" > /dev/ttyUSB0
+>a01CV1,#01,#0f,255,2,0000,000000<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#50000200<
+
+
+echo ">A01CVBTA1,5<" > /dev/ttyUSB0
+>a01S#80<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#50000200<
+
+echo ">A01CVBTA1,0<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#5a000200<
+
+echo ">A01ERR?<" > /dev/ttyUSB0
+>a01ERR1,123<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#52000200<
+
+echo ">A01CVLR?<" > /dev/ttyUSB0
+>a01CVLR#0000000f,#00000000,#00000000<
+
+echo ">A01CVLR<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CVTAG<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CVTAG1,<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CVTAG,10<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01CVTAG1,10<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01CVTAG5,15<" > /dev/ttyUSB0
+>a01RES1,116,1<					//La clé 5 n'est pas chargé
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#52000200<
+
+echo ">A01ERR?<" > /dev/ttyUSB0
+>a01ERR1,116<
+
+echo ">A01CVTAG1,18<" > /dev/ttyUSB0
+>a01S#80<
+
+echo ">A01TAK0<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01PWCHK#378cd993<" > /dev/ttyUSB0
+>a01RES1,33,1<
+
+Affichage sur l'equipement
+INTERNAL ALARM  33
+RESTART WITH RESET
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#56000200<			// Flag alarme(26) est à 1.
+
+echo ">A01ERR?<" > /dev/ttyUSB0
+>a01S#20RES0,0,1<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#56000200<
+
+echo ">A01CVLR?<" > /dev/ttyUSB0
+>a01S#20RES0,0,1<
+
+
+echo ">A01ERR?<" > /dev/ttyUSB0
+>a01S#20RES0,0,1<
+
+
+-------------------------------------------------
+echo ">A01RST0<" > /dev/ttyUSB0
+echo ">A01INI?<" > /dev/ttyUSB0
+>a01INI4,#12<
+
+echo ">A01TAK0<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01PWCHK#37fcd993<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#52000200<
+
+echo ">A01PWCHK#37acd993<" > /dev/ttyUSB0
+>a01RES1,33,1<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#56000200<
+
+echo ">A01PWCHG#37fcd993,#c43504e5<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+
+echo ">A01PWCHK#37fcd993<" > /dev/ttyUSB0
+>a01RES4,1,1<
+
+Depuis la face avant passage en LOCAL
+
+echo ">A01INI?<" > /dev/ttyUSB0
+>a01INI4,#12<
+
+echo ">A01TAK0<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01PWCHG#c43504e5<" > /dev/ttyUSB0
+>a01S#40<
+
+echo ">A01PWCHK#c43504e5<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01PWCHK#c43004e5<" > /dev/ttyUSB0
+>a01RES4,1,1<
+
+

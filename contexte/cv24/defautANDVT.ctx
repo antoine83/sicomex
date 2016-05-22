@@ -1,0 +1,13 @@
+// Contexte d'exploitation d'une carte CC24
+// ************************************************
+P00=CV24_ANDVT
+// Etats des entrées.
+P01=000
+// Etats des masques des entrées.
+P02=111
+// Etats des sorties.
+P03=00000000
+// Valeur de la dernière clé transférée.
+P04=0
+// Valeur du status.
+P05=1

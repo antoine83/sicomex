@@ -1,0 +1,336 @@
+ Le volume dans le lecteur C s'appelle STS
+ Le num‚ro de s‚rie du volume est 78F8-53AE
+
+
+R‚pertoire de C:\SICOMEX\sico_v1.0
+
+28/02/97  08:39         <DIR>          .
+28/02/97  08:39         <DIR>          ..
+24/02/97  12:33         <DIR>          COMM
+13/02/97  17:58         <DIR>          CUSTOM
+28/02/97  08:39                      0 dir.txt
+24/02/97  17:52         <DIR>          DIVERS
+06/12/96  18:28                 14ÿ675 DLG1236.BAK
+24/02/97  17:08                 14ÿ646 DLG1236.CPP
+13/02/97  17:44                  4ÿ532 dlg1236.h
+24/02/97  17:09                 14ÿ718 dlg1236l.cpp
+13/02/97  17:45                  4ÿ557 dlg1236l.h
+24/02/97  17:10                 14ÿ990 dlg1236s.cpp
+13/02/97  17:45                  4ÿ604 dlg1236s.h
+24/02/97  17:09                 15ÿ435 dlg1237.cpp
+13/02/97  17:45                  4ÿ603 dlg1237.h
+24/02/97  17:09                 15ÿ510 dlg1237l.cpp
+13/02/97  17:45                  4ÿ637 dlg1237l.h
+24/02/97  17:10                 15ÿ785 dlg1237s.cpp
+13/02/97  17:45                  4ÿ678 dlg1237s.h
+24/02/97  17:08                 24ÿ093 DLG1241.CPP
+13/02/97  17:45                  4ÿ941 DLG1241.H
+24/02/97  17:10                 24ÿ332 DLG1241L.CPP
+13/02/97  17:45                  4ÿ951 DLG1241L.H
+24/02/97  17:09                 24ÿ603 dlg1241s.cpp
+13/02/97  17:45                  4ÿ995 dlg1241s.h
+24/02/97  17:08                 21ÿ763 Dlg18C.CPP
+13/02/97  17:45                  5ÿ001 dlg18c.h
+24/02/97  17:11                 27ÿ002 dlg251.cpp
+14/02/97  12:29                  5ÿ183 dlg251.h
+13/02/97  17:42                 13ÿ897 DLGACCOR.CPP
+13/02/97  17:45                  4ÿ540 DLGACCOR.H
+13/02/97  17:43                  8ÿ625 dlgaccue.cpp
+13/02/97  17:45                  6ÿ435 dlgaccue.h
+13/02/97  17:43                 13ÿ891 DLGAFFEC.CPP
+13/02/97  17:45                  5ÿ674 DLGAFFEC.H
+24/02/97  18:09                  2ÿ529 DLGAIDE.CPP
+24/02/97  17:52                  1ÿ790 DLGAIDE.H
+13/02/97  17:43                  1ÿ189 DLGAPROP.CPP
+13/02/97  17:46                  2ÿ279 DLGAPROP.H
+13/02/97  17:43                 45ÿ937 DLGAUDIO.CPP
+13/02/97  17:46                  6ÿ213 DLGAUDIO.H
+13/02/97  17:43                  7ÿ129 DLGCONFI.CPP
+13/02/97  17:46                  4ÿ604 DLGCONFI.H
+24/02/97  17:08                 14ÿ548 DLGEMHF.CPP
+13/02/97  17:46                  4ÿ519 DLGEMHF.H
+24/02/97  17:08                 21ÿ992 dlgemrec.cpp
+13/02/97  17:46                  5ÿ032 dlgemrec.h
+13/02/97  17:43                 14ÿ280 DLGEQUIP.CPP
+13/02/97  17:46                  6ÿ264 DLGEQUIP.H
+13/02/97  17:43                  3ÿ574 DLGOUTIL.CPP
+13/02/97  17:46                  4ÿ483 DLGOUTIL.H
+13/02/97  17:44                 13ÿ116 DLGSTDHF.CPP
+13/02/97  17:46                  4ÿ052 DLGSTDHF.H
+13/02/97  17:56         <DIR>          EQUIP
+13/02/97  16:29         <DIR>          exe
+24/02/97  17:03                  2ÿ454 GLOBAL.H
+13/02/97  16:29         <DIR>          RES
+06/02/97  19:07                 18ÿ044 resource.h
+14/02/97  09:48                111ÿ510 sicomex.aps
+14/02/97  12:27                119ÿ860 sicomex.CLW
+13/02/97  17:49                  2ÿ059 sicomex.CPP
+13/02/97  17:48                  2ÿ185 sicomex.H
+13/02/97  18:02                 48ÿ514 sicomex.MAK
+14/02/97  09:48                124ÿ063 sicomex.RC
+24/02/97  18:10                 27ÿ136 sicomex.vcp
+07/02/96  12:05                    201 STDAFX.CPP
+07/02/96  12:05                    284 STDAFX.H
+06/12/96  17:25                  1ÿ517 tous.env
+13/02/97  17:48                  1ÿ027 TYP_GLOB.H
+              69 fichier(s)          955ÿ680 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\COMM
+
+24/02/97  12:33         <DIR>          .
+24/02/97  12:33         <DIR>          ..
+13/02/97  17:50                  7ÿ485 PORT.CPP
+13/02/97  17:52                  5ÿ190 PORT.H
+24/02/97  12:31                 13ÿ499 PROTO.CPP
+24/02/97  11:34                  7ÿ214 PROTO.H
+24/02/97  12:02                 16ÿ711 PROT_ACC.CPP
+24/02/97  11:33                  4ÿ088 PROT_ACC.H
+24/02/97  12:00                  7ÿ544 PROT_AUD.CPP
+24/02/97  11:34                  3ÿ900 PROT_AUD.H
+24/02/97  12:33                 10ÿ696 PROT_STD.CPP
+24/02/97  11:34                  3ÿ894 PROT_STD.H
+24/02/97  12:04                 17ÿ703 p_1225.CPP
+24/02/97  11:33                  4ÿ510 p_1225.H
+24/02/97  12:02                 18ÿ743 P_1236.CPP
+24/02/97  11:33                  4ÿ511 P_1236.H
+24/02/97  12:04                 18ÿ983 P_1237.CPP
+24/02/97  11:33                  4ÿ511 P_1237.H
+24/02/97  12:02                 36ÿ039 P_1241.CPP
+24/02/97  11:33                  4ÿ749 P_1241.H
+24/02/97  12:04                 28ÿ311 P_18A.CPP
+24/02/97  11:33                  4ÿ465 P_18A.H
+24/02/97  12:27                 29ÿ288 P_251.CPP
+24/02/97  11:33                  5ÿ138 P_251.H
+              24 fichier(s)          257ÿ172 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\CUSTOM
+
+13/02/97  17:58         <DIR>          .
+13/02/97  17:58         <DIR>          ..
+13/02/97  17:58                  1ÿ857 DIODE.CPP
+13/02/97  17:44                  3ÿ319 DIODE.H
+13/02/97  17:58                    847 ICONE.CPP
+13/02/97  17:47                  3ÿ140 ICONE.H
+13/02/97  17:58                  1ÿ741 INTER.CPP
+13/02/97  17:48                  3ÿ577 INTER.H
+13/02/97  17:58                  6ÿ270 OUTIL.CPP
+13/02/97  17:48                  3ÿ114 OUTIL.H
+              10 fichier(s)           23ÿ865 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\DIVERS
+
+24/02/97  17:52         <DIR>          .
+24/02/97  17:52         <DIR>          ..
+13/02/97  17:53                  7ÿ656 DIV_FIC.CPP
+24/02/97  17:52                  1ÿ787 DIV_FIC.H
+13/02/97  17:53                  3ÿ706 DIV_TMP.CPP
+13/02/97  17:44                  1ÿ290 DIV_TMP.H
+13/02/97  17:53                  3ÿ612 TABLE.CPP
+13/02/97  17:48                  3ÿ423 TABLE.H
+13/02/97  17:53                  4ÿ802 TACHE.CPP
+13/02/97  17:48                  3ÿ902 TACHE.H
+              10 fichier(s)           30ÿ178 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\EQUIP
+
+13/02/97  17:56         <DIR>          .
+13/02/97  17:56         <DIR>          ..
+13/02/97  17:55                 21ÿ596 Eqp1225.cpp
+13/02/97  17:46                 10ÿ765 Eqp1225.H
+13/02/97  17:55                 22ÿ162 Eqp1236.CPP
+13/02/97  17:46                 11ÿ622 Eqp1236.H
+13/02/97  17:55                  2ÿ488 Eqp1236L.CPP
+13/02/97  17:46                  2ÿ645 Eqp1236L.H
+13/02/97  17:55                  2ÿ885 Eqp1236S.CPP
+13/02/97  17:46                  2ÿ590 Eqp1236S.H
+13/02/97  17:55                 22ÿ777 Eqp1237.CPP
+13/02/97  17:46                 12ÿ231 Eqp1237.H
+13/02/97  17:55                  2ÿ487 Eqp1237L.CPP
+13/02/97  17:47                  2ÿ645 Eqp1237L.H
+13/02/97  17:55                  2ÿ885 Eqp1237S.CPP
+13/02/97  17:47                  2ÿ590 Eqp1237S.H
+13/02/97  17:55                 36ÿ902 Eqp1241.Cpp
+13/02/97  17:47                 20ÿ840 Eqp1241.H
+13/02/97  17:55                  2ÿ555 Eqp1241L.Cpp
+13/02/97  17:47                  2ÿ646 Eqp1241L.H
+13/02/97  17:55                  3ÿ113 Eqp1241S.Cpp
+13/02/97  17:47                  2ÿ590 Eqp1241S.H
+13/02/97  17:55                 45ÿ563 Eqp18A.cpp
+13/02/97  17:47                 23ÿ509 Eqp18A.H
+13/02/97  17:56                  4ÿ454 Eqp18C.cpp
+13/02/97  17:47                  2ÿ717 Eqp18C.H
+13/02/97  17:56                 43ÿ272 Eqp251.Cpp
+13/02/97  17:47                 23ÿ481 Eqp251.H
+13/02/97  17:56                 21ÿ182 EqpAcco.CPP
+13/02/97  17:47                 12ÿ614 EqpAcco.h
+13/02/97  17:56                  8ÿ083 EqpAudi.CPP
+13/02/97  17:47                  4ÿ672 EqpAudi.H
+13/02/97  17:56                 20ÿ884 EqpStd.CPP
+13/02/97  17:47                 12ÿ512 EqpStd.H
+13/02/97  17:56                 11ÿ576 EQUIP.CPP
+13/02/97  17:47                 10ÿ318 EQUIP.H
+13/02/97  17:56                 18ÿ323 PARAMSIM.CPP
+13/02/97  17:48                  7ÿ946 PARAMSIM.H
+13/02/97  17:56                  9ÿ448 SEQUENCE.CPP
+13/02/97  17:48                  6ÿ453 SEQUENCE.H
+13/02/97  17:56                  5ÿ687 SYNCHRO.CPP
+13/02/97  17:48                  2ÿ919 SYNCHRO.H
+              42 fichier(s)          486ÿ627 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+24/02/97  17:53         <DIR>          AIDE
+13/02/97  16:29         <DIR>          CONTEXTE
+               4 fichier(s)                0 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\AIDE
+
+24/02/97  17:53         <DIR>          .
+24/02/97  17:53         <DIR>          ..
+12/09/96  17:40                  9ÿ513 Accord.hlp
+28/08/96  09:36                  1ÿ780 ACCUEIL.HLP
+27/08/96  11:17                  1ÿ077 AFFECTE.HLP
+12/09/96  17:42                  8ÿ946 Audio.hlp
+27/08/96  11:10                  1ÿ924 CONFIG.HLP
+26/06/95  17:57                 11ÿ598 DING.WAV
+24/02/97  17:56                 11ÿ376 EMR_18.hlp
+12/09/96  17:43                  9ÿ654 E_1225.HLP
+24/02/97  18:04                 10ÿ107 E_1236.HLP
+24/02/97  18:07                 10ÿ172 E_1237.HLP
+16/09/94  14:00                  9ÿ996 INCORREC.WAV
+26/06/95  17:57                  5ÿ212 RINGOUT.WAV
+24/02/97  18:00                 10ÿ899 R_1241.HLP
+24/02/97  18:08                 10ÿ377 R_251.HLP
+12/09/96  17:45                  8ÿ061 STANDHF.HLP
+              17 fichier(s)          120ÿ692 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+13/02/97  16:29         <DIR>          ACCORD
+13/02/97  16:29         <DIR>          AUDIO
+13/02/97  16:29         <DIR>          EMR_18
+13/02/97  16:29         <DIR>          EM_1225
+13/02/97  16:29         <DIR>          EM_1236
+13/02/97  16:29         <DIR>          EM_1237
+13/02/97  16:29         <DIR>          REC_1241
+13/02/97  16:29         <DIR>          REC_251
+13/02/97  16:29         <DIR>          STANDARD
+              11 fichier(s)                0 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\ACCORD
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+11/09/96  14:36                    235 DEFAUT.CTX
+               3 fichier(s)              235 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\AUDIO
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+12/09/96  14:46                  3ÿ057 DEFAUT.CTX
+               3 fichier(s)            3ÿ057 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EMR_18
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+27/08/96  11:56                    345 DEFAUT.CTX
+               3 fichier(s)              345 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1225
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+30/01/97  14:27                    195 DEFAUT.CTX
+               3 fichier(s)              195 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1236
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+13/02/97  16:29         <DIR>          REC_1241
+               3 fichier(s)                0 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1236\REC_1241
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+30/01/97  14:27                    258 DEFAUT.CTX
+               3 fichier(s)              258 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1237
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+13/02/97  16:29         <DIR>          EM_1236
+               3 fichier(s)                0 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1237\EM_1236
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+13/02/97  16:29         <DIR>          REC_1241
+               3 fichier(s)                0 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\EM_1237\EM_1236\REC_1241
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+30/01/97  14:27                    258 DEFAUT.CTX
+               3 fichier(s)              258 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\REC_1241
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+30/01/97  14:27                    258 DEFAUT.CTX
+               3 fichier(s)              258 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\REC_251
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+30/01/97  14:29                    332 Copie de Defaut.ctx
+30/01/97  14:29                    332 Defaut.ctx
+               4 fichier(s)              664 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\exe\CONTEXTE\STANDARD
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+27/08/96  11:56                    174 DEFAUT.CTX
+               3 fichier(s)              174 octets
+
+R‚pertoire de C:\SICOMEX\sico_v1.0\RES
+
+13/02/97  16:29         <DIR>          .
+13/02/97  16:29         <DIR>          ..
+03/04/96  12:47                    918 DIODE_AL.BMP
+02/07/96  13:40                    918 DIODE_ER.BMP
+02/08/96  17:20                    918 DIODE_OF.BMP
+02/08/96  17:20                    918 DIODE_ON.BMP
+05/12/96  15:35                    766 EM_HF.ICO
+04/09/96  11:12                    918 EQP_ACCO.BMP
+11/06/96  11:53                    918 EQP_AUDI.BMP
+06/06/96  18:57                    918 EQP_EMET.BMP
+04/09/96  11:12                    918 EQP_EMRE.BMP
+11/06/96  11:51                    918 EQP_RECE.BMP
+06/06/96  18:57                    918 EQP_STD_.BMP
+05/06/96  15:32                    918 FLECHE_B.BMP
+05/06/96  15:32                    918 FLECHE_H.BMP
+26/02/96  12:04                    918 INTER_OF.BMP
+26/02/96  16:12                    918 INTER_ON.BMP
+10/07/96  17:53                    766 IOS.ICO
+15/07/96  18:43                    766 REC_HF.ICO
+07/02/96  18:00                  1ÿ078 sicomex.ICO
+07/02/96  12:05                    395 sicomex.RC2
+              21 fichier(s)           16ÿ623 octets
+
+     Total des fichiers list‚sÿ:
+             245 fichier(s)        1ÿ896ÿ281 octets
+                            88ÿ839ÿ168 octets libres

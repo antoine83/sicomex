@@ -1,0 +1,26 @@
+Modem TRC1752P
+
+Le modem TRC1752 QUADRIVOIE ou BIVOIE est un modem multimode conçu pour être installé
+à bord de bâtiments ou dans des stations à terre sur support amortisseur ou en baie standard 19
+pouces. Il permet des transmissions de données haut débit (jusqu’à 4800 b/s) en HF onde de sol
+ou onde ionosphérique, mais il peut aussi être utilisé sur des canaux LF, MF, VHF ou UHF.
+
+Le modem HF est intégré au système émission et/ou réception de la gamme HF, entre un
+terminal de données ou un module de chiffrement et l'équipement radio.
+En émission, le modem HF délivre un signal de Mute appliqué au récepteur, un signal d’alternat et
+un signal BF appliqués à l’émetteur à partir des données synchrones ou asynchrones fournies par
+l'équipement de chiffrement ou le terminal de données.
+En réception, le modem HF fournit des données synchrones ou asynchrones à l’équipement de
+chiffrement ou au terminal de données, à partir du signal BF délivré par le récepteur.
+Les équipements de chiffrements utilisés sont typiquement des KW46, des KG84 ou équivalents.
+
+Le modem HF permet d’assurer des communications simplex, half duplex ou duplex dans les modes
+suivants :
+ - STANAG 4285
+ - STANAG 4529
+ - FSK, ce mode est utilisé principalement pour assurer une compatibilité avec des équipements
+        anciens encore en service,
+ - MIL-STD 188-110 A (mode série).
+Un mode diversité d’ordre 2 (d’antennes, de polarisation et de fréquences) permet d’améliorer la
+qualité de la réception dans les conditions difficiles.
+ - ALE : Automatic Link Establishment, conforme à la norme MIL-STD-188-141A

@@ -1,0 +1,77 @@
+Après le ED42_test_S_20.txt
+---------------------------
+
+echo ">A01ONL8<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01SYS#72200201<
+
+echo ">A01OPS?<" > /dev/ttyUSB0
+>a01OPS8<
+
+echo ">A01S?CIK?<" > /dev/ttyUSB0
+....pas de reponse de l'equipement
+
+echo ">A01S?SYS?<" > /dev/ttyUSB0
+>a01S#00SYS#72000201<
+
+echo ">A01CIK?<" > /dev/ttyUSB0
+....pas de repo,se de l'equipement
+
+
+echo ">A01S?SYS?<" > /dev/ttyUSB0
+>a01S#00SYS#72000201<
+
+echo ">A01S?KEK?<" > /dev/ttyUSB0
+....pas de reponse de l'equipement
+
+echo ">A01S?CES?<" > /dev/ttyUSB0
+>a01S#00CES#12,#02<
+
+
+echo ">A01S?ACV?CES?ERR?ALM?<" > /dev/ttyUSB0
+>a01S#00ACV1,#01,#0f,5,0,0000,000000CES#12,#02ERR0,0ALM0,0<
+
+echo ">A01CIK?<" > /dev/ttyUSB0
+....pas de reponse de l'equipement
+
+
+echo ">A01S?SYS?<" > /dev/ttyUSB0
+>a01S#00SYS#40000201<
+
+
+apres un certain temp (2 à 5 minutes)
+echo ">A01S?SYS?<" > /dev/ttyUSB0
+>a01S#20RES0,0,2<
+
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01S#20RES0,0,1<
+
+echo ">A01INI?<" > /dev/ttyUSB0
+plus de reponse de l'equipement
+
+A/M électrique puis passage OFLINE depuis la face avant de l'équipement.
+------------------------------------------------------------------------
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01S#10RES0,0,1<
+
+echo ">A01INI?<" > /dev/ttyUSB0
+>a01INI4,#12<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01S#10RES0,0,1<
+
+echo ">A01PWCHK#37fcd993<" > /dev/ttyUSB0
+>a01S#10RES0,0,1<
+
+echo ">A01TAK0<" > /dev/ttyUSB0
+>a01RES0,0,1<
+
+echo ">A01SYS?<" > /dev/ttyUSB0
+>a01S#20RES0,0,1<
+
+Puisque la séquence est : INI,TAK puis PWCHK.
+

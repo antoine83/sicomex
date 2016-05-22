@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName>sicomex</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{0D435D1C-FBB4-4F39-8157-EE9FBFE29E29}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Release\sicomex.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <TypeLibraryName>.\Release\sicomex.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\sicomex.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Release\sicomex.exe</OutputFile>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\sicomex.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <CallingConvention>StdCall</CallingConvention>
+    </ClCompile>
+    <Midl>
+      <TypeLibraryName>.\Debug\sicomex.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\sicomex.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Debug\sicomex.exe</OutputFile>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="COMM\PORT.CPP" />
+    <ClCompile Include="COMM\PROTO.CPP" />
+    <ClCompile Include="COMM\PROT_ACC.CPP" />
+    <ClCompile Include="COMM\PROT_AUD.CPP" />
+    <ClCompile Include="COMM\PROT_STD.CPP" />
+    <ClCompile Include="COMM\p_1225.CPP" />
+    <ClCompile Include="COMM\P_1236.CPP" />
+    <ClCompile Include="COMM\P_1237.CPP" />
+    <ClCompile Include="COMM\P_1241.CPP" />
+    <ClCompile Include="COMM\P_18A.CPP" />
+    <ClCompile Include="COMM\P_251.CPP" />
+    <ClCompile Include="comm\p_AAD.cpp" />
+    <ClCompile Include="COMM\p_CA150.cpp" />
+    <ClCompile Include="comm\p_CV24Card.cpp" />
+    <ClCompile Include="comm\p_ED42.cpp" />
+    <ClCompile Include="COMM\p_MAT.cpp" />
+    <ClCompile Include="comm\p_MatCom.cpp" />
+    <ClCompile Include="comm\p_temp.cpp" />
+    <ClCompile Include="COMM\p_Test.cpp" />
+    <ClCompile Include="comm\p_TORCard.cpp" />
+    <ClCompile Include="comm\p_TRC1752.cpp" />
+    <ClCompile Include="CUSTOM\DIODE.CPP" />
+    <ClCompile Include="CUSTOM\ICONE.CPP" />
+    <ClCompile Include="CUSTOM\INTER.CPP" />
+    <ClCompile Include="CUSTOM\OUTIL.CPP" />
+    <ClCompile Include="DIVERS\DIV_FIC.CPP" />
+    <ClCompile Include="DIVERS\DIV_TMP.CPP" />
+    <ClCompile Include="DIVERS\TABLE.CPP" />
+    <ClCompile Include="DIVERS\TACHE.CPP" />
+    <ClCompile Include="DLG1236.CPP" />
+    <ClCompile Include="dlg1236l.cpp" />
+    <ClCompile Include="dlg1236s.cpp" />
+    <ClCompile Include="dlg1237.cpp" />
+    <ClCompile Include="dlg1237l.cpp" />
+    <ClCompile Include="dlg1237s.cpp" />
+    <ClCompile Include="DLG1241.CPP" />
+    <ClCompile Include="DLG1241L.CPP" />
+    <ClCompile Include="dlg1241s.cpp" />
+    <ClCompile Include="Dlg18C.CPP" />
+    <ClCompile Include="dlg251.cpp" />
+    <ClCompile Include="DLGaad_20_4.cpp" />
+    <ClCompile Include="DLGaad_20_8.cpp" />
+    <ClCompile Include="DLGACCOR.CPP" />
+    <ClCompile Include="dlgaccue.cpp" />
+    <ClCompile Include="DLGAFFEC.CPP" />
+    <ClCompile Include="DLGAIDE.CPP" />
+    <ClCompile Include="DLGAPROP.CPP" />
+    <ClCompile Include="DLGAUDIO.CPP" />
+    <ClCompile Include="DLGCA150.cpp" />
+    <ClCompile Include="dlgCommutationMatrix.cpp" />
+    <ClCompile Include="DLGCONFI.CPP" />
+    <ClCompile Include="DLGCV24Card.cpp" />
+    <ClCompile Include="DlgED42.cpp" />
+    <ClCompile Include="DlgED42AnalogDCE.cpp" />
+    <ClCompile Include="DlgED42AnalogDTE.cpp" />
+    <ClCompile Include="DlgED42Bit.cpp" />
+    <ClCompile Include="DlgED42CikSystem.cpp" />
+    <ClCompile Include="DlgED42DigitalDCE.cpp" />
+    <ClCompile Include="DlgED42DigitalDTE.cpp" />
+    <ClCompile Include="DlgED42ERR.cpp" />
+    <ClCompile Include="DlgED42ERRPANNE.cpp" />
+    <ClCompile Include="DlgED42GeneralParameter.cpp" />
+    <ClCompile Include="DlgED42Info.cpp" />
+    <ClCompile Include="DlgED42KeyDisplay.cpp" />
+    <ClCompile Include="DlgED42KeyManagement.cpp" />
+    <ClCompile Include="DlgED42KeyManagementTab.cpp" />
+    <ClCompile Include="DlgED42KeyTag.cpp" />
+    <ClCompile Include="DlgED42Pannes.cpp" />
+    <ClCompile Include="DlgED42Parametres.cpp" />
+    <ClCompile Include="DlgED42Password.cpp" />
+    <ClCompile Include="DlgED42Presets.cpp" />
+    <ClCompile Include="DlgED42PresetsTab.cpp" />
+    <ClCompile Include="DlgED42SecurityTab.cpp" />
+    <ClCompile Include="DlgED42StatusERR.cpp" />
+    <ClCompile Include="DlgED42Tab.cpp" />
+    <ClCompile Include="DLGEMHF.CPP" />
+    <ClCompile Include="dlgemrec.cpp" />
+    <ClCompile Include="DLGEQUIP.CPP" />
+    <ClCompile Include="DLGmatL11.cpp" />
+    <ClCompile Include="DLGmatSPIN.cpp" />
+    <ClCompile Include="DlgModeOperationnel.cpp" />
+    <ClCompile Include="DLGOUTIL.CPP" />
+    <ClCompile Include="DLGSTDHF.CPP" />
+    <ClCompile Include="DLGtemp.cpp" />
+    <ClCompile Include="DLGTest1.cpp" />
+    <ClCompile Include="DLGTORCard.cpp" />
+    <ClCompile Include="DlgTRC1752.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ALE.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ARQ.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_CONF.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_ENV.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_RDO.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_CONF_STST.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_OPS.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_CALL.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_LP.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_SYS.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ALE_TAB.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_CONF.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_ENV.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_ASS.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_BF.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_LIAS.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_PIL.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_INTF_TC.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_A1.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_A2.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_B1.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_B2.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STA_TST.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_STST.cpp" />
+    <ClCompile Include="DlgTRC1752_MOD_PROG_TC.cpp" />
+    <ClCompile Include="equip\AppelAle.cpp" />
+    <ClCompile Include="EQUIP\Eqp1225.cpp" />
+    <ClCompile Include="EQUIP\Eqp1236.CPP" />
+    <ClCompile Include="EQUIP\Eqp1236L.CPP" />
+    <ClCompile Include="EQUIP\Eqp1236S.CPP" />
+    <ClCompile Include="EQUIP\Eqp1237.CPP" />
+    <ClCompile Include="EQUIP\Eqp1237L.CPP" />
+    <ClCompile Include="EQUIP\Eqp1237S.CPP" />
+    <ClCompile Include="EQUIP\Eqp1241.Cpp" />
+    <ClCompile Include="EQUIP\Eqp1241L.Cpp" />
+    <ClCompile Include="EQUIP\Eqp1241S.Cpp" />
+    <ClCompile Include="EQUIP\Eqp18A.cpp" />
+    <ClCompile Include="EQUIP\Eqp18C.cpp" />
+    <ClCompile Include="EQUIP\Eqp251.Cpp" />
+    <ClCompile Include="equip\EqpAAD.cpp" />
+    <ClCompile Include="EQUIP\EqpAcco.CPP" />
+    <ClCompile Include="EQUIP\EqpAudi.CPP" />
+    <ClCompile Include="EQUIP\EqpCA150.cpp" />
+    <ClCompile Include="equip\EqpCV24Card.cpp" />
+    <ClCompile Include="EQUIP\EqpMAT.cpp" />
+    <ClCompile Include="equip\eqpMATCOM.cpp" />
+    <ClCompile Include="EQUIP\EqpStd.CPP" />
+    <ClCompile Include="equip\EqpTemp.cpp" />
+    <ClCompile Include="equip\EqpTORCard.cpp" />
+    <ClCompile Include="EQUIP\EQUIP.CPP" />
+    <ClCompile Include="equip\EquipED42.cpp" />
+    <ClCompile Include="equip\EquipM1752.cpp" />
+    <ClCompile Include="equip\EquipTest.cpp" />
+    <ClCompile Include="EQUIP\PARAMSIM.CPP" />
+    <ClCompile Include="EQUIP\SEQUENCE.CPP" />
+    <ClCompile Include="EQUIP\SYNCHRO.CPP" />
+    <ClCompile Include="IDD_Mode_Operationnel.cpp" />
+    <ClCompile Include="MyEdit.cpp" />
+    <ClCompile Include="MyListCtrl.cpp" />
+    <ClCompile Include="sicomex.CPP" />
+    <ClCompile Include="STDAFX.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="XTabCtrl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README.TXT" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sicomex.RC" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="COMM\PORT.H" />
+    <ClInclude Include="COMM\PROTO.H" />
+    <ClInclude Include="COMM\PROT_ACC.H" />
+    <ClInclude Include="COMM\PROT_AUD.H" />
+    <ClInclude Include="COMM\PROT_STD.H" />
+    <ClInclude Include="COMM\p_1225.H" />
+    <ClInclude Include="COMM\P_1236.H" />
+    <ClInclude Include="COMM\P_1237.H" />
+    <ClInclude Include="COMM\P_1241.H" />
+    <ClInclude Include="COMM\P_18A.H" />
+    <ClInclude Include="COMM\P_251.H" />
+    <ClInclude Include="comm\p_AAD.h" />
+    <ClInclude Include="COMM\p_CA150.h" />
+    <ClInclude Include="comm\p_CV24Card.h" />
+    <ClInclude Include="comm\p_ED42.h" />
+    <ClInclude Include="COMM\p_MAT.h" />
+    <ClInclude Include="comm\p_MatCom.h" />
+    <ClInclude Include="comm\p_temp.h" />
+    <ClInclude Include="COMM\p_Test.h" />
+    <ClInclude Include="comm\p_TORCard.h" />
+    <ClInclude Include="comm\p_TRC1752.h" />
+    <ClInclude Include="CUSTOM\DIODE.H" />
+    <ClInclude Include="CUSTOM\ICONE.H" />
+    <ClInclude Include="CUSTOM\INTER.H" />
+    <ClInclude Include="CUSTOM\OUTIL.H" />
+    <ClInclude Include="DIVERS\DIV_FIC.H" />
+    <ClInclude Include="DIVERS\DIV_TMP.H" />
+    <ClInclude Include="DIVERS\TABLE.H" />
+    <ClInclude Include="DIVERS\TACHE.H" />
+    <ClInclude Include="dlg1236.h" />
+    <ClInclude Include="dlg1236l.h" />
+    <ClInclude Include="dlg1236s.h" />
+    <ClInclude Include="dlg1237.h" />
+    <ClInclude Include="dlg1237l.h" />
+    <ClInclude Include="dlg1237s.h" />
+    <ClInclude Include="DLG1241.H" />
+    <ClInclude Include="DLG1241L.H" />
+    <ClInclude Include="dlg1241s.h" />
+    <ClInclude Include="dlg18c.h" />
+    <ClInclude Include="dlg251.h" />
+    <ClInclude Include="DLGaad_20_4.h" />
+    <ClInclude Include="DLGaad_20_8.h" />
+    <ClInclude Include="DLGACCOR.H" />
+    <ClInclude Include="dlgaccue.h" />
+    <ClInclude Include="DLGAFFEC.H" />
+    <ClInclude Include="DLGAIDE.H" />
+    <ClInclude Include="DLGAPROP.H" />
+    <ClInclude Include="DLGAUDIO.H" />
+    <ClInclude Include="DLGCA150.h" />
+    <ClInclude Include="dlgCommutationMatrix.h" />
+    <ClInclude Include="DLGCONFI.H" />
+    <ClInclude Include="DLGCV24Card.h" />
+    <ClInclude Include="DlgED42.h" />
+    <ClInclude Include="DlgED42AnalogDCE.h" />
+    <ClInclude Include="DlgED42AnalogDTE.h" />
+    <ClInclude Include="DlgED42Bit.h" />
+    <ClInclude Include="DlgED42CikSystem.h" />
+    <ClInclude Include="DlgED42DigitalDCE.h" />
+    <ClInclude Include="DlgED42DigitalDTE.h" />
+    <ClInclude Include="DlgED42ERR.h" />
+    <ClInclude Include="DlgED42ERRPANNE.h" />
+    <ClInclude Include="DlgED42GeneralParameter.h" />
+    <ClInclude Include="DlgED42Info.h" />
+    <ClInclude Include="DlgED42KeyDisplay.h" />
+    <ClInclude Include="DlgED42KeyManagement.h" />
+    <ClInclude Include="DlgED42KeyManagementTab.h" />
+    <ClInclude Include="DlgED42KeyTag.h" />
+    <ClInclude Include="DlgED42Pannes.h" />
+    <ClInclude Include="DlgED42Parametres.h" />
+    <ClInclude Include="DlgED42Password.h" />
+    <ClInclude Include="DlgED42Presets.h" />
+    <ClInclude Include="DlgED42PresetsTab.h" />
+    <ClInclude Include="DlgED42SecurityTab.h" />
+    <ClInclude Include="DlgED42StatusERR.h" />
+    <ClInclude Include="DlgED42Tab.h" />
+    <ClInclude Include="DLGEMHF.H" />
+    <ClInclude Include="dlgemrec.h" />
+    <ClInclude Include="DLGEQUIP.H" />
+    <ClInclude Include="DLGmatL11.h" />
+    <ClInclude Include="DLGmatSPIN.h" />
+    <ClInclude Include="DlgModeOperationnel.h" />
+    <ClInclude Include="DLGOUTIL.H" />
+    <ClInclude Include="DLGSTDHF.H" />
+    <ClInclude Include="DLGtemp.h" />
+    <ClInclude Include="DLGTest1.h" />
+    <ClInclude Include="DLGTORCard.h" />
+    <ClInclude Include="DlgTRC1752.h" />
+    <ClInclude Include="DlgTRC1752_MOD.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ALE.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ARQ.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_CONF.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_ENV.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_RDO.h" />
+    <ClInclude Include="DlgTRC1752_MOD_CONF_STST.h" />
+    <ClInclude Include="DlgTRC1752_MOD_OPS.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_CALL.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_LP.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_SYS.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ALE_TAB.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_CONF.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_ENV.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_ASS.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_BF.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_LIAS.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_PIL.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_INTF_TC.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_A1.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_A2.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_B1.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_B2.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STA_TST.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_STST.h" />
+    <ClInclude Include="DlgTRC1752_MOD_PROG_TC.h" />
+    <ClInclude Include="equip\AppelAle.h" />
+    <ClInclude Include="EQUIP\Eqp1225.H" />
+    <ClInclude Include="EQUIP\Eqp1236.H" />
+    <ClInclude Include="EQUIP\Eqp1236L.H" />
+    <ClInclude Include="EQUIP\Eqp1236S.H" />
+    <ClInclude Include="EQUIP\Eqp1237.H" />
+    <ClInclude Include="EQUIP\Eqp1237L.H" />
+    <ClInclude Include="EQUIP\Eqp1237S.H" />
+    <ClInclude Include="EQUIP\Eqp1241.H" />
+    <ClInclude Include="EQUIP\Eqp1241L.H" />
+    <ClInclude Include="EQUIP\Eqp1241S.H" />
+    <ClInclude Include="EQUIP\Eqp18A.H" />
+    <ClInclude Include="EQUIP\Eqp18C.H" />
+    <ClInclude Include="EQUIP\Eqp251.H" />
+    <ClInclude Include="equip\EqpAAD.h" />
+    <ClInclude Include="EQUIP\EqpAcco.h" />
+    <ClInclude Include="EQUIP\EqpAudi.H" />
+    <ClInclude Include="EQUIP\EqpCA150.h" />
+    <ClInclude Include="equip\EqpCV24Card.h" />
+    <ClInclude Include="EQUIP\EqpMAT.h" />
+    <ClInclude Include="equip\eqpMATCOM.h" />
+    <ClInclude Include="EQUIP\EqpStd.H" />
+    <ClInclude Include="equip\EqpTemp.h" />
+    <ClInclude Include="equip\eqpTORCard.h" />
+    <ClInclude Include="EQUIP\EQUIP.H" />
+    <ClInclude Include="equip\EquipED42.h" />
+    <ClInclude Include="equip\EquipM1752.h" />
+    <ClInclude Include="EQUIP\EquipTest.h" />
+    <ClInclude Include="equip\EquipXT4410.h" />
+    <ClInclude Include="EQUIP\PARAMSIM.H" />
+    <ClInclude Include="EQUIP\SEQUENCE.H" />
+    <ClInclude Include="EQUIP\SYNCHRO.H" />
+    <ClInclude Include="GLOBAL.H" />
+    <ClInclude Include="IDD_Mode_Operationnel.h" />
+    <ClInclude Include="MyEdit.h" />
+    <ClInclude Include="MyListCtrl.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="sicomex.H" />
+    <ClInclude Include="STDAFX.H" />
+    <ClInclude Include="TYP_GLOB.H" />
+    <ClInclude Include="XTabCtrl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\AAD20_4.bmp" />
+    <Image Include="res\AAD20_8.bmp" />
+    <Image Include="res\andvt.bmp" />
+    <Image Include="res\atos.bmp" />
+    <Image Include="res\atoslogo_rgb.bmp" />
+    <Image Include="res\black.bmp" />
+    <Image Include="res\ca_150.bmp" />
+    <Image Include="res\cik_off.bmp" />
+    <Image Include="res\cik_on.bmp" />
+    <Image Include="res\ComMat.bmp" />
+    <Image Include="RES\DIODE_ER.BMP" />
+    <Image Include="RES\DIODE_OF.BMP" />
+    <Image Include="RES\DIODE_ON.BMP" />
+    <Image Include="res\ED42.bmp" />
+    <Image Include="RES\EM_HF.ICO" />
+    <Image Include="RES\EQP_ACCO.BMP" />
+    <Image Include="RES\EQP_AUDI.BMP" />
+    <Image Include="RES\EQP_EMET.BMP" />
+    <Image Include="RES\EQP_EMRE.BMP" />
+    <Image Include="RES\EQP_RECE.BMP" />
+    <Image Include="RES\EQP_STD_.BMP" />
+    <Image Include="res\icon1.ico" />
+    <Image Include="RES\INTER_OF.BMP" />
+    <Image Include="RES\INTER_ON.BMP" />
+    <Image Include="RES\IOS.ICO" />
+    <Image Include="res\ky58.bmp" />
+    <Image Include="res\matl11.bmp" />
+    <Image Include="res\matspin.bmp" />
+    <Image Include="res\mdm_1752.bmp" />
+    <Image Include="RES\REC_HF.ICO" />
+    <Image Include="res\red.bmp" />
+    <Image Include="RES\sicomex.ICO" />
+    <Image Include="res\tor.bmp" />
+    <Image Include="res\white.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="RES\sicomex.RC2" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
