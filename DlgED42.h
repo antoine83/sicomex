@@ -87,7 +87,7 @@ private:
 	CString chaineSep;
 	CString chaineEnCours;
 	CString tmpPwd;
-	int actionEnCours, actionEnCours1, actionEnCours2;
+	int actionEnCours, actionEnCours1, actionEnCours2, actionEnCoursTmp;
 	int languageCours;
 
 	void affichgeExploitation();
@@ -153,7 +153,7 @@ private:
 	CString createAffiche(CString motIn, CString motAjout, int lenAjout);
 	void TraitementTouches(CString dcp1, CString dcp2, bool flagAddFonc = FALSE, bool flagFW= FALSE);
 	void initAffichageUn(CString ligne1, CString ligne2, int flag1=0, bool flag2=FALSE);
-	BOOL userPasswordVerification(CString passwdTmp);
+	BOOL userPasswordVerification(CString passwdTmp, string passWord = "");
 
 	string cstringTostring(CString motIn);
 
