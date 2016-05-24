@@ -809,6 +809,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							eqp->SetUserPassWord(s1);
 							eqp->SetOperatingStatus(USER_PW_VERIFICATION);			//actionEnCours = USER_PW_VERIFICATION;
 							eqp->SetChaineClavier("");
+							actionEnCours1 = ENTER_USER_PW;
 						}
 
 						SetClavier(FALSE);
@@ -891,7 +892,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							if (actionEnCours1 == ENTER_ZEROIZE_PW)
 								 eqp->SetOperatingStatus(OFFLINE);
 							
-							//actionEnCours = LANGUAGE_SELECTION;
+							if(actionEnCours1 == ENTER_USER_PW)
+								eqp->SetOperatingStatus(LANGUAGE_SELECTION);		//actionEnCours = LANGUAGE_SELECTION;
 						}
 
 						SetClavier(FALSE);
@@ -935,7 +937,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 						if (chaineSep == "ST")
 						{
-							//actionEnCours = OFFLINE;
 							eqp->SetOperatingStatus(OFFLINE);
 							eqp->SetMarcheEd42(true);
 							eqp->SetFullSimu(true);
@@ -946,7 +947,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 						SetClavier(FALSE);
 					}
-					
 					break;
 				case OFFLINE:
 					OutputDebugString("Dans : case OFFLINE:!\n");
