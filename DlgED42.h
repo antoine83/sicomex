@@ -96,8 +96,7 @@ private:
 	void GestionAffichageEmRec(bool val);
 	void GestionBoutonLockUnlock();
 	void BuildComposant(int composant, int preset);
-	
-	
+	void sortieDebug(string param1, int param2, int param3 = -1);
 	
 /* **********************************************************************
 METHODE :		CDlgED42()

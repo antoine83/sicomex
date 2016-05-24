@@ -45,7 +45,6 @@ CDlgED42::CDlgED42(CWnd* pParent /*=NULL*/)
 	valBool		= FALSE;
 
 	LoadData();
-
 }
 
 CDlgED42::~CDlgED42()
@@ -164,8 +163,6 @@ void CDlgED42::OnAide()
 // ******************************************
 void CDlgED42::OnErreursPannes()
 {
-	//int	iResult;
-
 	DlgED42ERRPANNE*	win2 = new DlgED42ERRPANNE(eqp);
 
 	win2->DoModal();
@@ -179,7 +176,6 @@ void CDlgED42::OnErreursPannes()
 // ******************************************
 BOOL CDlgED42::OnInitDialog()
 {
-
 	OutputDebugString("Dans : CDlgED42::OnInitDialog() !\n");
 
 	lockTimeChecker = 0;
@@ -220,14 +216,12 @@ BOOL CDlgED42::OnInitDialog()
 	m_cycle.SetCheck(equip->EnvoiCyclique());
 	m_synchro.SetCheck(equip->Synchronise());
 
-
 // Custom control
 // **************
 	m_activite.SubclassDlgItem(IDC_ACTIVITE,this);
 	m_cik.SubclassDlgItem(IDC_ED42_DCP_CIK,this);
 	m_nl.SubclassDlgItem(IDC_ED42_DCP_NL,this);
 	m_eg.SubclassDlgItem(IDC_ED42_DCP_EG,this);
-
 
 	//Initialiasation du bouton CIK
 	GetDlgItem(IDC_ED42_DCP_CIK)->EnableWindow(TRUE);
@@ -240,7 +234,6 @@ BOOL CDlgED42::OnInitDialog()
     m_dlgTab->ShowWindow(SW_SHOW);
 
 	UpdateData(FALSE);
-
 
 	GestionAffichageBoutons(FALSE);
 	RazAffichage();
@@ -290,7 +283,6 @@ void CDlgED42::OnInfo()
 	eqp->ChangeCik(ret1,FALSE); // Traitement de CIK pour CIK_STATE
 	eqp->SetKeStatus(ret2);		// Traitement de CE State - KEStatus
 	eqp->setSecureMode(ret3);
-
 }
 
 /* **************************************************************************
@@ -321,7 +313,6 @@ void CDlgED42::OnEg()
 	int	iResult = m_eg.Inverse_etat();
 
  	eqp->ChangeEg(iResult);
-
 }
 
 /* **************************************************************************
@@ -348,8 +339,12 @@ TRAITEMENT:		Affichage des boutons et de l'onglet Prog
 ***************************************************************************	*/
 void CDlgED42::GestionAffichageBoutons(bool affiche)
 {
+	OutputDebugString("Dans : CDlgED42::GestionAffichageBoutons(bool affiche) !\n");
+
 	if (eqp->GetMarcheEd42() && !eqp->GetStatusNl())
 	{
+		OutputDebugString("Dans : CDlgED42::GestionAffichageBoutons(bool affiche) et if (eqp->GetMarcheEd42() && !eqp->GetStatusNl())!\n");
+
 		GetDlgItem(IDC_ED42_DCP_BTN_RS)->EnableWindow(affiche);
 		GetDlgItem(IDC_ED42_DCP_BTN_FW)->EnableWindow(affiche);
 		GetDlgItem(IDC_ED42_DCP_BTN_ST)->EnableWindow(affiche);
@@ -364,6 +359,8 @@ void CDlgED42::GestionAffichageBoutons(bool affiche)
 
 	if (!eqp->GetMarcheEd42())
 	{
+		OutputDebugString("Dans : CDlgED42::GestionAffichageBoutons(bool affiche) et if (!eqp->GetMarcheEd42())!\n");
+
 		GetDlgItem(IDC_ED42_DCP_BTN_RS)->EnableWindow(FALSE);
 		GetDlgItem(IDC_ED42_DCP_BTN_FW)->EnableWindow(FALSE);
 		GetDlgItem(IDC_ED42_DCP_BTN_ST)->EnableWindow(FALSE);
@@ -380,7 +377,7 @@ void CDlgED42::GestionAffichageBoutons(bool affiche)
 	if (eqp->GetStatusNl() && eqp->GetMarcheEd42())
 		GetDlgItem(IDC_ED42_DCP_BTN_RS)->EnableWindow(true);
 
-
+	OutputDebugString("Fin : CDlgED42::GestionAffichageBoutons(bool affiche) !\n");
 }
 
 
@@ -403,10 +400,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 	chaineSep = eqp->GetChaineClavier().c_str();
 
-	
 	if (eqp->GetStatusBusy() == 1)
 		SetTimer(11,500,NULL);
-
 
 	//IDC_CHECK_FULL
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_FULL)->ShowWindow(eqp->GetMarcheEd42() && !eqp->GetResetEd42() && !eqp->GetStatusNl());
@@ -441,7 +436,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 	if (m_timerEd != 9 && eqp->GetPasswordHoldTime() != 0 && !eqp->getED42Lock() && !eqp->getRemoteStatus())
 		m_timerEd = SetTimer(9,DUREEHT*eqp->GetPasswordHoldTime(),NULL);
 
-	/*
 	// Traitement de TAMPER
 	if (eqp->GetKeStatus() == TAMPER)
 	{
@@ -452,10 +446,12 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 		//actionEnCours = ZEROIZE_ALARM;
 		eqp->SetKeStatus(KE_IDLE);
 	}
-	*/
-
+	
 	// Traitement de ZEROIZE
 	if (eqp->GetStatusNl() && actionEnCours != MA &&
+							  actionEnCours != USER_PW_VERIFICATION &&
+							  actionEnCours != RESTART_WITH_RESET &&
+							  actionEnCours != ZEROIZE_ALARM &&
 		                      actionEnCours != ZEROIZE_ALARM_C &&
 							  actionEnCours != ZEROIZE_ALARM_S &&
 							  actionEnCours != ACTIV_LOCAL_CTRL &&
@@ -463,18 +459,18 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							  actionEnCours != ACTIV_LOCAL_CTRL_2 &&
 							  actionEnCours != ENTER_ZEROIZE_PW &&
 							  actionEnCours != ENTER_USER_PW &&
-							  actionEnCours != ONLINE)
+							  actionEnCours != ONLINE &&
+							  equip->Actif())
 	{
-		OutputDebugString("Dans : // Traitement de ZEROIZE !\n");
-		eqp->SetOperatingStatus(ZEROIZE_ALARM);			// actionEnCours = ZEROIZE_ALARM;
+		sortieDebug("Dans : // Traitement de ZEROIZE : ", actionEnCours);
 
+		eqp->SetOperatingStatus(ZEROIZE_ALARM);			// actionEnCours = ZEROIZE_ALARM;
 	}
 
 
 	// Affichage des pannes
 	c_checksum.SetCheck(eqp->getStatusErrorTable(SYNTAX_RCS));		//|| eqp->getStatusErrorRCS());
 	
-
 	//actionEnCours = eqp->GetOperatingStatus();
 
 	OutputDebugString("Avant : switch (nIDEvent) !\n");
@@ -494,6 +490,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				KillTimer(m_timerEd);
 				m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[RESTART_WITH_RESET].c_str());
 				m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_2)->SetWindowText(OPERATING_STATUS[CARVIDE].c_str());
+
 				eqp->SetOperatingStatus(RESTART_WITH_RESET);		//actionEnCours = RESTART_WITH_RESET;
 
 				actionEnCours1 = CARVIDE;
@@ -521,14 +518,9 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				GestionAffichageExploitation(FALSE);
 			}
 
-			actionEnCours		= eqp->GetOperatingStatus();
+			actionEnCours = eqp->GetOperatingStatus();
 
-			AfficheDebug.append("Avant : switch (actionEnCours) : ");
-			AfficheDebug.append(OPERATING_STATUS[actionEnCours].c_str());
-			AfficheDebug.append(" !\n");
-
-			OutputDebugString(AfficheDebug.c_str());
-
+			sortieDebug("Avant : switch (actionEnCours) : ", actionEnCours);
 
 			switch (actionEnCours)
 			{
@@ -544,6 +536,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				case POWER_ON_BIT:
 					break;
 				case ZEROIZE_ALARM_S:
+					OutputDebugString("Dans : case ZEROIZE_ALARM_S: !\n");
 					break;
 				case ZEROIZE_ALARM:
 					OutputDebugString("Dans : case ZEROIZE_ALARM: !\n");
@@ -564,48 +557,105 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					break;
 				case RESTART_WITH_RESET:
 					OutputDebugString("Dans : case RESTART_WITH_RESET: !\n");
-
 					KillTimer(1);
 					eqp->SetResetEd42(false);
-					/*
-					// Gestion Des Affichages
-					GestionAffichageExploitation(FALSE);
-					GestionAffichageEmRec(FALSE);
-					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(FALSE);
-					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
-					// Mise à jour des flag's
-					eqp->SetOnlinePresetStatus(0);					// Param 21 : Flag : Online preset
-					eqp->SetKeyList(1);								// Param 25 : Flag : key list
-					eqp->SetActiveKeyState(0);						// Param 29 : Flag : Active KEY state
-					eqp->SetOperatingStatus(OFFLINE);
-					eqp->SetOnlinePreset(DEFAULT_INVALID_VALUE_ED42);
-					eqp->SetRemoteTC(LOCAL_TC);
-					eqp->SetStatusTx(0);
-					eqp->SetStatusRx(0);
-					*/
 					break;
 				case ENTER_ZEROIZE_PW:
 					
 					OutputDebugString("Dans : case ENTER_ZEROIZE_PW: !\n");
-					/*
+
+					GetDlgItem(IDC_ED42_DCP_BTN_ST)->EnableWindow(true);
+					GetDlgItem(IDC_ED42_DCP_BTN_FW)->EnableWindow(true);
+
+					initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[DEF_PW].c_str(), 1);
+
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->SetWindowText(OPERATING_STATUS[DEF_PW].c_str());
+					//m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+					m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+
 					if (GetClavier())
 					{
-						OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) !\n");
-						if (chaineSep == "ST")
+						OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier())!\n");
+
+						if(eqp->GetChaineClavier() == "FW")
 						{
-							OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if (chaineSep == 'ST') !\n");
-							TraitementTouches(OPERATING_STATUS[ENTER_ZEROIZE_PW].c_str(), OPERATING_STATUS[DEF_PW].c_str(), NULL, TRUE);
-							SetClavier(FALSE);
-							isNum = TRUE;
-							actionEnCours = DEF_PW;
+							OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'FW')!\n");
+							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+							eqp->SetChaineClavier("");
+							break;
 						}
-					}else
-					{
-						OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et else !\n");
-							m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[ED42_INITIALISATION].c_str());
-							m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_2)->SetWindowText(OPERATING_STATUS[POWER_ON_BIT].c_str());
-					}
-					*/
+
+						if(eqp->GetChaineClavier() == "V")
+						{
+							OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V')!\n");
+
+							if (actionEnCours1 == ENTER_ZEROIZE_PW)
+							{
+								OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V') et if (actionEnCours1 == ED42_UNLOCK)!\n");
+
+								initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[DEF_PW].c_str(), 1);
+
+								m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+								m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+								m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+								m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+								eqp->SetChaineClavier("");
+								break;
+							}
+						}
+
+						if(eqp->GetChaineClavier() == "V")
+						{
+							OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V')!\n");
+
+							initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[DEF_PW].c_str());
+
+							actionEnCours1 = ENTER_ZEROIZE_PW;
+							chaineSep = "";
+							eqp->SetChaineClavier("");
+						}
+
+									
+						if (eqp->GetChaineClavier() == "ST")
+						{
+							OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if (eqp->GetChaineClavier() == 'ST')!\n");
+
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
+
+							if (userPasswordVerification(chaineEnCours, eqp->GetDefPassWord()))
+							{
+								OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if (eqp->GetChaineClavier() == 'ST' et if (userPasswordVerification(chaineEnCours, eqp->GetDefPassWord())))!\n");
+
+								initAffichageUn(OPERATING_STATUS[ENTER_ZEROIZE_PW].c_str(), OPERATING_STATUS[SUCCESSFUL].c_str());
+								actionEnCours1 = ENTER_ZEROIZE_PW;
+								actionEnCours2 = CARVIDE;
+								eqp->SetOperatingStatus(ACTIV_LOCAL_CTRL_1);			// SUCCESSFUL
+								eqp->setED42Lock(false);
+								m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(false);
+								m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+								m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(false);
+								m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+								}else
+								{
+									OutputDebugString("Dans : case ENTER_ZEROIZE_PW: et if (GetClavier()) et if (eqp->GetChaineClavier() == 'ST' et if (userPasswordVerification(chaineEnCours, eqp->GetUserPassWord()))) et else!\n");
+									initAffichageUn(OPERATING_STATUS[ENTER_ZEROIZE_PW].c_str(), OPERATING_STATUS[INCORRECT].c_str());
+									actionEnCours1 = ENTER_ZEROIZE_PW;
+									actionEnCours2 = INCORRECT;							   
+									eqp->SetOperatingStatus(ACTIV_LOCAL_CTRL_2);		// INCORRECT
+									m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+								}
+
+								chaineSep = "";
+								eqp->SetChaineClavier("");
+							}
+									
+							SetClavier(FALSE);
+						}
 					break;
 				case DEF_PW:
 					//*******************************
@@ -613,7 +663,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					//*******************************
 					
 					OutputDebugString("Dans : case DEF_PW: !\n");
-					/*
+					
 					eqp->SetOperatingStatus(DEF_PW);
 					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
 					eqp->SetFullSimu(false);
@@ -623,7 +673,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 					if (GetClavier())
 					{
-						if (chaineSep == "V")
+						if (eqp->GetChaineClavier() == "V")
 						{
 							OutputDebugString("Dans : case DEF_PW: et if (chaineSep == 'V') !\n");
 							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
@@ -632,7 +682,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(TRUE);
 						}
 
-						if (chaineSep == "ST")
+						if (eqp->GetChaineClavier() == "ST")
 						{
 							OutputDebugString("Dans : case DEF_PW: et if (chaineSep == 'ST') !\n");
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
@@ -640,7 +690,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							CString ChS1(chaineEnCours);
 							std::string s1((LPCTSTR)ChS1);
 							int lenChS1 = s1.length();
-
 
 							if (lenChS1<=0 || lenChS1>8)
 							{
@@ -659,10 +708,10 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(FALSE);
 
 							eqp->SetDefPassWord(s1);
-							actionEnCours = ENTER_USER_PW;
+							eqp->SetOperatingStatus(ENTER_USER_PW);	//actionEnCours = ENTER_USER_PW;
 						}
 
-						if (chaineSep == "FW")
+						if (eqp->GetChaineClavier() == "FW")
 						{
 							OutputDebugString("Dans : case DEF_PW: et if (chaineSep == 'FW') !\n");
 							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
@@ -672,7 +721,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 						SetClavier(FALSE);
 					}
-					*/
 					break;
 				case ENTER_USER_PW:
 					//****************************
@@ -680,27 +728,50 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					//****************************
 					
 					OutputDebugString("Dans : case ENTER_USER_PW: !\n");
+
+					initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[USER_PW].c_str(), 1);
+
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->SetWindowText(OPERATING_STATUS[USER_PW].c_str());
+					//m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+					m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+
 					/*
 					if (GetClavier() && eqp->GetMarcheEd42())
 					{
 						OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier() && eqp->GetMarcheEd42())!\n");
+
 						m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(TRUE);
-						res = ED42_UnLock();
+						//res = ED42_UnLock();
 
 						SetClavier(FALSE);
 						break;
 					}
 					// Configuration Usine
-					eqp->SetOperatingStatus(ENTER_USER_PW);
-					TraitementTouches(OPERATING_STATUS[ENTER_USER_PW].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
-					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
+					//eqp->SetOperatingStatus(ENTER_USER_PW);
+					//TraitementTouches(OPERATING_STATUS[ENTER_USER_PW].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
+					//m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
+					*/
 
 					if (GetClavier())
 					{
 						OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier())!\n");
+
 						m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[ENTER_USER_PW].c_str());
 
-						if (chaineSep == "V")
+						if(eqp->GetChaineClavier() == "FW")
+						{
+							OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'FW')!\n");
+							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+							eqp->SetChaineClavier("");
+							break;
+						}
+
+						if (eqp->GetChaineClavier() == "V")
 						{
 							OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier()) et if (chaineSep == 'V')!\n");
 							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
@@ -709,15 +780,15 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(TRUE);
 						}
 
-						if (chaineSep == "ST")
+						if (eqp->GetChaineClavier() == "ST")
 						{
 							OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier()) et if (chaineSep == 'ST')!\n");
+
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 
 							CString ChS1(chaineEnCours);
 							std::string s1((LPCTSTR)ChS1);
 							int lenChS1 = s1.length();
-
 
 							if (lenChS1<5 || lenChS1>8)
 							{
@@ -736,51 +807,68 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(FALSE);
 
 							eqp->SetUserPassWord(s1);
-							actionEnCours = USER_PW_VERIFICATION;
-						}
-
-						if (chaineSep == "FW")
-						{
-							OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier()) et if (chaineSep == 'FW')!\n");
-							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
-							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
-							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(TRUE);
+							eqp->SetOperatingStatus(USER_PW_VERIFICATION);			//actionEnCours = USER_PW_VERIFICATION;
+							eqp->SetChaineClavier("");
 						}
 
 						SetClavier(FALSE);
 					}
-					*/
 					break;
 				case USER_PW_VERIFICATION:
 					
 					OutputDebugString("Dans : case USER_PW_VERIFICATION:!\n");
-					/*
-					eqp->SetOperatingStatus(USER_PW_VERIFICATION);
-					TraitementTouches(OPERATING_STATUS[USER_PW_VERIFICATION].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
-					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
+
+					initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[USER_PW].c_str(), 1);
+
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->SetWindowText(OPERATING_STATUS[USER_PW].c_str());
+					//m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+					m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+					
+					//eqp->SetOperatingStatus(USER_PW_VERIFICATION);
+					//TraitementTouches(OPERATING_STATUS[USER_PW_VERIFICATION].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
+					//m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
 
 					if (GetClavier())
 					{
+						OutputDebugString("Dans : case USER_PW_VERIFICATION: et if (GetClavier())!\n");
+
 						m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[USER_PW_VERIFICATION].c_str());
 
-						if (chaineSep == "V")
+						if(eqp->GetChaineClavier() == "FW")
 						{
+							OutputDebugString("Dans : case USER_PW_VERIFICATION: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'FW')!\n");
+
+							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
+							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+							eqp->SetChaineClavier("");
+							break;
+						}
+
+						if (eqp->GetChaineClavier() == "V")
+						{
+							OutputDebugString("Dans : case USER_PW_VERIFICATION: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V')!\n");
+
 							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
 							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->SetWindowText(OPERATING_STATUS[USER_PW].c_str());
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(TRUE);
 						}
 
-						if (chaineSep == "ST")
+						if (eqp->GetChaineClavier() == "ST")
 						{
+							OutputDebugString("Dans : case USER_PW_VERIFICATION: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'ST')!\n");
+
 							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 
 							CString ChS1(chaineEnCours);
 							std::string s1((LPCTSTR)ChS1);
 							int lenChS1 = s1.length();
 
-
-							if (lenChS1<5 || lenChS1>8 || !userPasswordVerification(chaineEnCours))
+							if (lenChS1<5 || lenChS1>8 || !userPasswordVerification(chaineEnCours, eqp->GetUserPassWord()))
 							{
 								Beep(440,500);
 								m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(FALSE);
@@ -797,19 +885,17 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(FALSE);
 
 							eqp->SetUserPassWord(s1);
-							actionEnCours = LANGUAGE_SELECTION;
-						}
+							eqp->ChangeNl(0);
+							eqp->SetResetEd42(false);
 
-						if (chaineSep == "FW")
-						{
-							m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(TRUE);
-							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
-							m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(TRUE);
+							if (actionEnCours1 == ENTER_ZEROIZE_PW)
+								 eqp->SetOperatingStatus(OFFLINE);
+							
+							//actionEnCours = LANGUAGE_SELECTION;
 						}
 
 						SetClavier(FALSE);
 					}
-					*/
 					break;
 				case VERIFICATION_ERROR:
 					break;
@@ -819,7 +905,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					//*********************************
 					
 					OutputDebugString("Dans : case LANGUAGE_SELECTION:!\n");
-					/*
+					
 					eqp->SetOperatingStatus(LANGUAGE_SELECTION);
 					TraitementTouches(OPERATING_STATUS[LANGUAGE_SELECTION].c_str(), LANGUAGES_SELECTION[eqp->GetLanguage()].c_str(), TRUE);
 					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(TRUE);
@@ -849,7 +935,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 						if (chaineSep == "ST")
 						{
-							actionEnCours = OFFLINE;
+							//actionEnCours = OFFLINE;
 							eqp->SetOperatingStatus(OFFLINE);
 							eqp->SetMarcheEd42(true);
 							eqp->SetFullSimu(true);
@@ -860,7 +946,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 						SetClavier(FALSE);
 					}
-					*/
+					
 					break;
 				case OFFLINE:
 					OutputDebugString("Dans : case OFFLINE:!\n");
@@ -951,7 +1037,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 						OutputDebugString("Dans : case ONLINE: et if(eqp->getED42Lock()) !\n");
 						actionEnCoursTmp = eqp->GetOperatingStatus();
 						eqp->SetOperatingStatus(ED42_UNLOCK);
-
 					}
 
 					// Gestion des actions de l'opérateur
@@ -1040,7 +1125,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 											m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
 											eqp->SetChaineClavier("");
 											break;
-
 										}
 									}
 
@@ -1086,7 +1170,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 										chaineSep = "";
 										eqp->SetChaineClavier("");
-
 									}
 									
 									SetClavier(FALSE);
@@ -1180,9 +1263,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 						eqp->SetMarcheEd42(false);
 						chaineSep = "";
 					}
-
 				}
-
 				break;
 			case 6:	// Timer6								// RST0 - RS
 				OutputDebugString("Dans : case 6: !\n");
@@ -1207,7 +1288,13 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 						ED42_UnLock(false);
 						GestionBoutonLockUnlock();
 					}
-					initAffichageUn(OPERATING_STATUS[actionEnCours1].c_str(), OPERATING_STATUS[USER_PW].c_str());
+
+					if (actionEnCours1 == ED42_UNLOCK)
+						initAffichageUn(OPERATING_STATUS[actionEnCours1].c_str(), OPERATING_STATUS[USER_PW].c_str());
+
+					if (actionEnCours1 == ENTER_ZEROIZE_PW)
+						initAffichageUn(OPERATING_STATUS[actionEnCours1].c_str(), OPERATING_STATUS[DEF_PW].c_str());
+
 					eqp->SetOperatingStatus(actionEnCours1);
 					actionEnCours1 = CARVIDE;
 					actionEnCours2 = CARVIDE;
@@ -1225,11 +1312,16 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 						eqp->SetOperatingStatus(actionEnCoursTmp);
 					}
 
-
 					if (actionEnCours1 == ED42_UNLOCK)
 					{
 						actionEnCours1 = CARVIDE;
 						eqp->SetOperatingStatus(actionEnCoursTmp);
+					}
+
+					if (actionEnCours1 == ENTER_ZEROIZE_PW)
+					{
+						//actionEnCours1 = CARVIDE;
+						eqp->SetOperatingStatus(ENTER_USER_PW);
 					}
 
 					SetTimer(1,DUREE1S,NULL);
@@ -1237,7 +1329,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
                 break;
 			case 8:	// Timer8
 				OutputDebugString("Dans : case 8:!\n");
-				/*
+		
 				KillTimer(8);
 				//On vérifie que les erreurs Flash error et intégrity software provoque un blocage équipement
 				if(!(eqp->getPowerBitTable(POWER_ON_BIT_FLASH_MEMORY_TEST)
@@ -1251,7 +1343,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					eqp->RAZTable(); //Effacement des tables
 
 				SetTimer(1,DUREE1S,NULL);
-				*/
+				
 				break;
 			case 9:	// Timer9							//LOCK&UNLOCK
 				OutputDebugString("Dans : case 9:!\n");
@@ -1259,7 +1351,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				m_timerEd = 0;
 				eqp->setED42Lock(TRUE);
 				break;
-			case 10:	// Timer10								// After Zeroize/Emergency Clear page 83
+			case 10:	// Timer10								
 				OutputDebugString("Dans : case 10:!\n");
 				/*
 				KillTimer(10);
@@ -1501,10 +1593,15 @@ void CDlgED42::RazEd42()
 //*****************************
 void CDlgED42::OnEd42DcpBtnFw()
 {
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnFw() !\n");
+
 	m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 
-	if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
+	if (chaineEnCours == "")
 		return;
+
+	//if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
+		//return;
 
 	if (eqp->GetZeroizeStatus() && chaineEnCours == "")
 		return;
@@ -1518,15 +1615,22 @@ void CDlgED42::OnEd42DcpBtnFw()
 		m_dlgTab->LoadData();
 		eqp->setModifVue(FALSE);
 	}
+
+	OutputDebugString("Fin : CDlgED42::OnEd42DcpBtnFw() !\n");
 }
 
 void CDlgED42::OnEd42DcpBtnSt()
 {
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnSt() !\n");
+
 	m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 	//m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->
 
-	if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
+	if (chaineEnCours == "")
 		return;
+
+	//if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
+		//return;
 
 	if (eqp->GetZeroizeStatus() && chaineEnCours == "")
 		return;
@@ -1540,6 +1644,8 @@ void CDlgED42::OnEd42DcpBtnSt()
 
 void CDlgED42::OnEd42DcpBtnRs()
 {
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnRs() !\n");
+
 	//eqp->SetChaineClavier("RS");
 	//eqp->SetClavier(TRUE);
 	eqp->SetResetEd42(true);
@@ -1687,6 +1793,24 @@ BOOL CDlgED42::userPasswordVerification(CString passwdTmp, string passWord)
 			if (userPwTmp != passWord)
 				return false;
 		}
+												 
+		if (eqp->GetOperatingStatus() == USER_PW_VERIFICATION)
+		{
+			OutputDebugString("Dans : CDlgED42::userPasswordVerification et if (eqp->GetOperatingStatus() == USER_PW_VERIFICATION) !\n");
+
+			if (userPwTmp != passWord)
+				return false;
+		}
+
+		if (eqp->GetOperatingStatus() == ENTER_ZEROIZE_PW)
+		{
+			OutputDebugString("Dans : CDlgED42::userPasswordVerification et if (eqp->GetOperatingStatus() == USER_PW_VERIFICATION) !\n");
+
+			if (userPwTmp != passWord)
+				return false;
+		}
+
+		
 
 		/*
 		if ((eqp->getED42Lock() || actionEnCours1 == ENTER_ZEROIZE_PW ||
@@ -1742,6 +1866,7 @@ BOOL CDlgED42::MainMenu()
 {
 	bool ret = true;
 
+	/*
 	actionEnCours = MAIN_MENU;
 
 	if (GetClavier())
@@ -1793,7 +1918,7 @@ BOOL CDlgED42::MainMenu()
 	initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[actionEnCours1].c_str());
 
 	SetClavier(FALSE);
-
+	*/
 	return ret;
 }
 
@@ -1998,6 +2123,7 @@ BOOL CDlgED42::Cv_Voice_Crypto()
 
 	bool ret = true;
 
+	/*
 	eqp->SetOperatingStatus(CV_VOICE_CRYPTO);		//CV_VOICE_CRYPTO;
 
 	// TODO
@@ -2016,6 +2142,7 @@ BOOL CDlgED42::Cv_Voice_Crypto()
 	}
 
 	initAffichageUn(OPERATING_STATUS[eqp->GetOperatingStatus()].c_str(), "");
+	*/
 
 	return ret;
 }
@@ -2035,12 +2162,17 @@ BOOL CDlgED42::MiseEnMarche()
 
     if (eqp->GetStatusNl() == FALSE)
 	{
+		OutputDebugString("Dans : début CDlgED42::MiseEnMarche() et if (eqp->GetStatusNl() == FALSE)!\n");
+
 		if (eqp->GetDefPassWord().length() <= 2)
 		{
 			eqp->SetOperatingStatus(CARVIDE);	//actionEnCours	= CARVIDE;
 		}else
 		{
-			eqp->SetOperatingStatus(OFFLINE);	//actionEnCours	= OFFLINE;
+			if (eqp->GetOnlinePreset() == DEFAULT_INVALID_VALUE_ED42)
+				eqp->SetOperatingStatus(OFFLINE);	//actionEnCours	= OFFLINE;
+			else
+				eqp->SetOperatingStatus(ONLINE);	//actionEnCours	= ONLINE;
 		}
 		actionEnCours1	= CARVIDE;
 		m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[eqp->GetOperatingStatus()].c_str());
@@ -2048,11 +2180,16 @@ BOOL CDlgED42::MiseEnMarche()
 	}
 	else
 	{
+		OutputDebugString("Dans : début CDlgED42::MiseEnMarche() et if (eqp->GetStatusNl() == FALSE et else)!\n");
+
 		m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[ZEROIZE_ALARM].c_str());
 		m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_2)->SetWindowText(OPERATING_STATUS[RESTART_WITH_RESET].c_str());
 
 		if (eqp->GetMarcheEd42())
+		{
+			OutputDebugString("Dans : début CDlgED42::MiseEnMarche() et if (eqp->GetStatusNl() == FALSE et else et if (eqp->GetMarcheEd42()))!\n");
 			eqp->SetOperatingStatus(ZEROIZE_ALARM_C);	//actionEnCours = ZEROIZE_ALARM_C;
+		}
 	}
 
 	eqp->SetMarcheEd42(true);
@@ -2081,7 +2218,6 @@ void CDlgED42::OnChecksum()
 	UpdateData(FALSE);
 
 	eqp->setStatusErrorTable(SYNTAX_RCS, c_checksum.GetCheck() == 1);
-
 }
 
 void CDlgED42::OnNumMsg()
@@ -2093,28 +2229,24 @@ void CDlgED42::OnFinTrame()
 {
 	eqp->setErrorLF(c_pasDeLf.GetCheck()==1);
 	OnKillfocusRetard();
-
 }
 
 void CDlgED42::OnDebutTrame()
 {
 	eqp->setErrorCR(c_pasDeCr.GetCheck()==1);
 	OnKillfocusRetard();
-
 }
 
 void CDlgED42::OnPasReponse()
 {
 	eqp->setPasDeReponse(c_pasDeReponse.GetCheck()==1);
 	OnKillfocusRetard();
-
 }
 
 void CDlgED42::OnCdeInconue()
 {
 	eqp->setStatusErrorTable(UNKNOWN_COMMAND, c_cdeInconnue.GetCheck()==1);
 	OnKillfocusRetard();
-
 }
 
 void CDlgED42::OnKillfocusRetard()
@@ -2135,7 +2267,6 @@ void CDlgED42::OnKillfocusRetard()
 	err.retard = atoi(m_err_retard);
 
 	equip->ChangeComErreur(err);
-
 }
 
 
@@ -2232,6 +2363,7 @@ void CDlgED42::affichgeExploitation()
 	else if(actionEnCoursTmp == OFFLINE && equip->Actif())
 	{
 		OutputDebugString("Dans : début CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et else if(eqp->GetOperatingStatus() == OFFLINE && equip->Actif())!\n");
+
 		m_dlgTab->m_Info->c_Transmission_Mode.EnableWindow(TRUE);
 		m_dlgTab->m_Info->c_Transmission_Procedure.EnableWindow(TRUE);
 		m_dlgTab->m_Info->c_Trafic_Mode.EnableWindow(TRUE);
@@ -2304,7 +2436,6 @@ void CDlgED42::GestionAffichageEmRec(bool val)
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_REC)->ShowWindow(val);
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_CALL)->ShowWindow(val);
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_SYNC)->ShowWindow(val);
-
 }
 
 //******************************************
@@ -2504,5 +2635,23 @@ void CDlgED42::GestionBoutonLockUnlock()
 
 		if (eqp->GetOperatingStatus() == RESTART_WITH_RESET)
 			m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
+}
 
+
+
+void CDlgED42::sortieDebug(string param1, int param2, int param3)
+{
+	char buffer [3];
+	string AfficherDebug;
+
+	itoa (param2,buffer,10);
+
+	AfficherDebug.append(param1);
+	AfficherDebug.append(" : ");
+	AfficherDebug.append(buffer);
+	AfficherDebug.append(" : ");
+	AfficherDebug.append(OPERATING_STATUS[param2].c_str());
+	AfficherDebug.append(" !\n");
+
+	OutputDebugString(AfficherDebug.c_str());
 }
