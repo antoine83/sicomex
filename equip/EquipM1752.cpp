@@ -12153,7 +12153,7 @@ void CEquipM1752::ReinitModem()
 	FinAppel("B1");
 	SetMode(FALSE, FALSE);				//RAZ de la case à cocher "Distante"
 	// TODO on arrete les voies etc...
-	for (int i=0; i<NB_CHANNELS; i++)
+	for (i=0; i<NB_CHANNELS; i++)
 	{
 		SetChannelState(CHANNELS[i], "INACTIVE");
 		SetChannelTest(CHANNELS[i], DEFAULT_STRING_VALUE);

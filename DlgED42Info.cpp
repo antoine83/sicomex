@@ -131,6 +131,8 @@ BOOL DlgED42Info::OnInitDialog()
 
 void DlgED42Info::OnButton8()
 {
+	OutputDebugString("Dans : DlgED42Info::OnButton8() !\n");
+
 	eqp->SetClavier(TRUE);
 	eqp->SetChaineClavier("V");
 }
@@ -171,15 +173,19 @@ void DlgED42Info::OnCheckRec()
 
 void DlgED42Info::OnButtonActDesact() 
 {
+	OutputDebugString("Dans : DlgED42Info::OnButtonActDesact() !\n");
+
 	char buffer[3] = {0};
+
 	int presetOnline = c_operationMode.GetCurSel() * 8 + c_preset.GetCurSel();
 
 	itoa(presetOnline,buffer,10);
 
 	if(eqp->GetOperatingStatus() == ONLINE)
 	{
-		eqp->SetOnlinePresetStatus(1);					// Param 21 : Flag : Online preset
-		eqp->SetActiveKeyState(1);						// Param 29 : Flag : Active KEY state
+		eqp->SetPresetList("255", 'X');					// Param 20
+		eqp->SetOnlinePresetStatus(0);					// Param 21 : Flag : Online preset
+		eqp->SetActiveKeyState(0);						// Param 29 : Flag : Active KEY state
 		eqp->SetKeyList(1);								// Param 25 : Flag : key list
 		eqp->SetOperatingStatus(OFFLINE);
 		eqp->SetOnlinePreset(DEFAULT_INVALID_VALUE_ED42);
@@ -218,13 +224,17 @@ void DlgED42Info::OnButtonActDesact()
 
 void DlgED42Info::OnButtonUnlock() 
 {
+	OutputDebugString("Dans : DlgED42Info::OnButtonUnlock() !\n");
+
 	if(eqp->getED42Lock())
 	{
+		OutputDebugString("Dans : DlgED42Info::OnButtonUnlock() et if(eqp->getED42Lock()) !\n");
 		// UNLOCK
 		GetDlgItem(IDC_BUTTON_8)->ShowWindow(TRUE);	
 	}
 	else
 	{
+		OutputDebugString("Dans : DlgED42Info::OnButtonUnlock() et if(eqp->getED42Lock()) et else!\n");
 		//LOCK
 		eqp->setED42Lock(TRUE);
 	}

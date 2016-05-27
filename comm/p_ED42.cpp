@@ -71,6 +71,9 @@ TRAITEMENT:		Prend un message TS, l'encapsule en fonction du protocole
 ***************************************************************************	*/
 int CProtoED42::EnvoyerTS(char *message)
 {
+	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message)!\n");
+
+
 	int		len_mes,iResult;
 
 	char	buf[TAILLE_BUFFER+1];
@@ -88,8 +91,12 @@ int CProtoED42::EnvoyerTS(char *message)
 
 	buf[iResult+1]=0;				// Force la fin de chaine
 
+	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf)!\n");
+
 	iResult = ligne.Ecrire(buf);
 	if(iResult < 0) return ERREUR_EXTERNE+iResult;
+
+	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf) pas de ERREUR_EXTERNE+iResult!\n");
 
 	return iResult;  // nb d'octet transmis
 }
@@ -101,6 +108,8 @@ TRAITEMENT:		Traite une TC (partie utile) et formate le message TS reponse
 ***************************************************************************	*/
 int CProtoED42::TraiteTC(char *mess)
 {
+
+	OutputDebugString("Dans : début CProtoED42::TraiteTC(char *mess) !\n");
 
 	//if (equip->getRemoteMode() == LF_DIG || equip->GetStatusNl())
 	if (equip->getRemoteMode() == LF_DIG)
@@ -326,6 +335,9 @@ int CProtoED42::TraiteTC(char *mess)
 			}
 		}
 
+		//**************************
+		//  checker == SUCCESS
+		//**************************
 		if((checker == SUCCESS &&
 			cmd.str() != "A" &&
 			cmd.str() != "N" &&
@@ -333,23 +345,22 @@ int CProtoED42::TraiteTC(char *mess)
 			checker == NOT_REMOTE_MODE ||
 			checker == CONFLICT)
 		{
+			OutputDebugString("Dans : fin CProtoED42::TraiteTC(char *mess) et cptSuccessfullCmd++!\n");
+
 			cptSuccessfullCmd++;
 		}
+
 	}
 
-	/*if(checker != SUCCESS)
-	{
-		return ERR_NON_CONFORME;
-	}
-	else
-	{
-		cout << bufCmd;*/
-		sendAcq(typeCmd);
+	//**************************
+	//  Réponse à la commande
+	//**************************
+	sendAcq(typeCmd);
 
-		return SUCCESS;
-	/*}
+	OutputDebugString("Dans : fin CProtoED42::TraiteTC(char *mess) !\n");
 
-	return SUCCESS;*/
+	return SUCCESS;
+
 }
 
 /* **************************************************************************
@@ -520,6 +531,7 @@ void CProtoED42:: sendAcq(int val)
 {
 	//TODO : Ne pas repondre lorsqu'on demande RST
 
+	OutputDebugString("Dans : CProtoED42:: sendAcq(int val)!\n");
 
 	if(equip->getPasDeReponse())
 		return;
@@ -607,6 +619,8 @@ void CProtoED42:: sendAcq(int val)
 	}else
 		equip->setLastMessage(reponse);
 
+	OutputDebugString("Dans : CProtoED42:: sendAcq(int val) et EnvoyerTS!\n");
+
 	EnvoyerTS((char*)LPCTSTR(CString(reponse.c_str())));
 
 	//}
@@ -670,6 +684,7 @@ TRAITEMENT:		Requête de la clé active (page 175)
 ***************************************************************************	*/
 int CProtoED42:: ACV(string trame)
 {
+	OutputDebugString("Dans : CProtoED42:: ACV(string trame) !\n");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -723,8 +738,15 @@ int CProtoED42:: ACV(string trame)
 	if (trame[0] == '?')
 	{
 	*/
+
+	OutputDebugString("Dans : CProtoED42:: ACV(string trame) et début!\n");
+
 	if (equip->GetStatusBusy() == 1)
+	{
+		OutputDebugString("Dans : CProtoED42:: ACV(string trame) et if (equip->GetStatusBusy() == 1) !\n");
 		return IN_BUSY;
+	}
+		
 
 	//Récupéreration de la valeur en binaire avant de la transformer en hexadécimal.
 	stringstream timeDate;
@@ -736,7 +758,7 @@ int CProtoED42:: ACV(string trame)
 	if (tmpMemIdx == DEFAULT_INVALID_VALUE_ED42)
 	{
 		strcat(bufCmd, "ACV255,#ff,#ff,255,0,0000,000000");
-		equip->SetKeyList(0);				// Param 25 : Flag : key listpage page 163
+		//equip->SetKeyList(0);				// Param 25 : Flag : key listpage page 163	TODO
 		equip->SetActiveKeyState(0);		// Param 29 : Flag : Active KEY state page 163 
 		return SUCCESS;
 	}
@@ -907,7 +929,7 @@ int CProtoED42:: ALM(string trame)
 
 	strcat(bufCmd, "ALM");
 
-	//Recherche de la première alarme
+	//Recherche de la première alarme - Alarm Message page 170
 	TAlarm alarm;
 	TVectorAlarm alarmList = equip->getAlarms();
 
@@ -923,12 +945,12 @@ int CProtoED42:: ALM(string trame)
 
 	if(alarmFind)
 	{
-		itoa(alarm.alarmType,buffer,10);
+		itoa(alarm.alarmType,buffer,10);		// Alarm Message page 170
 		strcat(bufCmd, buffer);
 
 		strcat(bufCmd, ",");
 
-		itoa(alarm.alarmNumber,buffer,10);
+		itoa(alarm.alarmNumber,buffer,10);		// Alarm Message page 170
 		strcat(bufCmd, buffer);
 
 		// ------------------------------------------------------------------------------------
@@ -1102,6 +1124,8 @@ TRAITEMENT:		Requête d'une clé (page 173)
 ***************************************************************************	*/
 int CProtoED42:: CV(string trame)
 {
+	OutputDebugString("Dans : CProtoED42:: CV(string trame)!\n");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -1137,8 +1161,11 @@ int CProtoED42:: CV(string trame)
 			return ERR_NON_CONFORME;
 		}
 
-	if (equip->GetStatusBusy() == 1)
-		return IN_BUSY;
+		if (equip->GetStatusBusy() == 1)
+		{
+			OutputDebugString("Dans : CProtoED42:: CV(string trame) et if (equip->GetStatusBusy() == 1)!\n");
+			return IN_BUSY;
+		}
 
 		//Récupéreration de la valeur en binaire avant de la transformer en hexadécimal.
 		stringstream timeDate;
@@ -1619,7 +1646,9 @@ int CProtoED42:: CVDLA(string trame)
 
 		return ERR_NON_CONFORME;
 	}
-	if (testTrameFirst(trame, 0, 1, '0', &ret, true, 2))
+
+
+	if (testTrameFirst(trame, 0, 1, '0', &ret, true, 2, true))
 	{
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
@@ -1887,7 +1916,7 @@ int CProtoED42:: CVTAG(string trame)
 	if (equip->GetKeStatus() == CIK_NOT_PLUGED)
 		return CIK_NOT_PLUGED;
 
-	if (testTrameFirst(trame, 0, 5, '?', &ret, false, 5))
+	if (testTrameFirst(trame, 0, 5, '?', &ret, false, 5, true))
 	{
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
@@ -2015,6 +2044,13 @@ int CProtoED42:: CVUPD(string trame)
 		equip->SetError(TRUE);
 
 		return ERR_NON_CONFORME;
+	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
 	}
 	
 	if(trame.size() == 0)
@@ -2503,6 +2539,13 @@ int CProtoED42:: KEKDL(string trame)
 
 		return ERR_NON_CONFORME;
 	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
+	}
 	
 	if(trame.size() == 0)
 	{
@@ -2615,6 +2658,8 @@ TRAITEMENT:		Passer en mode OFFLINE (page 171)
 ***************************************************************************	*/
 int CProtoED42:: OFL(string trame)
 {
+	OutputDebugString("Dans : OFL(string trame)!\n");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2659,7 +2704,11 @@ int CProtoED42:: OFL(string trame)
 	}
 
 	if (equip->GetStatusBusy() == 1)
+	{
+		OutputDebugString("Dans : OFL(string trame) et if (equip->GetStatusBusy() == 1)!\n");
 		return IN_BUSY;
+	}
+
 
 	if (equip->GetKeStatus() == CIK_NOT_PLUGED)
 		return CIK_NOT_PLUGED;
@@ -2688,6 +2737,8 @@ TRAITEMENT:		Passer en mode ONLINE (page 148/171)
 int CProtoED42:: ONL(string trame)
 {
     //>A01N178S?ONL8RCS#43<
+
+	OutputDebugString("Dans : CProtoED42:: ONL(string trame) !\n");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -2719,7 +2770,7 @@ int CProtoED42:: ONL(string trame)
 		return ERR_NON_CONFORME;
 	}
 
-	if (testTrameFirst(trame, 0, 2, '?', &ret, false, 6))
+	if (testTrameFirst(trame, 0, 2, '?', &ret, false, 6, true))
 	{
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
@@ -2741,7 +2792,11 @@ int CProtoED42:: ONL(string trame)
 	}
 
 	if (equip->GetStatusBusy() == 1)
+	{
+		OutputDebugString("Dans : CProtoED42:: ONL(string trame) et if (equip->GetStatusBusy() == 1)!\n");
 		return IN_BUSY;
+	}
+		
 
 	if (equip->GetKeStatus() == CIK_NOT_PLUGED)
 		return CIK_NOT_PLUGED;
@@ -2934,6 +2989,13 @@ int CProtoED42:: PWCHG(string trame)
 	isRES = TRUE;
 
 	
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
+	}
+
 	if(trame.size() == 0)
 	{
 		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
@@ -3905,6 +3967,13 @@ int CProtoED42:: SETAD(string trame)
 
 		return ERR_NON_CONFORME;
 	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
+	}
 	
 	if(trame.size() == 0)
 	{
@@ -4069,6 +4138,13 @@ int CProtoED42:: SETHD(string trame)
 
 		return ERR_NON_CONFORME;
 	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
+	}
 	
 	if(trame.size() == 0)
 	{
@@ -4149,7 +4225,7 @@ int CProtoED42:: SETHT(string trame)
 		return ERR_NON_CONFORME;
 	}
 	
-	if (testTrameFirst(trame, 0, 2, '0', &ret, false, 4))
+	if (testTrameFirst(trame, 0, 2, '0', &ret, false, 4, true))
 	{
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
@@ -4221,6 +4297,13 @@ int CProtoED42:: SETID(string trame)
 
 		return ERR_NON_CONFORME;
 	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
+	}
 	
 	if(trame.size() == 0)
 	{
@@ -4271,6 +4354,7 @@ TRAITEMENT:		Permet de définir le preset actif (page 186)
 ***************************************************************************	*/
 int CProtoED42:: SETPS(string trame)
 {
+	OutputDebugString("Dans : CProtoED42:: SETPS(string trame)!\n");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -4305,8 +4389,10 @@ int CProtoED42:: SETPS(string trame)
 		equip->setErrorTable(WRONG_PASSWORD, TRUE);
 		return ERR_NON_CONFORME;
 	}
+
+	OutputDebugString("Dans : CProtoED42:: SETPS(string trame) et début traitement!\n");
 	
-	if (testTrameFirst(trame, 0, 129, '?', &ret, false, 6))
+	if (testTrameFirst(trame, 0, 129, '?', &ret, false, 6, true))
 	{
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
@@ -4328,6 +4414,7 @@ int CProtoED42:: SETPS(string trame)
 	//********************
 	// Début du traitement
 	//********************
+	OutputDebugString("Dans : CProtoED42:: SETPS(string trame) et // Début du traitement!\n");
 	cmd.clear();
 
 	string commande = "";
@@ -5163,6 +5250,13 @@ int CProtoED42:: SETUL(string trame)
 		equip->SetError(TRUE);
 
 		return ERR_NON_CONFORME;
+	}
+
+	if (equip->GetOperatingStatus() == ONLINE)
+	{
+		//Parametre invalide
+		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
+		return WRONG_COMMAND;
 	}
 	
 	if(trame.size() == 0)

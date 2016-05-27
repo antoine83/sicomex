@@ -974,7 +974,7 @@ int CEquip251::VoieActive(int	num_canal,int *etat) const
 // Valor/jason  *************
 int CEquip251::Interface(int	num_canal,int *etat) const
 {
-	int		i, iResult = SUCCESS;
+	int		i,iResult = NULL;
 
 	if(num_canal<0 || num_canal>99) return ERR_CDE_INCONNUE;
 

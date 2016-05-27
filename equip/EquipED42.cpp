@@ -297,7 +297,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	default_general_parameters["3"].dceAnalogInterf = TRUE;
 	default_general_parameters["3"].dceDigitalInterface = FALSE;
 
-	for(int i=0; i<8; i++) {
+	for(i=0; i<8; i++) {
 		general_parameters[PRESET_CONFIGURATION[i]] = default_general_parameters["0"];
 		general_parameters[PRESET_CONFIGURATION[i]].preset = i;
 	}
@@ -1425,6 +1425,7 @@ int CEquipED42::ChangeNl(int valeur, BOOL genere_TS)
 				SetKeStatus(ZEROIZED);
 				SetZeroizeStatus(TRUE);
 			}
+			SetZeroizePassWord(2);
 		LeaveCriticalSection(&crit);
 
 		if(genere_TS)
@@ -2475,6 +2476,8 @@ TRAITEMENT:		Retourne la valeur de busy
 *************************************************************************** */
 int CEquipED42::GetStatusBusy()
 {
+	OutputDebugString("Dans : CEquipED42::GetStatusBusy()!\n");
+
 	return this->statusED42.statusBusy;
 }
 
@@ -2484,6 +2487,8 @@ TRAITEMENT:		Set la valeur de busy
 *************************************************************************** */
 void CEquipED42::SetStatusBusy(int val)
 {
+	OutputDebugString("Dans : CEquipED42::SetStatusBusy(int val)!\n");
+
 	this->statusED42.statusBusy = val;
 }
 
@@ -3745,9 +3750,11 @@ BOOL CEquipED42::getBitManuallyResultTable(int errorValue)
 METHODE :		RAZTable()
 TRAITEMENT:		Efface toutes les tables
 *************************************************************************** */
-void		CEquipED42::RAZTable()
+void CEquipED42::RAZTable()
 {
 	int cpt =0;
+
+	OutputDebugString("Dans : début CEquipED42::RAZTable() !\n");
 
 	//Pour errorTab
 	for(cpt=0;cpt<NB_ERROR;cpt++)
@@ -3778,6 +3785,8 @@ void		CEquipED42::RAZTable()
 	{
 		setBitManuallyTable(cpt,FALSE);
 	}
+
+	OutputDebugString("Dans : fin CEquipED42::RAZTable() !\n");
 }
 
 /* **************************************************************************
@@ -3850,6 +3859,23 @@ TRAITEMENT:
 void CEquipED42::SetFullSimu(bool val)
 {
 	this->statusED42.fullSimu = val;
+}
+
+/* **************************************************************************
+METHODE :		SetZeroizePassWord()
+TRAITEMENT:		
+*************************************************************************** */
+void CEquipED42::SetZeroizePassWord(int val)
+{
+	this->statusED42.zeroizePassWord = val;
+}
+/* **************************************************************************
+METHODE :		SetZeroizePassWord()
+TRAITEMENT:		
+*************************************************************************** */
+int CEquipED42::GetZeroizePassWord()
+{
+	return this->statusED42.zeroizePassWord;
 }
 
 /* **************************************************************************

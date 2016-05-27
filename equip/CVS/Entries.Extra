@@ -1,7 +1,5 @@
 /AppelAle.cpp////*////
 /AppelAle.h////*////
-/Eqp251.Cpp////*////
-/Eqp251.H////*////
 /EqpAAD.cpp////*////
 /EqpAAD.h////*////
 /EqpCA150.cpp////*////
@@ -44,6 +42,8 @@
 /eqp18a.h////*////
 /eqp18c.cpp////*////
 /eqp18c.h////*////
+/eqp251.cpp////*////
+/eqp251.h////*////
 /eqpMATCOM.cpp////*////
 /eqpTORCard.h////*////
 /eqpacco.cpp////*////

@@ -344,6 +344,7 @@ DWORD WINAPI CProto::Traitement(void *param)
 					continue;
 				}
 				else iResult = TraiteTC(mes);
+
 				if (iResult>=0)
 				{
 					sprintf(buf,"<-- %s - ",Renvoi_temps_milli(tps));

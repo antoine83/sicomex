@@ -157,7 +157,7 @@ int CProtoCommutationMatrix::TraiteTC(char *mes)
 		if ( (strlen(mes)!=8) || (mes[1]!=SEPARATOR) ) {
 			strcat(reponse,"d;KO");
 		} else {
-			short inputId = 0, outputId = 0;
+			int inputId = 0, outputId = 0;
 			char direction = 'U';
 			// Get the values.
 			sscanf(mes + 2, "%2d;%1c%2d", &inputId, &direction, &outputId);
@@ -196,7 +196,7 @@ int CProtoCommutationMatrix::TraiteTC(char *mes)
 			bool hasError = false;
 			char * pointer = mes + 2;
 			char * lastOffset = mes + strlen(mes);
-			short presetId = 0;
+			int presetId = 0;
 			CommutationMatrixPreset preset;
 
 			preset.setSetted(true);
@@ -205,7 +205,7 @@ int CProtoCommutationMatrix::TraiteTC(char *mes)
 			pointer += 2;
 			// Read each uplink.
 			while (pointer < lastOffset) {
-				short uplinkId = 0;
+				int uplinkId = 0;
 				if ( !testSeparator(pointer) ) {
 					hasError = true;
 					break;

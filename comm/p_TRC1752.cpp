@@ -1755,7 +1755,7 @@ int CProtoTRC1752::DVM(istringstream &trame) //TODO, un parametre non attendu DO
 	int result; // utilisé en interne
 
 // Chargement des paramètres
-	for(int param_number = 1; param_number<23; param_number++)
+	for(param_number = 1; param_number<23; param_number++)
 		if(!getline(trame, params[param_number], ';') && param_number != 22)
 		{
 			

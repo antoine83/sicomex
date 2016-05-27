@@ -78,7 +78,8 @@ public:
 private:
 	BOOL etat;
 	BOOL res;
-	BOOL remoteMode, valBool;
+	//BOOL remoteMode;
+	//BOOL valBool;
 	int  lockTimeChecker;
 	int m_timerEd;
 

@@ -51,11 +51,12 @@ using namespace std;
 #define DUREE3S		DUREE1S*3
 #define DUREE4S		DUREE1S*4
 #define DUREE5S		DUREE1S*5
-#define DUREE10S	DUREE1S	//*10  // TODO
+#define DUREE10S	DUREE1S*10
 #define DUREE10R	DUREE1S*10
 #define DUREE20S	DUREE1S*20
 #define DUREE30S	DUREE1S*30
 #define DUREE1MN	DUREE1S*60
+#define DUREEBUSY	150
 
 // Mot de passe
 #define MDPMIN	5
@@ -1317,6 +1318,7 @@ struct TStatus {
 
 	int statusS20;	//Variable qui permet de vérifier si on a initialisé l'équipement lors 
 					//d'un réponse avec S#20 (il y a exécution ou non exécution des commandes)
+	int zeroizePassWord;
 
 	TStatus()
 	{
@@ -1332,7 +1334,7 @@ struct TStatus {
 		UserPassWord = DEFAULT_STRING_VALUE_ED42;
 		Language = 0;
 		ED42Lock = FALSE;
-		operatingStatus = OFFLINE;
+		operatingStatus = MA;
 		//transmitStatus	= DEFAULT_STRING_VALUE_ED42;
 		//receiveStatus	= DEFAULT_STRING_VALUE_ED42;
 		cikState = NO_CIK_STATE;
@@ -1392,6 +1394,7 @@ struct TStatus {
 		CyclicalStatusRequest = DUREE1MN*5;
 		fullSimu = TRUE;
 		statusS20 = 3;
+		zeroizePassWord = 2;
 	}
 
 };
@@ -1921,6 +1924,9 @@ TRAITEMENT:		Destructeur
 
 	// RAZ table CV et KEK
 	void RazTableCle(bool cle_kek = FALSE);
+
+	void SetZeroizePassWord(int val);
+	int GetZeroizePassWord();
 
 };
 

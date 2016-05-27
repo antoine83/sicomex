@@ -234,7 +234,6 @@
 /sicomex.opt////*////
 /sicomex.plg////*////
 /sicomex.rc////*////
-/sicomex.sln////*////
 /sicomex.suo////*////
 /sicomex.vcp////*////
 /sicomex.vcxproj////*////
@@ -259,3 +258,5 @@ D/exe////////
 D/ipch////////
 D/res////////
 D/temp////////
+/sicomex.sln////*////
+/.cvsignore////*////

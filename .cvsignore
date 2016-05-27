@@ -1,0 +1,11 @@
+vc60.idb
+vc60.pdb
+sicomex.depend
+sicomex.cbp
+sicomex.layout
+p_ED42.sbr
+EquipED42.sbr
+*.sbr
+*.vcxproj
+*.vcxproj.filters
+*.VC.db

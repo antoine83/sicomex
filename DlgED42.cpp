@@ -41,8 +41,8 @@ CDlgED42::CDlgED42(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDB_EQP_ED42);
 	etat		= FALSE;
 	isNum		= TRUE;				// TRUE = Touches numeriques
-	remoteMode	= FALSE;
-	valBool		= FALSE;
+	//remoteMode	= FALSE;
+	//valBool		= FALSE;
 
 	LoadData();
 }
@@ -297,7 +297,8 @@ void CDlgED42::OnNl()
 
 
 	RazEd42();
-	remoteMode = FALSE;
+	//remoteMode = FALSE;
+	eqp->setRemoteStatus(FALSE);
 	eqp->SetRemoteTC(LOCAL_TC);
 	eqp->SetKEState(1);						// Param 28 : Flag : KE state
 	eqp->RazTableCle(true);
@@ -401,11 +402,14 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 	chaineSep = eqp->GetChaineClavier().c_str();
 
 	if (eqp->GetStatusBusy() == 1)
-		SetTimer(11,500,NULL);
+		SetTimer(11,DUREEBUSY,NULL);
 
 	//IDC_CHECK_FULL
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_FULL)->ShowWindow(eqp->GetMarcheEd42() && !eqp->GetResetEd42() && !eqp->GetStatusNl());
 
+	//*******************************
+	// Traitement de la touche A/M
+	//*******************************
 	if(equip->Actif() != etat)
 	{
 		etat = equip->Actif();
@@ -441,7 +445,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 	{
 		eqp->SetStatusNl(1);
 		RazEd42();
-		remoteMode = FALSE;
+		//remoteMode = FALSE;
+		eqp->setRemoteStatus(FALSE);
 		eqp->SetRemoteTC(LOCAL_TC);
 		//actionEnCours = ZEROIZE_ALARM;
 		eqp->SetKeStatus(KE_IDLE);
@@ -482,7 +487,9 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 		case 1:
 			OutputDebugString("Dans : case 1:) !\n");
 
-			// Traitement de RS
+			//*******************************
+			// Traitement de la touche RS
+			//*******************************
 			if (eqp->GetResetEd42())
 			{
 				OutputDebugString("Dans : // Traitement de RS !\n");
@@ -499,9 +506,9 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				SetTimer(6, DUREE2S, NULL);
 
 				// Mise à jour des flag's
-				eqp->SetPresetList("255", 'X');
-				eqp->SetOnlinePresetStatus(1);					// Param 21 : Flag : Online preset
-				eqp->SetActiveKeyState(1);						// Param 29 : Flag : Active KEY state
+				eqp->SetPresetList("255", 'X');					// Param 20
+				eqp->SetOnlinePresetStatus(0);					// Param 21 : Flag : Online preset
+				eqp->SetActiveKeyState(0);						// Param 29 : Flag : Active KEY state
 				eqp->SetKeyList(1);								// Param 25 : Flag : key list
 
 				eqp->SetOnlinePreset(DEFAULT_INVALID_VALUE_ED42);
@@ -737,23 +744,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
 					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
 
-					/*
-					if (GetClavier() && eqp->GetMarcheEd42())
-					{
-						OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier() && eqp->GetMarcheEd42())!\n");
-
-						m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(TRUE);
-						//res = ED42_UnLock();
-
-						SetClavier(FALSE);
-						break;
-					}
-					// Configuration Usine
-					//eqp->SetOperatingStatus(ENTER_USER_PW);
-					//TraitementTouches(OPERATING_STATUS[ENTER_USER_PW].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
-					//m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
-					*/
-
 					if (GetClavier())
 					{
 						OutputDebugString("Dans : case ENTER_USER_PW: et if (GetClavier())!\n");
@@ -827,9 +817,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(true);
 					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
 					
-					//eqp->SetOperatingStatus(USER_PW_VERIFICATION);
-					//TraitementTouches(OPERATING_STATUS[USER_PW_VERIFICATION].c_str(), OPERATING_STATUS[USER_PW].c_str(), TRUE);
-					//m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(!(chaineSep == "V") && !(chaineSep == "FW"));
 
 					if (GetClavier())
 					{
@@ -916,7 +903,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					{
 						SetClavier(FALSE);
 
-						if (chaineSep == "V")
+						if (eqp->GetChaineClavier() == "V")
 						{
 							if (eqp->GetLanguage() == GERMAIN)
 							{
@@ -925,7 +912,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							}
 						}
 
-						if (chaineSep == "V")
+						if (eqp->GetChaineClavier() == "V")
 						{
 
 							if (eqp->GetLanguage() == ENGLICH)
@@ -935,7 +922,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							}
 						}
 
-						if (chaineSep == "ST")
+						if (eqp->GetChaineClavier() == "ST")
 						{
 							eqp->SetOperatingStatus(OFFLINE);
 							eqp->SetMarcheEd42(true);
@@ -953,14 +940,14 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 					UpdateData(FALSE);
 
-					// Mémorisation de l'action
-					actionEnCoursTmp = eqp->GetOperatingStatus();
+					// Mémorisation de l'action en cours
+					actionEnCoursTmp = OFFLINE;
 
 					// Gestion Des Affichages
 					GestionAffichageExploitation(FALSE);
 					GestionAffichageEmRec(FALSE);
 
-					valBool = eqp->getRemoteStatus();
+					//valBool = eqp->getRemoteStatus();
 
 					// Affichage du boutton "V"
 					m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(eqp->GetRemoteTC() == REMOTE_TC || eqp->getED42Lock());
@@ -971,7 +958,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 						OutputDebugString("Dans : case OFFLINE: et if(eqp->GetRemoteTC() == REMOTE_TC)!\n");
 							initAffichageUn(OPERATING_STATUS[OFFLINE].c_str(), OPERATING_STATUS[REMOTE_MODE].c_str());
 							eqp->setED42Lock(FALSE); //TODO
-							remoteMode = valBool;
+							//remoteMode = valBool;
 					}
 
 					if(eqp->GetRemoteTC() == LOCAL_TC)
@@ -989,6 +976,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					}
 
 					// Gestion des actions de l'opérateur
+					// Une action sur les touches ST, FW est traité dans ACTIV_LOCAL_CTRL 
 					if (GetClavier())
 					{
 						OutputDebugString("Dans : case OFFLINE: et if (GetClavier())!\n");
@@ -998,8 +986,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							OutputDebugString("Dans : case OFFLINE: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V' && eqp->GetRemoteTC() == REMOTE_TC)!\n");
 
 							initAffichageUn(OPERATING_STATUS[MAIN_MENU].c_str(), OPERATING_STATUS[ACTIV_LOCAL_CTRL].c_str());
-
-							actionEnCoursTmp = eqp->GetOperatingStatus();
 
 							eqp->SetOperatingStatus(ACTIV_LOCAL_CTRL);
 
@@ -1017,8 +1003,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				case ONLINE:
 					OutputDebugString("Dans : case ONLINE:!\n");
 
-					// Mémorisation de l'action
-					actionEnCoursTmp = eqp->GetOperatingStatus();
+					// Mémorisation de l'action en cours
+					actionEnCoursTmp = ONLINE;
 					
 					initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[REMOTE].c_str());
 
@@ -1040,6 +1026,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					}
 
 					// Gestion des actions de l'opérateur
+					// Une action sur les touches ST, FW est traité dans ACTIV_LOCAL_CTRL
 					if (GetClavier())
 					{
 						OutputDebugString("Dans : case ONLINE: et if (GetClavier())!\n");
@@ -1049,8 +1036,6 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							OutputDebugString("Dans : case ONLINE: et if (GetClavier()) et if(eqp->GetChaineClavier() == 'V' && eqp->GetRemoteTC() == REMOTE_TC)!\n");
 
 							initAffichageUn(OPERATING_STATUS[MAIN_MENU].c_str(), OPERATING_STATUS[ACTIV_LOCAL_CTRL].c_str());
-
-							//actionEnCoursTmp = eqp->GetOperatingStatus();
 
 							eqp->SetOperatingStatus(ACTIV_LOCAL_CTRL);
 
@@ -1270,7 +1255,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				KillTimer(6);
 				//eqp->setRemoteStatus(FALSE);
 				//eqp->setRemoteMode(LOCAL);
-				remoteMode = FALSE;
+				//remoteMode = FALSE;
 				m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[TRAIT].c_str());
 				m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_2)->SetWindowText(OPERATING_STATUS[TRAIT].c_str());
 				SetTimer(2,DUREE1S,NULL);
@@ -1364,7 +1349,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				*/
 				break;
 			case 11:	// Timer11								// After Zeroize/Emergency Clear page 83
-				OutputDebugString("Dans : case 11:!\n");
+				OutputDebugString("Dans : case 11: fin Busy!\n");
 				KillTimer(11);
 				eqp->SetStatusBusy(0);
 				break;
@@ -1558,8 +1543,6 @@ void CDlgED42::RazEd42()
 
 	RazAffichage();
 	GestionAffichageExploitation(FALSE);
-	eqp->setRemoteStatus(FALSE);
-	eqp->SetRemoteTC(LOCAL_TC);
 	GestionAffichageBoutons(eqp->GetStatusNl());
 	GestionAffichageEmRec(FALSE);
 
@@ -1567,8 +1550,10 @@ void CDlgED42::RazEd42()
 	m_dlgTab->m_Info->c_preset.ShowWindow(FALSE);
 	m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_ACT_DESACT)->ShowWindow(FALSE);
 
-	valBool = FALSE;
-	remoteMode = FALSE;
+	eqp->setRemoteStatus(FALSE);
+	eqp->SetRemoteTC(LOCAL_TC);
+	//valBool = FALSE;
+	//remoteMode = FALSE;
 	eqp->SetOperatingStatus(TRAIT);		//actionEnCours = TRAIT;
 
 
@@ -1597,14 +1582,15 @@ void CDlgED42::OnEd42DcpBtnFw()
 
 	m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 
-	if (chaineEnCours == "")
+	if (chaineEnCours == "" && eqp->GetOperatingStatus() != ACTIV_LOCAL_CTRL)
 		return;
 
-	//if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
-		//return;
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnFw() et suite1!\n");
 
 	if (eqp->GetZeroizeStatus() && chaineEnCours == "")
 		return;
+
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnFw() et suite2!\n");
 
 	eqp->SetChaineClavier("FW");
 	eqp->SetClavier(TRUE);
@@ -1626,14 +1612,17 @@ void CDlgED42::OnEd42DcpBtnSt()
 	m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
 	//m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->
 
-	if (chaineEnCours == "")
+	if (chaineEnCours == "" && eqp->GetOperatingStatus() != LANGUAGE_SELECTION &&
+							   eqp->GetOperatingStatus() != OFFLINE &&
+							   eqp->GetOperatingStatus() != ONLINE)
 		return;
 
-	//if (eqp->GetStatusNl() && actionEnCours != ACTIV_LOCAL_CTRL)
-		//return;
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnSt() et suite1!\n");
 
 	if (eqp->GetZeroizeStatus() && chaineEnCours == "")
 		return;
+
+	OutputDebugString("Dans : CDlgED42::OnEd42DcpBtnSt() et suite2!\n");
 
 	eqp->SetChaineClavier("ST");
 	eqp->SetClavier(TRUE);
@@ -1985,6 +1974,24 @@ BOOL CDlgED42::Activ_Local_Ctrl()
 	{
 		OutputDebugString("Dans : CDlgED42::Activ_Local_Ctrl() et if (GetClavier())!\n");
 
+		m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->GetWindowText(chaineEnCours);
+
+		if(eqp->GetChaineClavier() == "FW" && chaineEnCours == "")
+		{
+			OutputDebugString("Dans : CDlgED42::Activ_Local_Ctrl() et if (GetClavier()) et if(eqp->GetChaineClavier() == 'FW' && chaineEnCours == '')!\n");
+
+			m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(false);
+			m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->SetWindowText(_T(""));
+			m_dlgTab->m_Info->GetDlgItem(IDC_EDIT_USER_PWD)->ShowWindow(false);
+			m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_8)->ShowWindow(false);
+
+			eqp->SetOperatingStatus(actionEnCoursTmp);
+
+			eqp->SetChaineClavier("");
+			SetClavier(FALSE);
+			return ret;
+		}
+
 		if(eqp->GetChaineClavier() == "FW")
 		{
 			OutputDebugString("Dans : CDlgED42::Activ_Local_Ctrl() et if (GetClavier()) et if(eqp->GetChaineClavier() == 'FW')!\n");
@@ -2029,7 +2036,9 @@ BOOL CDlgED42::Activ_Local_Ctrl()
 			eqp->SetChaineClavier("");
 		}
 
-									
+		 //****************************
+		// Validation du mot de passe ?
+		//*****************************
 		if (eqp->GetChaineClavier() == "ST")
 		{
 			OutputDebugString("Dans : CDlgED42::Activ_Local_Ctrl() et if (GetClavier()) et if (eqp->GetChaineClavier() == 'ST')!\n");
@@ -2047,7 +2056,7 @@ BOOL CDlgED42::Activ_Local_Ctrl()
 
 				eqp->SetOperatingStatus(ACTIV_LOCAL_CTRL_1);
 				eqp->setRemoteStatus(FALSE);
-				remoteMode = FALSE;
+				//remoteMode = FALSE;
 				eqp->SetRemoteTC(LOCAL_TC);
 
 				m_dlgTab->m_Info->GetDlgItem(IDC_USER_PWD)->ShowWindow(false);
@@ -2094,6 +2103,7 @@ BOOL CDlgED42::Cv_Data_Crypto()
 
 	bool ret = true;
 
+	/*
 	eqp->SetOperatingStatus(CV_DATA_CRYPTO);		//actionEnCours = CV_DATA_CRYPTO;
 
 	if (GetClavier())
@@ -2110,6 +2120,7 @@ BOOL CDlgED42::Cv_Data_Crypto()
 	}
 
 	initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), "");
+	*/
 
 	return ret;
 }

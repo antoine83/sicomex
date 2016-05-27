@@ -176,6 +176,8 @@ TRAITEMENT:		vide les buffers d' I/O associé au port
 ***********************************************************************	*/
 int CPort::Purge()
 {
+	OutputDebugString("Dans : CPort::Purge() !\n");
+
 	if (!ouverte) return ERR_LIGNE_FERMEE;
 
 	if (!PurgeComm(hcom, PURGE_TXABORT | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_RXCLEAR))
