@@ -503,6 +503,9 @@
     <ClCompile Include="DIVERS\TACHE.CPP">
       <Filter>Divers</Filter>
     </ClCompile>
+    <ClCompile Include="divers\Logger.cpp">
+      <Filter>Divers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.TXT">
@@ -990,6 +993,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XTabCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="divers\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

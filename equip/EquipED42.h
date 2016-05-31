@@ -26,7 +26,10 @@ ROLE :		Implémentation de la classe CEquipED42
 #include <vector>
 #include <sstream>
 
+#include "Divers\Logger.h"
+
 using namespace std;
+using namespace CPlusPlusLogging;
 
 #define NB_BOOT_UP_BIT 6
 #define NB_MANUALLY_UP_BIT 5
@@ -1430,6 +1433,9 @@ protected:
 	int		nl;				// Présence NL
 	int		eg;				// Présence EG
 
+	//************************************
+	int niveauTrace;
+
 	//*****************************************************
 	int NumPreset;
 	TConfigExt configExt;
@@ -1495,6 +1501,9 @@ protected:
 	//Vérification si les presets ont été taggés
 	int presetTagV;
 	int presetTagD;
+
+public:
+	Logger* pLogger;
 
 
 

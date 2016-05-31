@@ -24,6 +24,7 @@ ROLE :		Implémentation de la classe CEquipED42
 
 
 using namespace std;
+using namespace CPlusPlusLogging;
 
 extern CParamSimu* glob_paramsimu;
 extern CDlgAccueil* glob_ihm;
@@ -118,6 +119,18 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	errorLF			= FALSE;
 	errorCR			= FALSE;
 	pasDeReponse	= FALSE;
+
+
+	// Traces
+	niveauTrace = LOG_LEVEL_TRACE;
+
+	// Log message C++ Interface
+    pLogger = NULL; // Create the object pointer for Logger Class
+    pLogger = Logger::getInstance();
+	pLogger->updateLogLevel(DISABLE_LOG);
+
+
+	pLogger->trace("Dans CEquipED42::CEquipED42(int idx):CEquip(idx)");
 
 	//Initialisation de la liste des erreurs
 	//Format : Used;Error Number;Extented Code;Meaning
@@ -742,6 +755,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	//Vérification des tag lors du chargement du context
 	presetTagV = 0;
 	presetTagD = 0;
+
 }
 
 /* **************************************************************************
@@ -758,6 +772,8 @@ TRAITEMENT:		Alloue le protocole de communication et l'ecran de controle
 ***************************************************************************	*/
 void CEquipED42::Allocation()
 {
+	pLogger->trace("Dans CEquipED42::Allocation()");
+
 	t_affecte ligne;
 
 	glob_paramsimu->Equipement(index,&ligne);
@@ -799,6 +815,8 @@ TRAITEMENT:		Initialise l'équipement à partir d'un fichier contenant un
 BOOL CEquipED42::Charge_Contexte(char *fichier)
 {
 	// TODO vérification de la validité des saisies.
+
+	pLogger->trace("Dans CEquipED42::Charge_Contexte(char *fichier)");
 
 	int  i = 0,
 	iResult = 0,
@@ -957,6 +975,11 @@ BOOL CEquipED42::Charge_Contexte(char *fichier)
 			setRemoteMode(REMOTE);
 		else
 			setRemoteMode(atoi(ligne+5));
+
+	// Niveau de traces
+	iResult = Extrait_ligne(contenu,"P030=",ligne,TAILLE_MAX_LIGNE);
+	if(iResult>=0)
+		pLogger->updateLogLevel((LogLevel)atoi(ligne+5));
 
 	// Key Management
 	strcat(bufKey, "P10..");
@@ -1172,6 +1195,9 @@ BOOL CEquipED42::Sauve_Contexte(char *fichier)
 	sprintf(ligne,"P025=%d", getRemoteMode());
 	file << ligne << endl;
 
+	sprintf(ligne,"P030=%d", pLogger->getLogLevel());
+	file << ligne << endl;
+
 
 	//***************
 	// Key Management
@@ -1369,6 +1395,8 @@ int CEquipED42::InfoCik() const
 
 int CEquipED42::ChangeCik(int valeur, BOOL genere_TS)
 {
+	pLogger->trace("Dans CEquipED42::ChangeCik(int valeur, BOOL genere_TS)");
+
 	if(valeur>=NO_CIK_STATE && valeur <= WAITING_CIK_STATE)
 	{
 		EnterCriticalSection(&crit);
@@ -1729,6 +1757,8 @@ int CEquipED42::getHDLCAddress()
 
 int CEquipED42::ChangeDefPassWord(string valeur, BOOL genere_TS)
 {
+	pLogger->trace("Dans CEquipED42::ChangeDefPassWord(string valeur, BOOL genere_TS)");
+
 	int 	iResult = SUCCESS;
 
 	if(valeur.length()<MDPMIN && valeur.length()>MDMMAX)

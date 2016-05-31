@@ -160,6 +160,7 @@
     <ClCompile Include="CUSTOM\OUTIL.CPP" />
     <ClCompile Include="DIVERS\DIV_FIC.CPP" />
     <ClCompile Include="DIVERS\DIV_TMP.CPP" />
+    <ClCompile Include="divers\Logger.cpp" />
     <ClCompile Include="DIVERS\TABLE.CPP" />
     <ClCompile Include="DIVERS\TACHE.CPP" />
     <ClCompile Include="DLG1236.CPP" />
@@ -328,6 +329,7 @@
     <ClInclude Include="CUSTOM\OUTIL.H" />
     <ClInclude Include="DIVERS\DIV_FIC.H" />
     <ClInclude Include="DIVERS\DIV_TMP.H" />
+    <ClInclude Include="divers\Logger.h" />
     <ClInclude Include="DIVERS\TABLE.H" />
     <ClInclude Include="DIVERS\TACHE.H" />
     <ClInclude Include="dlg1236.h" />

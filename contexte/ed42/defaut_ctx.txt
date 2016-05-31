@@ -26,6 +26,7 @@ P022=0			// CIK Status NO_CIK = 0, invalid data = 1, UNKNOWN_CIK = 2, OBSOLETE_C
 P023=0			// User CIK 0:no user, 1:user1, 2:user2
 P024=0			// action sur la gestion du CIK
 P025=9			// REMOTE = 9, LF_DIG=10
+P030=4			// Niveau de traces : DISABLE_LOG = 1, LOG_LEVEL_INFO= 2, LOG_LEVEL_BUFFER= 3, LOG_LEVEL_TRACE= 4, LOG_LEVEL_DEBUG= 5, ENABLE_LOG= 6,
 P1000=255		//kekLoaded => 255 : no KEK loaded, 0 : KEK loaded.
 P1001=0			//variableLocation le 0 est pour la gestion du KEK
 P1002=255		//updateCount 255 : no KEK loaded

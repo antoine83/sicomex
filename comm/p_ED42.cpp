@@ -21,6 +21,7 @@ ROLE :		Implémentation de la classe CProtoED42
 
 #include <stdexcept>
 #include <algorithm>
+#include "Divers\Logger.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -29,9 +30,12 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 using namespace std;
+using namespace CPlusPlusLogging;
 // using namespace System::Text::RegularExpressions;
 // using namespace System;
 
+
+extern Logger pLogger;
 
 const char 	DEBUT_TRAME = '>';
 const char 	FIN_TRAME 	= '<';
@@ -62,6 +66,7 @@ TRAITEMENT:		Destructeur
 ***************************************************************************	*/
 CProtoED42::~CProtoED42()
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: Destructeur");
 }
 
 /* **************************************************************************
@@ -109,7 +114,8 @@ TRAITEMENT:		Traite une TC (partie utile) et formate le message TS reponse
 int CProtoED42::TraiteTC(char *mess)
 {
 
-	OutputDebugString("Dans : début CProtoED42::TraiteTC(char *mess) !\n");
+	//OutputDebugString("Dans : début CProtoED42::TraiteTC(char *mess) !\n");
+	pLogger.LOG_TRACE("Dans CProtoED42::TraiteTC(char *mess)");
 
 	//if (equip->getRemoteMode() == LF_DIG || equip->GetStatusNl())
 	if (equip->getRemoteMode() == LF_DIG)
@@ -156,6 +162,8 @@ int CProtoED42::TraiteTC(char *mess)
 
 			if (found!=std::string::npos)
 			{
+				pLogger.LOG_TRACE("Dans CProtoED42::TraiteTC(char *mess) et if (found!=std::string::npos)");
+
 				lenMsg = message.length();
 				string rcsMsg = message.substr (lenMsg-2,2);
 				string rcsMsgTmp = RCS(message.substr (0,lenMsg-6), TRUE);
@@ -370,6 +378,8 @@ TRAITEMENT:		Formate une TS en fonction en réccupérant les etats internes
 ***************************************************************************	*/
 int CProtoED42:: TraiteTS(int type_REC,char *reponse)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: TraiteTS(int type_REC,char *reponse)");
+
 	int	iResult = 0;
 
 	return iResult;
@@ -382,15 +392,36 @@ TRAITEMENT:		Réceptionne une TC, Valide le bon format et en extrait la partie
 ***************************************************************************	*/
 int CProtoED42::RecevoirTC(char *message,int nb_car)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::RecevoirTC(char *message,int nb_car)");
+
 	char	buf[TAILLE_BUFFER+1];
 	int		index,iResult;
 
-	if(nb_car > TAILLE_BUFFER) return ERR_TAILLE_BUFFER;
+	size_t lenMsg = strlen(message);
+
+	ostringstream sss;
+    sss << endl;
+    sss << "\t" << "Avant debut traitement" << endl;
+    sss << "\t" << "message: " << message << endl;
+	sss << "\t" << "lenMsg:  " << lenMsg << endl;
+	sss << "\t" << "nb_car:  " << nb_car << endl << endl;
+    pLogger.LOG_DEBUG(sss);
+
+	if(nb_car > TAILLE_BUFFER) return ERR_TAILLE_BUFFER;			// TODO ?? nb_car = tjrs 512 et ERR_TAILLE_BUFFER = tjrs 512
 
 	index=0;
 	while(index<nb_car)
 	{
 		iResult = ligne.Lire(buf+index,1);
+		//********************************
+		ostringstream ss1;
+		ss1 << endl;
+		ss1 << "\t" << "Dans le while(index<nb_car)" << endl;
+		ss1 << "\t" << "iResult: " << iResult << endl;
+		ss1 << "\t" << "index:   " << index << endl;
+		ss1 << "\t" << "nb_car:  " << nb_car << endl << endl;
+		pLogger.LOG_DEBUG(ss1);
+		//********************************
 		if(iResult < 0) return ERREUR_EXTERNE+iResult;
 		if(iResult == 0) return ERREUR_TIMEOUT;
 		if(buf[index]==DEBUT_TRAME && index!=0)
@@ -398,6 +429,7 @@ int CProtoED42::RecevoirTC(char *message,int nb_car)
 			buf[0] = DEBUT_TRAME;
 			index=0;
 		}
+
 		if(buf[index]==FIN_TRAME) break;
 
 		index++;
@@ -405,6 +437,14 @@ int CProtoED42::RecevoirTC(char *message,int nb_car)
 
 	if(!ExtraitUtile(buf,message,&iResult))
 		return ERR_NON_CONFORME;			// Message non conforme
+
+	ostringstream ss2;
+    ss2 << endl;
+    ss2 << "\t" << "Apres traitement" << endl;
+	ss2 << "\t" << "buf:	 " << buf << endl;
+    ss2 << "\t" << "iResult: " << iResult << endl;
+	ss2 << "\t" << "index:   " << index << endl << endl;
+    pLogger.LOG_DEBUG(ss2);
 
 	return iResult;
 }
@@ -416,6 +456,8 @@ TRAITEMENT:		Attend un message d'acquitement du type de commande précedement
 ***************************************************************************	*/
 BOOL CProtoED42::ValideAcquittement(int type_cde,char *buf)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::ValideAcquittement(int type_cde,char *buf)");
+
 	int		iResult = NULL;
 	BOOL	bResult;
 
@@ -431,6 +473,7 @@ TRAITEMENT:		Génère les octets de controle du message
 ***************************************************************************	*/
 char* CProtoED42::ControleTrame(char *message,char *octet_controle)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::ControleTrame(char *message,char *octet_controle)");
 	//int		i,len_mes;
 	//char	pc;
 
@@ -446,6 +489,7 @@ TRAITEMENT:		Génère les octets de controle du message
 ***************************************************************************	*/
 BOOL CProtoED42::ExtraitUtile(char *buf,char *message,int *long_utile)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::ExtraitUtile");
 
 	int		len_mes;
 
@@ -467,6 +511,8 @@ TRAITEMENT:		Retourne le n° de canal pour utiliser lors de l'envoi des TS
 ***************************************************************************	*/
 int CProtoED42::CanalLecture()
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::CanalLecture()");
+
 	int	valeur;
 
 	EnterCriticalSection(&crit);
@@ -490,6 +536,8 @@ BOOL CProtoED42::ChangeCanalLecture(int	valeur)
 
 int CProtoED42::ExtractData(istringstream &data, string res[], int length, char sep)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::ExtractData");
+
 	for(int param_number = 1; param_number<length; param_number++)
 		if(!getline(data, res[param_number], sep) && param_number != length-1)
 		{
@@ -506,6 +554,8 @@ int CProtoED42::ExtractData(istringstream &data, string res[], int length, char 
 //********************************************************************
 void CProtoED42::sendAuthorizationError()
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::sendAuthorizationError()");
+
 	stringstream out;
 	if((equip->getRemoteAdress()) <10)
 	{
@@ -531,7 +581,8 @@ void CProtoED42:: sendAcq(int val)
 {
 	//TODO : Ne pas repondre lorsqu'on demande RST
 
-	OutputDebugString("Dans : CProtoED42:: sendAcq(int val)!\n");
+	//OutputDebugString("Dans : CProtoED42:: sendAcq(int val)!\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: sendAcq(int val)");
 
 	if(equip->getPasDeReponse())
 		return;
@@ -619,7 +670,13 @@ void CProtoED42:: sendAcq(int val)
 	}else
 		equip->setLastMessage(reponse);
 
-	OutputDebugString("Dans : CProtoED42:: sendAcq(int val) et EnvoyerTS!\n");
+	//OutputDebugString("Dans : CProtoED42:: sendAcq(int val) et EnvoyerTS!\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: sendAcq(int val) et EnvoyerTS");
+	ostringstream sss;
+    sss << endl;
+    sss << "\t" << "EnvoyerTS" << endl;
+    sss << "\t" << "reponse: " << reponse << endl << endl;
+    pLogger.LOG_DEBUG(sss);
 
 	EnvoyerTS((char*)LPCTSTR(CString(reponse.c_str())));
 
@@ -641,6 +698,8 @@ TRAITEMENT:		Permet de définir à quel appareil le message va être envoyé (page 1
 *********************************************************************************** */
 int CProtoED42:: A(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: A(string trame)");
+
  	if(atoi(trame.c_str()) == equip->getRemoteAdress())
 	{
 		char remoteAdr[2]="";
@@ -684,7 +743,8 @@ TRAITEMENT:		Requête de la clé active (page 175)
 ***************************************************************************	*/
 int CProtoED42:: ACV(string trame)
 {
-	OutputDebugString("Dans : CProtoED42:: ACV(string trame) !\n");
+	//OutputDebugString("Dans : CProtoED42:: ACV(string trame) !\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: ACV(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -916,6 +976,8 @@ TRAITEMENT:		Buffer de l'alarme (page 169)
 ***************************************************************************	*/
 int CProtoED42:: ALM(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: ALM(string trame)");
+
 	char buffer[3] = "";
 	bool alarmFind = FALSE;
 	int i = 0;
@@ -976,6 +1038,8 @@ TRAITEMENT:		Etat da la machine de cryptage (page 165)
 ***************************************************************************	*/
 int CProtoED42:: CES(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CES(string trame)");
+
 	int ret = NOT_ERROR;
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
@@ -1046,6 +1110,7 @@ TRAITEMENT:		requête du statut du CIK (page 183)
 ***************************************************************************	*/
 int CProtoED42:: CIK(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CIK(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -1124,7 +1189,8 @@ TRAITEMENT:		Requête d'une clé (page 173)
 ***************************************************************************	*/
 int CProtoED42:: CV(string trame)
 {
-	OutputDebugString("Dans : CProtoED42:: CV(string trame)!\n");
+	//OutputDebugString("Dans : CProtoED42:: CV(string trame)!\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: CV(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -1319,6 +1385,8 @@ TRAITEMENT:		tag bilateral d'une clé (page 178)
 ***************************************************************************	*/
 int CProtoED42:: CVBTA(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVBTA(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -1419,6 +1487,7 @@ TRAITEMENT:		update bilateral d'une clé (page 178)
 ***************************************************************************	*/
 int CProtoED42:: CVBUD(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVBUD(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -1514,6 +1583,8 @@ TRAITEMENT:		supprime une clé (page 176)
 ***************************************************************************	*/
 int CProtoED42:: CVDEL(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVDEL(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -1612,6 +1683,7 @@ TRAITEMENT:		supprime toutes les clés (page 177)
 ***************************************************************************	*/
 int CProtoED42:: CVDLA(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVDLA(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -1700,6 +1772,7 @@ TRAITEMENT:		update la vue sur les clés (page 179)
 ***************************************************************************	*/
 int CProtoED42:: CVLG(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVLG(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -1786,6 +1859,8 @@ TRAITEMENT:		requête d'une vue sur les clés (page 179)
 ***************************************************************************	*/
  int CProtoED42:: CVLR(string trame)
 {
+	 pLogger.LOG_TRACE("Dans CProtoED42:: CVLR(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -1880,6 +1955,8 @@ TRAITEMENT:		tag une clé (page 176)
 ***************************************************************************	*/
 int CProtoED42:: CVTAG(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -1896,6 +1973,7 @@ int CProtoED42:: CVTAG(string trame)
 		
 		//Force le RES
 		isRES = TRUE;
+		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) CONFLICT.");
 		return CONFLICT;
 	}
 
@@ -1918,6 +1996,7 @@ int CProtoED42:: CVTAG(string trame)
 
 	if (testTrameFirst(trame, 0, 5, '?', &ret, false, 5, true))
 	{
+		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) ERR_NON_CONFORME.");
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
 	}
@@ -1926,8 +2005,11 @@ int CProtoED42:: CVTAG(string trame)
 	{
 		//Parametre invalide
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
+		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) ERR_NO_REMOTE_MODE.");
 		return ERR_NO_REMOTE_MODE;
 	}
+
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) début traitement.");
 
 
 	TKeyManagement keyManagement;
@@ -2014,6 +2096,8 @@ TRAITEMENT:		update une clé (page 177)
 ***************************************************************************	*/
 int CProtoED42:: CVUPD(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVUPD(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2139,6 +2223,8 @@ TRAITEMENT:		requête des paramètres par défaut (page 189)
 ***************************************************************************	*/
 int CProtoED42:: DEFPS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: DEFPS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2230,6 +2316,7 @@ TRAITEMENT:		accès au buffer d'erreur (page 169)
 ***************************************************************************	*/
 int CProtoED42:: ERR(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: ERR(string trame)");
 	// TODO : traitement d'une seule erreur !! ??
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
@@ -2359,6 +2446,7 @@ TRAITEMENT:		permet d'initialiser une connection et vérifie la version
 ***************************************************************************	*/
 int CProtoED42:: INI(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: INI(string trame)");
 
 	//La taille du message est trop grande ou vide.
 	if(trame.size() > 1 )
@@ -2405,6 +2493,8 @@ TRAITEMENT:		requête d'une KEK (page 181)
 ***************************************************************************	*/
 int CProtoED42:: KEK(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: KEK(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2507,6 +2597,8 @@ TRAITEMENT:		supprime une KEK (page 182)
 ***************************************************************************	*/
 int CProtoED42:: KEKDL(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: KEKDL(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2604,6 +2696,8 @@ TRAITEMENT:		Déclenche le compteur de message (page158)
 ***************************************************************************	*/
 int CProtoED42:: N(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: N(string trame)");
+
 	//La taille du message est trop grande ou vide.
 	if(trame.size() > 3 || trame.size() == 0)
 	{
@@ -2658,7 +2752,8 @@ TRAITEMENT:		Passer en mode OFFLINE (page 171)
 ***************************************************************************	*/
 int CProtoED42:: OFL(string trame)
 {
-	OutputDebugString("Dans : OFL(string trame)!\n");
+	//OutputDebugString("Dans : OFL(string trame)!\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: OFL(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -2738,7 +2833,9 @@ int CProtoED42:: ONL(string trame)
 {
     //>A01N178S?ONL8RCS#43<
 
-	OutputDebugString("Dans : CProtoED42:: ONL(string trame) !\n");
+	//OutputDebugString("Dans : CProtoED42:: ONL(string trame) !\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: ONL(string trame)");
+	pLogger.LOG_TRACE(trame);
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -2845,6 +2942,8 @@ TRAITEMENT:		Retourne le preset qui est online (page 172)
 ***************************************************************************	*/
 int CProtoED42:: OPS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: OPS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -2912,6 +3011,8 @@ TRAITEMENT:		Requête d'un changement d'état de preset (page 190)
 ***************************************************************************	*/
 int CProtoED42:: PSS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: PSS(string trame)");
+
 	if(!(equip->getRemoteStatus()))
 	{
 		//Parametre invalide
@@ -2976,6 +3077,8 @@ TRAITEMENT:		changer le mot de passe (page 182)
 ***************************************************************************	*/
 int CProtoED42:: PWCHG(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: PWCHG(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3167,6 +3270,8 @@ TRAITEMENT:		vérifie le password (Doc EL4.2 - Software interface control p 135 /
 *******************************************************************************************	*/
 int CProtoED42:: PWCHK(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: PWCHK(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3295,6 +3400,8 @@ TRAITEMENT:		Renvoie la DSInterface en cours (page 180)
 ***************************************************************************	*/
 int CProtoED42:: REQDS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQDS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3362,6 +3469,8 @@ TRAITEMENT:		Renvoie la HDLC Adress (page 191)
 ***************************************************************************	*/
 int CProtoED42:: REQHD(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQHD(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3431,6 +3540,8 @@ TRAITEMENT:		Renvoie le temps avant autolock (page 192)
 ***************************************************************************	*/
 int CProtoED42:: REQHT(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQHT(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3484,6 +3595,8 @@ TRAITEMENT:		Renvoie l'ID de la station (page 191)
 ***************************************************************************	*/
 int CProtoED42:: REQID(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQID(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3554,6 +3667,8 @@ TRAITEMENT:		Renvoie les parametres du preset en cours (page186)
 ***************************************************************************	*/
 int CProtoED42:: REQPS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQPS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3651,6 +3766,8 @@ TRAITEMENT:		Renvoie le nombre maximum de mise à jour (page 190)
 ***************************************************************************	*/
 int CProtoED42:: REQUL(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQUL(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3720,6 +3837,7 @@ TRAITEMENT:		Résultat d'une opération (page 166)
 ***************************************************************************	*/
 string CProtoED42:: RES()
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: RES()");
 
 /*
 	if(!(equip->getAuthentified()))
@@ -3748,6 +3866,8 @@ TRAITEMENT:		Résultat d'une opération (page 166)
 ***************************************************************************	*/
 int CProtoED42:: RES(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: RES(string trame)");
+
 		//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3793,6 +3913,8 @@ TRAITEMENT:		Retourne un Checksum (page 159)
 ***************************************************************************	*/
 string CProtoED42:: RCS(string reponse, bool outCmd)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: RCS(string reponse, bool outCmd)");
+
 	stringstream out;
 
 	//Calcul du checksum (page 159)
@@ -3825,6 +3947,8 @@ TRAITEMENT:		Reset de l'appareil (page 172)
 ***************************************************************************	*/
 int CProtoED42:: RST(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: RST(string trame)");
+
 	if(trame.size() == 0)
 	{
 		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
@@ -3856,6 +3980,8 @@ TRAITEMENT:		Renvoie le statut du message (page 156)
 ***************************************************************************	*/
 int CProtoED42:: S(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: S(string trame)");
+
 
 	if(trame.size() == 0)
 	{
@@ -3890,7 +4016,8 @@ TRAITEMENT:		Renvoie le statut du message (page 156)
 ***************************************************************************	*/
 string CProtoED42::S()
 {
-	// TODO tableau 36, utiliser pour les divers errors, a implémenter dans le code.
+	pLogger.LOG_TRACE("Dans CProtoED42::S()");
+
 	double resultat = 0;
 	string res;
 
@@ -3935,6 +4062,8 @@ TRAITEMENT:		Permet de définir l'adresse de l'appareil (page 192)
 ***************************************************************************	*/
 int CProtoED42:: SETAD(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETAD(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -4023,6 +4152,8 @@ TRAITEMENT:		Permet de définir la DS interface en cours (page 180)
 ***************************************************************************	*/
 int CProtoED42:: SETDS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETDS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -4107,6 +4238,8 @@ TRAITEMENT:		Permet de définir la HDLC Adress (page 191)
 ***************************************************************************	*/
 int CProtoED42:: SETHD(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETHD(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -4194,6 +4327,8 @@ TRAITEMENT:		Permet de définir Le temps avant verrouillage (page 192)
 ***************************************************************************	*/
 int CProtoED42:: SETHT(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETHT(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -4265,6 +4400,8 @@ TRAITEMENT:		Permet de définir L'ID de la station (page 191)
 ***************************************************************************	*/
 int CProtoED42:: SETID(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETID(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -4354,7 +4491,8 @@ TRAITEMENT:		Permet de définir le preset actif (page 186)
 ***************************************************************************	*/
 int CProtoED42:: SETPS(string trame)
 {
-	OutputDebugString("Dans : CProtoED42:: SETPS(string trame)!\n");
+	//OutputDebugString("Dans : CProtoED42:: SETPS(string trame)!\n");
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETPS(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -5209,6 +5347,12 @@ int CProtoED42:: SETPS(string trame)
 	equip->setReceptionDonnee(TRUE);
 	equip->SetPresetList(tmp_Preset, 'A');			// Param 20 : Flag : Preset list
 
+	ostringstream sss;
+    sss << endl;
+    sss << "\t" << "Traitement de SETPS" << endl;
+    sss << "\t" << "tmp_Preset: " << tmp_Preset << endl << endl;
+    pLogger.LOG_DEBUG(sss);
+
 	return SUCCESS;
 }
 
@@ -5219,6 +5363,8 @@ TRAITEMENT:		Permet de définir le nombre maximum de mise à jour pouvant
 ***************************************************************************	*/
 int CProtoED42:: SETUL(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SETUL(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -5310,6 +5456,8 @@ TRAITEMENT:		Requête du statut du système (page 161)
 ***************************************************************************	*/
 int CProtoED42:: SYS(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: SYS(string trame)");
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -5496,6 +5644,12 @@ int CProtoED42:: SYS(string trame)
 
 	strcat(bufCmd, elementHex.str().c_str());
 
+	ostringstream sss;
+    sss << endl;
+    sss << "\t" << "Traitement de SYS" << endl;
+	sss << "\t" << "bufCmd:  " << bufCmd << endl << endl;
+    pLogger.LOG_DEBUG(sss);
+
 	return SUCCESS;
 }
 
@@ -5505,6 +5659,8 @@ TRAITEMENT:		Passe en mode Remote (page 168)
 ***************************************************************************	*/
 int CProtoED42:: TAK(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: TAK(string trame)");
+
 	//Envoi d'un RES
 	isRES = TRUE;
 
@@ -5557,6 +5713,7 @@ TRAITEMENT:		Renvoie la version de l'appareil (page 185)
 ***************************************************************************	*/
 int CProtoED42:: VER(string trame)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42:: VER(string trame)");
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
@@ -5647,6 +5804,8 @@ TRAITEMENT:		Renvoie l'erreur la dernière erreur stocké dans (COMMAND_RES)
 ***************************************************************************	*/
 string CProtoED42::getUneError(string tmp_cmd)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::getUneError(string tmp_cmd)");
+
 	char buffer[3] = "";
 	bool errorFind = FALSE;
 	char bufErr[TAILLE_BUFFER] = "";
@@ -5713,6 +5872,8 @@ string CProtoED42::getUneError(string tmp_cmd)
  */
 int CProtoED42::GestionHexa(const char* toBeTested)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::GestionHexa");
+
 	int iResult;
 
 	if(toBeTested[0] == '#')
@@ -5750,6 +5911,8 @@ int CProtoED42::DecimalToHexa(char* number)
  */
 string CProtoED42::HaxaToStringRCS(string reponse)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::HaxaToStringRCS(string reponse)");
+
     int checksum = 0x00;
 
     for(int i=0; i<reponse.length();i++)
@@ -5773,6 +5936,8 @@ string CProtoED42::HaxaToStringRCS(string reponse)
  */
 string CProtoED42::IntToHexaString(int reponse, int format)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::IntToHexaString(int reponse, int format)");
+
     stringstream elementHex;
 
     //Mise en place du format de la réponse en hexadécimal "XXXXXXXX"
@@ -5794,6 +5959,8 @@ string CProtoED42::IntToHexaString(int reponse, int format)
  */
 string CProtoED42::TagStatusCrypto(string confKey, int tmpOnlinePreset, int tmpPresetType)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::TagStatusCrypto");
+
 	stringstream elementBin;
 	stringstream elementHex;
 
@@ -5827,6 +5994,15 @@ string CProtoED42::TagStatusCrypto(string confKey, int tmpOnlinePreset, int tmpP
  */
 string CProtoED42::KeyMemoryIndex(TMapKeyManagement confKey, int minPlage, int maxPlage)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::KeyMemoryIndex");
+
+	ostringstream sss;
+    sss << endl;
+    sss << "\t" << "Traitement de KeyMemoryIndex" << endl;
+    sss << "\t" << "minPlage: " << minPlage << endl;
+	sss << "\t" << "maxPlage: " << maxPlage << endl << endl;
+    pLogger.LOG_DEBUG(sss);
+
 	char buffer[3] = {0};
 	stringstream elementBin;
 	stringstream elementHex;
@@ -5861,6 +6037,8 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,TDigitalDCE di
 								   TDigitalDTE digitalDteEnCours,TAnalogDCE analogDceEnCours,
 								   TAnalogDTE analogDteEnCours)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::buildTrameREQPS");
+
 	//Récupération du preset demandé
 	char buffer[10]="";
 	string result="";
@@ -6201,6 +6379,8 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,TDigitalDCE di
 
 bool CProtoED42::testTrameFirst(string trame, int sizeMin, int sizeMax, char usedSep, int *ret, bool option, int typeOption, bool isOnline)
 {
+	pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst");
+
 	if (isOnline && equip->GetOperatingStatus() == ONLINE)
 	{
 		*ret =  WRONG_COMMAND;
