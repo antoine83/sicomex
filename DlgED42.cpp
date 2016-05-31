@@ -589,7 +589,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					OutputDebugString("Dans : case RESTART_WITH_RESET: !\n");
 					pLogger.LOG_TRACE("Dans : case RESTART_WITH_RESET !");
 					KillTimer(1);
-					eqp->SetResetEd42(false);
+					//eqp->SetResetEd42(false);
 					break;
 				case ENTER_ZEROIZE_PW:
 					
@@ -842,7 +842,9 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							eqp->SetUserPassWord(s1);
 							eqp->SetOperatingStatus(USER_PW_VERIFICATION);			//actionEnCours = USER_PW_VERIFICATION;
 							eqp->SetChaineClavier("");
-							actionEnCours1 = ENTER_USER_PW;
+
+							if (!eqp->GetZeroizeStatus())
+								actionEnCours1 = ENTER_USER_PW;
 						}
 
 						SetClavier(FALSE);
@@ -923,10 +925,15 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							eqp->SetUserPassWord(s1);
 							eqp->ChangeNl(0);
 							eqp->SetZeroizeStatus(FALSE);
-							eqp->SetResetEd42(false);
+							//eqp->SetResetEd42(false);
 
 							if (actionEnCours1 == ENTER_ZEROIZE_PW)
-								 eqp->SetOperatingStatus(OFFLINE);
+							{
+								eqp->SetResetEd42(false);
+								eqp->SetOperatingStatus(OFFLINE);
+							}
+
+							//eqp->SetOperatingStatus(OFFLINE);
 							
 							if(actionEnCours1 == ENTER_USER_PW)
 								eqp->SetOperatingStatus(LANGUAGE_SELECTION);		//actionEnCours = LANGUAGE_SELECTION;
