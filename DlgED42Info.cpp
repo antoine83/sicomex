@@ -177,12 +177,16 @@ void DlgED42Info::OnButtonActDesact()
 
 	char buffer[3] = {0};
 
+	eqp->SetStatusBusy(1);
+
 	int presetOnline = c_operationMode.GetCurSel() * 8 + c_preset.GetCurSel();
 
 	itoa(presetOnline,buffer,10);
 
 	if(eqp->GetOperatingStatus() == ONLINE)
 	{
+		OutputDebugString("Dans : DlgED42Info::OnButtonActDesact() et if(eqp->GetOperatingStatus() == ONLINE)!\n");
+
 		eqp->SetPresetList("255", 'X');					// Param 20
 		eqp->SetOnlinePresetStatus(0);					// Param 21 : Flag : Online preset
 		eqp->SetActiveKeyState(0);						// Param 29 : Flag : Active KEY state
@@ -196,6 +200,8 @@ void DlgED42Info::OnButtonActDesact()
 	}
 	else
 	{
+		OutputDebugString("Dans : DlgED42Info::OnButtonActDesact() et // Activation!\n");
+
 		// Activation
 		int tmpMemIdx = eqp->GetMemoryIndexOfKey(presetOnline,c_operationMode.GetCurSel());
 
@@ -219,7 +225,9 @@ void DlgED42Info::OnButtonActDesact()
 		eqp->SetOnlinePresetStatus(1);						// Param 21 : Flag : Online preset
 		eqp->SetActivatedKey(tmpMemIdx);						// pour ACV
 		eqp->SetOperatingStatus(ONLINE);
-	}	
+	}
+	
+	eqp->SetStatusBusy(0);
 }
 
 void DlgED42Info::OnButtonUnlock() 

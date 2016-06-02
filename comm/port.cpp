@@ -251,7 +251,7 @@ TRAITEMENT:		Lecture des octets sur le port de communication selon le
 ***********************************************************************	*/
 int CPort::Lire(char *buf,const int nb_car)
 {
-int 	nb_car_lu=0;
+	int nb_car_lu=0;
 
 	if (!ouverte) return ERR_LIGNE_FERMEE;
 

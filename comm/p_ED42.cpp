@@ -77,6 +77,7 @@ TRAITEMENT:		Prend un message TS, l'encapsule en fonction du protocole
 int CProtoED42::EnvoyerTS(char *message)
 {
 	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message)!\n");
+	pLogger.LOG_TRACE("Dans : CProtoED42::EnvoyerTS(char *message)!");
 
 
 	int		len_mes,iResult;
@@ -96,12 +97,14 @@ int CProtoED42::EnvoyerTS(char *message)
 
 	buf[iResult+1]=0;				// Force la fin de chaine
 
-	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf)!\n");
+	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf) !\n");
+	pLogger.LOG_TRACE("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf) !");
 
 	iResult = ligne.Ecrire(buf);
 	if(iResult < 0) return ERREUR_EXTERNE+iResult;
 
 	OutputDebugString("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf) pas de ERREUR_EXTERNE+iResult!\n");
+	pLogger.LOG_TRACE("Dans : CProtoED42::EnvoyerTS(char *message) et ligne.Ecrire(buf) pas de ERREUR_EXTERNE+iResult!");
 
 	return iResult;  // nb d'octet transmis
 }
@@ -114,10 +117,9 @@ TRAITEMENT:		Traite une TC (partie utile) et formate le message TS reponse
 int CProtoED42::TraiteTC(char *mess)
 {
 
-	//OutputDebugString("Dans : début CProtoED42::TraiteTC(char *mess) !\n");
-	pLogger.LOG_TRACE("Dans CProtoED42::TraiteTC(char *mess)");
+	OutputDebugString("Dans : CProtoED42::TraiteTC(char *mess) !\n");
+	pLogger.LOG_TRACE("Dans : CProtoED42::TraiteTC(char *mess)");
 
-	//if (equip->getRemoteMode() == LF_DIG || equip->GetStatusNl())
 	if (equip->getRemoteMode() == LF_DIG)
 		return ERR_NO_REMOTE_MODE;
 
@@ -129,6 +131,7 @@ int CProtoED42::TraiteTC(char *mess)
 	int len_mes			= (int)strlen(mess);
 
 	TVectorError errorEncours = equip->getErrors();
+
 	//On efface l'erreur en l'enplacement RES
 	errorEncours[COMMAND_RES] = " ";
 	equip->setErrors(errorEncours);
@@ -3720,6 +3723,8 @@ int CProtoED42:: REQPS(string trame)
 	
 	if (equip->GetStatusBusy() == 1)
 		return IN_BUSY;
+
+	pLogger.LOG_TRACE("Dans CProtoED42:: REQPS(string trame) et traitement");
 
 	cmd.clear();
 

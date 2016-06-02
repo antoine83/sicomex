@@ -17,6 +17,7 @@ ROLE :		Implémentation de la classe CEquipED42
 #include "Comm\p_ED42.h"
 
 #include "Divers\Div_fic.h"
+#include "Divers\Logger.h"
 
 #include <sstream>
 #include <fstream>
@@ -28,6 +29,8 @@ using namespace CPlusPlusLogging;
 
 extern CParamSimu* glob_paramsimu;
 extern CDlgAccueil* glob_ihm;
+
+extern Logger pLogger;
 
 extern char glob_CONTEXT_ED42[];
 
@@ -94,7 +97,6 @@ TRAITEMENT:		Constructeur, initialise les structures
 CEquipED42::CEquipED42(int idx):CEquip(idx)
 {
 	int i;
-
 	char heure[9];
 	char date[9];
 	GetTimeFormat (LOCALE_SYSTEM_DEFAULT, TIME_FORCE24HOURFORMAT , NULL, "HH'H'mm'.'ss", (LPTSTR) heure, 9);
@@ -125,8 +127,8 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	niveauTrace = LOG_LEVEL_TRACE;
 
 	// Log message C++ Interface
-    pLogger = NULL; // Create the object pointer for Logger Class
-    pLogger = Logger::getInstance();
+	pLogger = NULL; // Create the object pointer for Logger Class
+	pLogger = Logger::getInstance();
 	pLogger->updateLogLevel(DISABLE_LOG);
 
 
@@ -1092,6 +1094,8 @@ BOOL CEquipED42::Charge_Contexte(char *fichier)
 
 	}
 
+	pLogger->trace("Fin CEquipED42::Charge_Contexte(char *fichier)");
+
 	return TRUE;
 }
 
@@ -1101,6 +1105,8 @@ TRAITEMENT:		Sauveagrde le contexte d'exploitation d'un fichier
 ***************************************************************************	*/
 BOOL CEquipED42::Sauve_Contexte(char *fichier)
 {
+	pLogger->trace("Dans CEquipED42::Sauve_Contexte(char *fichier)");
+
 	char ligne[TAILLE_MAX_MESSAGE*2];
 
 	char buffer[10]		= {0};
@@ -1308,7 +1314,9 @@ BOOL CEquipED42::Sauve_Contexte(char *fichier)
 
 	file.close();
 
-		return TRUE;
+	pLogger->trace("Fin CEquipED42::Sauve_Contexte(char *fichier)");
+
+	return TRUE;
 }
 
 /* **************************************************************************
@@ -1422,6 +1430,8 @@ int CEquipED42::ChangeCik(int valeur, BOOL genere_TS)
 // NL******************************************
 int CEquipED42::InfoNl() const
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::InfoNl()!");
+
 	int		iResult;
 
 	EnterCriticalSection((CRITICAL_SECTION*)&crit);
@@ -1439,6 +1449,8 @@ int CEquipED42::InfoNl() const
  */
 int CEquipED42::ChangeNl(int valeur, BOOL genere_TS)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::ChangeNl(int valeur, BOOL genere_TS)");
+
 	int iResult = valeur;
 
 	if(valeur>=0 && valeur <= 1)
@@ -1468,6 +1480,8 @@ int CEquipED42::ChangeNl(int valeur, BOOL genere_TS)
 // EG******************************************
 int CEquipED42::InfoEg() const
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::InfoEg()");
+
 	int		iResult;
 
 	EnterCriticalSection((CRITICAL_SECTION*)&crit);
@@ -1479,6 +1493,8 @@ int CEquipED42::InfoEg() const
 
 int CEquipED42::ChangeEg(int valeur,BOOL genere_TS)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::ChangeEg(int valeur,BOOL genere_TS)");
+
 	int 	iResult = valeur;
 
 	if(valeur>=0 && valeur <= 1)

@@ -15,6 +15,8 @@ ROLE :		Implémentation de la classe CDlgEquip
 #include "custom\inter.h"
 
 #include <mmsystem.h>
+#include <string>
+#include <sstream>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -159,14 +161,16 @@ void CDlgEquip::AjoutJournal(char *mes,int code_erreur)
 	int			i,iResult;
 	int			nb_max_message = glob_paramsimu->MaxMessage();
 
+	
 	if(strlen(mes)>TAILLE_MESSAGE-5)		// 5 pour formatage code erreur 
-		mes[TAILLE_MESSAGE-5]=0;			// Force limitte la taille des messsage
+		mes[TAILLE_MESSAGE-5]='\0';			// Force limitte la taille des messsage
+
 
 	if(code_erreur)
 		sprintf(buf,"%s (%2d)",mes,code_erreur);
 	else
 		strcpy(buf,mes);
-	
+
 	journal = (CListBox*)GetDlgItem(IDC_JOURNAL);
 
 	iResult = journal->GetCount();
