@@ -12,6 +12,7 @@
 /EqpTORCard.cpp////*////
 /EqpTemp.cpp////*////
 /EqpTemp.h////*////
+/EquipM1752.cpp////*////
 /EquipM1752.h////*////
 /EquipTest.cpp////*////
 /EquipTest.h////*////
@@ -39,6 +40,8 @@
 /eqp18a.h////*////
 /eqp18c.cpp////*////
 /eqp18c.h////*////
+/eqp251.cpp////*////
+/eqp251.h////*////
 /eqpMATCOM.cpp////*////
 /eqpTORCard.h////*////
 /eqpacco.cpp////*////
@@ -57,6 +60,3 @@
 /synchro.h////*////
 /EquipED42.cpp////*////
 /EquipED42.h////*////
-/EquipM1752.cpp////*////
-/eqp251.cpp////*////
-/eqp251.h////*////

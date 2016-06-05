@@ -905,7 +905,7 @@ typedef struct
 	int		extendedCodes;
 	string	meaning;
 	bool	used;
-	int		nrCmdErr;
+
 }TError;
 
 typedef struct
@@ -923,7 +923,7 @@ typedef struct
 	string	meaning;
 	bool	used;
 	int		nbRepeat;
-	int		nrCmdErr;
+
 }TStatusError;
 
 typedef struct
@@ -1252,7 +1252,6 @@ enum REMOTE_MODE {
 struct TStatus {
 	bool marche;
 	bool RstEquip;
-	bool RstEquipTc;
 	bool RemoteStatus;					// True = remote; False = local..
 	int RemoteMode;						// REMOTE ou LF DIG si LF DIG pas de TC/TS possible
 	int RemoteTc;						// REMOTE = 0, LOCAL = 1. Ainsi que pour param 16 dans SYS. Gestion par TAK0 et CTRL_LOCAL
@@ -1323,13 +1322,11 @@ struct TStatus {
 	int statusS20;	//Variable qui permet de vérifier si on a initialisé l'équipement lors 
 					//d'un réponse avec S#20 (il y a exécution ou non exécution des commandes)
 	int zeroizePassWord;
-	int nrCommandInError;
 
 	TStatus()
 	{
 		marche = false;
 		RstEquip = false;
-		RstEquipTc = false;
 		RemoteStatus = false;
 		RemoteMode = REMOTE;
 		RemoteTc = LOCAL_TC; 
@@ -1396,12 +1393,11 @@ struct TStatus {
 		secureMode = NOT_DEFINED;
 		//errorRCS = FALSE;
 		//errorMSG = FALSE;
-		protocolVersion		= 4;
+		protocolVersion = 4;
 		CyclicalStatusRequest = DUREE1MN*5;
 		fullSimu = TRUE;
-		statusS20			= 3;
-		zeroizePassWord		= 2;
-		nrCommandInError	= 0;
+		statusS20 = 3;
+		zeroizePassWord = 2;
 	}
 
 };
@@ -1634,9 +1630,6 @@ TRAITEMENT:		Destructeur
 
 	BOOL GetResetEd42();
 	void SetResetEd42(bool val);
-
-	BOOL GetResetEd42Tc();
-	void SetResetEd42Tc(bool val);
 
 	BOOL GetStatusNl();
 	void SetStatusNl(bool val);
@@ -1943,9 +1936,6 @@ TRAITEMENT:		Destructeur
 
 	void SetZeroizePassWord(int val);
 	int GetZeroizePassWord();
-
-	void SetnrCommandInError(int val);
-	int GetnrCommandInError();
 
 };
 

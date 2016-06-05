@@ -42,7 +42,6 @@ const char 	FIN_TRAME 	= '<';
 
 
 int cptSuccessfullCmd;
-int cptNbrCmd;
 istringstream cmd;
 string pwd = "12345";
 
@@ -142,7 +141,6 @@ int CProtoED42::TraiteTC(char *mess)
 
 	int checker			= SUCCESS;
 	cptSuccessfullCmd	= 0;
-	cptNbrCmd			= 0;
 
 	strcpy(bufCmd,"");
 
@@ -153,14 +151,12 @@ int CProtoED42::TraiteTC(char *mess)
 	int endOfCmd	= 0;
 	int endOfParams = 0;
 
-	//while(endOfParams != -1 && checker == SUCCESS)
-	while(endOfParams != -1)
+	while(endOfParams != -1 && checker == SUCCESS)
 	{
-		//if(	checker == SUCCESS)
-		if(	checker != 255)
+		if(	checker == SUCCESS)
 		{
-			int param	= 0;
-			int lenMsg	= 0;
+			int param=0;
+			int lenMsg=0;
 
 			//***************************
 			// Vérification du RCS
@@ -200,13 +196,6 @@ int CProtoED42::TraiteTC(char *mess)
 
 		/*	if(!(equip->getRemoteStatus()))
 				return ERR_NON_CONFORME;*/
-
-			if (cmd.str() != "A" && cmd.str() != "RCS" && cmd.str() != "N")
-			{
-				pLogger.LOG_TRACE("Dans : CProtoED42::TraiteTC(char *mess) et cptNbrCmd++ !");
-				cptNbrCmd++;
-				equip->SetnrCommandInError(cptNbrCmd);
-			}
 
 			if(cmd.str() == "A")						// Permet de définir à quel appareil le message va être envoyé
 				checker = A(trame);
@@ -310,7 +299,7 @@ int CProtoED42::TraiteTC(char *mess)
 			else if(cmd.str() == "RCS")					// Résultat du checksum
 				checker = TRUE; //Vérifie juste que la commande est connue
 
-			else if(cmd.str() == "RST")					// Reset de l'appareil
+			else if(cmd.str() == "RST" && !equip->GetStatusNl())					// Reset de l'appareil
 				checker = RST(trame);
 
 			else if(cmd.str() == "S")					// Renvoie le statut du message TODO : 156
@@ -357,7 +346,6 @@ int CProtoED42::TraiteTC(char *mess)
 			}
 		}
 
-
 		//**************************
 		//  checker == SUCCESS
 		//**************************
@@ -368,31 +356,19 @@ int CProtoED42::TraiteTC(char *mess)
 			checker == NOT_REMOTE_MODE ||
 			checker == CONFLICT)
 		{
-			OutputDebugString("Dans : CProtoED42::TraiteTC(char *mess) et cptSuccessfullCmd++ !\n");
-			pLogger.LOG_TRACE("Dans : CProtoED42::TraiteTC(char *mess) et cptSuccessfullCmd++ !");
+			OutputDebugString("Dans : fin CProtoED42::TraiteTC(char *mess) et cptSuccessfullCmd++!\n");
 
 			cptSuccessfullCmd++;
 		}
 
 	}
 
-	ostringstream sss;
-    sss << endl;
-    sss << "\t" << "Dans : CProtoED42:: avant sendAcq(typeCmd)" << endl;
-    sss << "\t" << "cptSuccessfullCmd: " << cptSuccessfullCmd << endl;
-	sss << "\t" << "cptNbrCmd: " << cptNbrCmd << endl;
-    pLogger.LOG_DEBUG(sss);
-	pLogger.LOG_TRACE(sss.str());
-
-
-
 	//**************************
 	//  Réponse à la commande
 	//**************************
 	sendAcq(typeCmd);
 
-	OutputDebugString("Fin CProtoED42::TraiteTC(char *mess) !\n");
-	pLogger.LOG_TRACE("Fin CProtoED42::TraiteTC(char *mess) !");
+	OutputDebugString("Dans : fin CProtoED42::TraiteTC(char *mess) !\n");
 
 	return SUCCESS;
 
@@ -664,19 +640,14 @@ void CProtoED42:: sendAcq(int val)
 	{
 		out << msgS << bufCmd+3;
 	}
-
-	pLogger.LOG_TRACE(out.str());
+	
 
 	//Recherche si envoi d'un RES
 	if(isRES)
 		out << RES();
 
-	pLogger.LOG_TRACE("Dans CProtoED42:: sendAcq(int val) et retour de if(isRES)");
-	pLogger.LOG_TRACE(out.str());
-
 	//Mise à jour du flag isRES
 	isRES = FALSE;
-	equip->SetnrCommandInError(0);
 
 	//*****************
 	//Ajout du checksum
@@ -684,17 +655,17 @@ void CProtoED42:: sendAcq(int val)
 	//if (val != 0)
 	//{
 
-	reponse			= out.str();
+	reponse = out.str();
 
-	reponseRcs		= RCS(reponse);
+	reponseRcs = RCS(reponse);
 
 	reponse.append(reponseRcs);
 
-	//--------------------------------------------------------------
-	// Attention 
-	// Quand on détecte une erreur, il ne faut pas mémoriser le dernier numéro de la trame
-	// car si on recoit la nouvelle trame qui ne contient plus d'erreur. Il faut pouvoir lui envoyer 
-	// une nouvelle réponce et non la précédent qui a remonté une erreur.
+		//--------------------------------------------------------------
+		// Attention 
+		// Quand on détecte une erreur, il ne faut pas mémoriser le dernier numéro de la trame
+		// car si on recoit la nouvelle trame qui ne contient plus d'erreur. Il faut pouvoir lui envoyer 
+		// une nouvelle réponce et non la précédent qui a remonté une erreur.
 	if(msgS.compare("S#00") != 0)
 	{
 		equip->setRepetition(FALSE);
@@ -702,18 +673,20 @@ void CProtoED42:: sendAcq(int val)
 	}else
 		equip->setLastMessage(reponse);
 
-	OutputDebugString("Dans : CProtoED42:: sendAcq(int val) et EnvoyerTS!\n");
+	//OutputDebugString("Dans : CProtoED42:: sendAcq(int val) et EnvoyerTS!\n");
 	pLogger.LOG_TRACE("Dans CProtoED42:: sendAcq(int val) et EnvoyerTS");
 	ostringstream sss;
     sss << endl;
     sss << "\t" << "EnvoyerTS" << endl;
-    sss << "\t" << "reponse: " << reponse << endl;
+    sss << "\t" << "reponse: " << reponse << endl << endl;
     pLogger.LOG_DEBUG(sss);
-	pLogger.LOG_TRACE(sss.str());
 
 	EnvoyerTS((char*)LPCTSTR(CString(reponse.c_str())));
 
 	//}
+
+
+
 	//*************************
 	// Mise à jour Status Error
 	//*************************
@@ -2039,7 +2012,7 @@ int CProtoED42:: CVTAG(string trame)
 		return ERR_NO_REMOTE_MODE;
 	}
 
-	pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) debut traitement.");
+	pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) début traitement.");
 
 
 	TKeyManagement keyManagement;
@@ -2057,10 +2030,8 @@ int CProtoED42:: CVTAG(string trame)
 
 	if(param < 1 || param > 96)
 	{
-		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) et if(param < 1 || param > 96)");
-
 		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
-		return INVALID_PARAMETER;
+		return ERR_NON_CONFORME;
 	}
 
 	// param : 2 Preset number
@@ -2069,25 +2040,19 @@ int CProtoED42:: CVTAG(string trame)
 	if(presetNumber < 0 || presetNumber > 15
 		|| (presetNumber == 0 && trame.substr(fin+1,trame.size()).compare("0") != 0))
 	{
-		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) et presetNumber NOk)");
-
 		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
-		return INVALID_PARAMETER;
+
+		return ERR_NON_CONFORME;
 	}
 
 	keyManagement = equip->GetKeyManagement(variableLocation);
-
-	// ************************************************************************
 	// Vérification si la variable location demande a été chargé par un LOAD CV
-	// ************************************************************************
 	if (equip->GetCvChargement(&keyManagement))
 	{
-		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) et if (equip->GetCvChargement(&keyManagement)))");
-
 		equip->setErrorTable(VARIABLE_NOT_DEFINED, TRUE);
 		equip->SetError(TRUE);
 
-		return VARIABLE_NOT_DEFINED;
+		return ERR_NON_CONFORME;
 	}
 
 	//Mise à jour, il faut retirer le nouveau preset dans les autres variables locations.
@@ -2106,7 +2071,6 @@ int CProtoED42:: CVTAG(string trame)
 	keyManagement = equip->GetKeyManagement(variableLocation);
 
 	//Tag sur un preset DATA
-	pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) et Tag sur un preset DATA");
 	if(presetNumber < 8)
 	{
 		if(keyManagement.tag[presetNumber] == 'V')
@@ -2117,7 +2081,6 @@ int CProtoED42:: CVTAG(string trame)
 	//Tag sur un preset VOICE
 	else
 	{
-		pLogger.LOG_TRACE("Dans CProtoED42:: CVTAG(string trame) et Tag sur un preset VOICE");
 		if(keyManagement.tag[presetNumber%8] == 'D')
 			keyManagement.tag[presetNumber%8] = 'B';
 		else
@@ -2125,9 +2088,7 @@ int CProtoED42:: CVTAG(string trame)
 	}	
 	
 	//Sauvegarde 
-	equip->SetKeyManagement(variableLocation, keyManagement);
-	
-	pLogger.LOG_TRACE("Fin CProtoED42:: CVTAG(string trame)");
+	equip->SetKeyManagement(variableLocation, keyManagement);		
 
 	return SUCCESS;
 }
@@ -2740,14 +2701,12 @@ int CProtoED42:: N(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: N(string trame)");
 
-	/*
 	//La taille du message est trop grande ou vide.
 	if(trame.size() > 3 || trame.size() == 0)
 	{
 		equip->setStatusErrorTable(MAX_MSG_LENGTH, TRUE);
 		return ERR_NON_CONFORME;
 	}
-	*/
 
 	//La fonction atoi remonte un 0 si le string n'est pas un integer.
 	if(atoi(trame.c_str()) < 0 || atoi(trame.c_str()) > 999 
@@ -3123,7 +3082,6 @@ int CProtoED42:: PWCHG(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: PWCHG(string trame)");
 
-	/*
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
 	{
@@ -3132,7 +3090,6 @@ int CProtoED42:: PWCHG(string trame)
 		isRES = TRUE;
 		return NOT_REMOTE_MODE;
 	}
-	*/
 
 	//Envoi d'un RES
 	isRES = TRUE;
@@ -3153,7 +3110,7 @@ int CProtoED42:: PWCHG(string trame)
 
 
 	//La taille du message est trop grande ou vide.
-	if(trame.size() > 19 )
+	if(trame.size() != 19 )
 	{
 		equip->setStatusErrorTable(MAX_MSG_LENGTH, TRUE);
 		return ERR_NON_CONFORME;
@@ -3901,10 +3858,7 @@ string CProtoED42:: RES()
 	reponse = getUneError("RES");
 	reponse.append(",");
 
-	if (reponse[3] == '0')
-		itoa(cptSuccessfullCmd, tmpcmd, 10);
-	else
-		itoa(equip->GetnrCommandInError(), tmpcmd, 10);
+	itoa(cptSuccessfullCmd, tmpcmd, 10);
 
 	reponse.append(tmpcmd);
 
@@ -4021,7 +3975,6 @@ int CProtoED42:: RST(string trame)
 	}
 
 	equip->SetResetEd42(true);
-	equip->SetResetEd42Tc(true);
 
 	return SUCCESS;
 }
@@ -5857,7 +5810,6 @@ TRAITEMENT:		Renvoie l'erreur la dernière erreur stocké dans (COMMAND_RES)
 string CProtoED42::getUneError(string tmp_cmd)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42::getUneError(string tmp_cmd)");
-	pLogger.LOG_TRACE(tmp_cmd);
 
 	char buffer[3] = "";
 	bool errorFind = FALSE;
@@ -5894,26 +5846,17 @@ string CProtoED42::getUneError(string tmp_cmd)
 
 	if(errorEncours[COMMAND_RES].compare(" ") != 0)
 	{
-		pLogger.LOG_TRACE("Dans CProtoED42::getUneError(string tmp_cmd) et if(errorEncours[COMMAND_RES].compare(' ') != 0)");
-
 		error = equip->DecodeError(errorEncours[COMMAND_RES]);
-
-		ostringstream sss;
-		sss << endl;
-		sss << "\t" << "TError error" << endl;
-		sss << "\t" << "error.errorNumbers:  " << error.errorNumbers << endl;
-		sss << "\t" << "error.extendedCodes:  " << error.extendedCodes << endl;
-		pLogger.LOG_TRACE(sss);
 
 		itoa(error.errorNumbers,buffer,10);
 		strcat(bufErr, buffer);
 
 		strcat(bufErr, ",");
+
 		itoa(error.extendedCodes,buffer,10);
 		strcat(bufErr, buffer);
 
 		//On efface l'erreur en l'enplacement RES
-		pLogger.LOG_TRACE("Dans CProtoED42::On efface l'erreur en l'enplacement RES");
 		errorEncours[COMMAND_RES] = " ";
 		equip->setErrors(errorEncours);
 	}
@@ -5921,9 +5864,6 @@ string CProtoED42::getUneError(string tmp_cmd)
 	{
 		strcat(bufErr, "0,0");
 	}
-
-	pLogger.LOG_TRACE(bufErr);
-	pLogger.LOG_TRACE("Fin CProtoED42::getUneError(string tmp_cmd)");
 
     return bufErr;
 }

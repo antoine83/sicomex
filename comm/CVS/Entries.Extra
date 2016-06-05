@@ -17,7 +17,6 @@
 /p_CA150.h////*////
 /p_CV24Card.cpp////*////
 /p_CV24Card.h////*////
-/p_ED42.cpp////*////
 /p_ED42.h////*////
 /p_MAT.cpp////*////
 /p_MAT.h////*////
@@ -31,7 +30,6 @@
 /p_Test.h////*////
 /p_temp.cpp////*////
 /p_temp.h////*////
-/port.cpp////*////
 /port.h////*////
 /prot_acc.cpp////*////
 /prot_acc.h////*////
@@ -41,3 +39,5 @@
 /prot_std.h////*////
 /proto.cpp////*////
 /proto.h////*////
+/port.cpp////*////
+/p_ED42.cpp////*////

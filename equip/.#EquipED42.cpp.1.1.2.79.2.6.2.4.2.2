@@ -135,32 +135,32 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	pLogger->trace("Dans CEquipED42::CEquipED42(int idx):CEquip(idx)");
 
 	//Initialisation de la liste des erreurs
-	//Format : Used;Error Number;Extented Code;Meaning;nrCmdErr
+	//Format : Used;Error Number;Extented Code;Meaning
 	errorTab.push_back(" "); //utiliser pour le RES
-	errorTab.push_back("0;1;1;error codes of cryptomodul;0");
-	errorTab.push_back("0;1;100;F101 interface not activated;0");
-	errorTab.push_back("0;1;101;F101 timeout from SKM;0");
-	errorTab.push_back("0;1;103;F101 error - give header action;0");
-	errorTab.push_back("0;1;106;no variable available;0");
-	errorTab.push_back("0;1;107;wrong password type;0");
-	errorTab.push_back("0;1;108;F101 error - store variable;0");
-	errorTab.push_back("0;1;109;F101 error - store KEK;0");
-	errorTab.push_back("0;1;111;configuration error;0");
-	errorTab.push_back("0;1;112;start error;0");
-	errorTab.push_back("0;1;114;error in software;0");
-	errorTab.push_back("0;1;116;selected variable not defined;0");
-	errorTab.push_back("0;1;119;update limit exceeded;0");
-	errorTab.push_back("0;1;122;bilateral update global error;0");
-	errorTab.push_back("0;1;123;bilateral tag global error;0");
-	errorTab.push_back("0;1;125;wrong dld password from user;0");
-	errorTab.push_back("0;1;126;format error;0");
-	errorTab.push_back("0;1;127;error while connecting CIK;0");
-	errorTab.push_back("0;2;0;variable management;0");
-	errorTab.push_back("0;3;207;missing CIK;0");
-	errorTab.push_back("0;3;1;wrong condition CIK;0");
-	errorTab.push_back("0;3;2;timeout while CIK-init;0");
-	errorTab.push_back("0;3;3;error from cryptomodul;0");
-	errorTab.push_back("0;4;1;password check;0");
+	errorTab.push_back("0;1;1;error codes of cryptomodul");
+	errorTab.push_back("0;1;100;F101 interface not activated");
+	errorTab.push_back("0;1;101;F101 timeout from SKM");
+	errorTab.push_back("0;1;103;F101 error - give header action");
+	errorTab.push_back("0;1;106;no variable available");
+	errorTab.push_back("0;1;107;wrong password type");
+	errorTab.push_back("0;1;108;F101 error - store variable");
+	errorTab.push_back("0;1;109;F101 error - store KEK");
+	errorTab.push_back("0;1;111;configuration error");
+	errorTab.push_back("0;1;112;start error");
+	errorTab.push_back("0;1;114;error in software");
+	errorTab.push_back("0;1;116;selected variable not defined");
+	errorTab.push_back("0;1;119;update limit exceeded");
+	errorTab.push_back("0;1;122;bilateral update global error");
+	errorTab.push_back("0;1;123;bilateral tag global error");
+	errorTab.push_back("0;1;125;wrong dld password from user");
+	errorTab.push_back("0;1;126;format error");
+	errorTab.push_back("0;1;127;error while connecting CIK");
+	errorTab.push_back("0;2;0;variable management");
+	errorTab.push_back("0;3;207;missing CIK");
+	errorTab.push_back("0;3;1;wrong condition CIK");
+	errorTab.push_back("0;3;2;timeout while CIK-init");
+	errorTab.push_back("0;3;3;error from cryptomodul");
+	errorTab.push_back("0;4;1;password check");
 
 	//Initialisation de la liste des alarmes
 	//Format : Used;Alarm type;Alamr number;Meaning
@@ -192,8 +192,8 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 
 	//Initialisation de la liste des status error
 	//Format : Used; error number; Meaning; nnRepeat (nombre de repetition)
-	for (int ii = 0; ii < NB_STATUS_ERROR; ii++)
-		statusErrorTab.push_back("0;ii;STATUS_ERROR[ii];0;0");
+	for (int ii=0; ii<NB_STATUS_ERROR; ii++)
+		statusErrorTab.push_back("0;ii;STATUS_ERROR[ii];0");
 	/*
 	statusErrorTab.push_back("0;PARITY_FRAMING;PARITY FRAMING;0");
 	statusErrorTab.push_back("0;SYNTAX_RCS;SYNTAX or RCS;0");
@@ -1699,25 +1699,6 @@ BOOL CEquipED42::GetResetEd42()
 {
 	return this->statusED42.RstEquip;
 }
-
-/* **************************************************************************
-METHODE :		SetResetEd42Tc()
-TRAITEMENT:		Set le status de marche
-*************************************************************************** */
-void CEquipED42::SetResetEd42Tc(bool val)
-{
-	this->statusED42.RstEquipTc = val;
-}
-
-/* **************************************************************************
-METHODE :		GetResetEd42Tc()
-TRAITEMENT:		Retourne le status de NL
-*************************************************************************** */
-BOOL CEquipED42::GetResetEd42Tc()
-{
-	return this->statusED42.RstEquipTc;
-}
-
 //******************************************************************************
 
 void CEquipED42::setRemoteAdress(const int valeur)
@@ -2742,11 +2723,8 @@ TRAITEMENT:		Decode une chaine de caractère en TError.
 *************************************************************************** */
 TError	CEquipED42::DecodeError(string val)
 {
-	pLogger->LOG_TRACE("CEquipED42::DecodeError(string val)");
-	pLogger->LOG_TRACE(val);
-
-	string res	= "";
-	int cpt		= 0;
+	string res="";
+	int cpt =0;
 	TError resultat;
 
 	//Récupère l'indice du séparateur.
@@ -2784,11 +2762,6 @@ TError	CEquipED42::DecodeError(string val)
 				resultat.meaning=res;
 				cpt++;
 				break;
-
-			case 4:
-				resultat.nrCmdErr = atoi(res.c_str());;
-				cpt++;
-				break;
 			}
 
 		//Recherche du prochain indice de début de chaine
@@ -2803,10 +2776,8 @@ TRAITEMENT:		Decode une chaine de caractère en TError.
 *************************************************************************** */
 TStatusError	CEquipED42::DecodeStatusError(string val)
 {
-	pLogger->LOG_TRACE("Dans CEquipED42::DecodeStatusError(string val)");
-
-	string res = "";
-	int cpt    = 0;
+	string res="";
+	int cpt = 0;
 	TStatusError resultat;
 
 	//Récupère l'indice du séparateur.
@@ -2857,23 +2828,9 @@ TRAITEMENT:		Encode TError en une chaine de caractère.
 *************************************************************************** */
 string	CEquipED42::EncodeError(TError val)
 {
-	pLogger->LOG_TRACE("Dans CEquipED42::EncodeError(TError val)");
-
-	ostringstream sss;
-	sss << endl;
-	sss << "\t" << "EncodeError" << endl;
-	sss << "\t" << "val.used:  " << val.used << endl;
-	sss << "\t" << "val.errorNumbers:  " << val.errorNumbers << endl;
-	sss << "\t" << "val.extendedCodes:  " << val.extendedCodes << endl;
-	pLogger->LOG_TRACE(sss);
-
 	stringstream resultat;
 
-	resultat << val.used << ";" << val.errorNumbers << ";" << val.extendedCodes << ";" << val.meaning << ";" << val.nrCmdErr ;
-
-	pLogger->LOG_TRACE(resultat.str());
-
-	pLogger->LOG_TRACE("Fin CEquipED42::EncodeError(TError val)");
+	resultat << val.used << ";" << val.errorNumbers << ";" << val.extendedCodes << ";" << val.meaning;
 
 	return resultat.str();
 }
@@ -3259,15 +3216,12 @@ TRAITEMENT:		Set la table StatusError
 *************************************************************************** */
 void CEquipED42::setStatusErrorTable(int errorNumber, bool val)
 {
-	pLogger->LOG_TRACE("CEquipED42::setStatusErrorTable(int errorNumber, bool val)");
-
-
 	TStatusError error;
 	TVectorStatusError errorList = getStatusErrors();
 
 	// Mise à jour de la variable used
-	error				= DecodeStatusError(errorList[errorNumber]);
-	error.used			= val;
+	error = DecodeStatusError(errorList[errorNumber]);
+	error.used = val;
 
 	// Si l'erreur est FALSE, on force la variable nbRepeat à 0
 	if(!val)
@@ -3437,8 +3391,6 @@ TRAITEMENT:		Verification du chargement du CV
 
 bool CEquipED42::GetCvChargement(TKeyManagement *keyManagement)
 {
-	pLogger->LOG_TRACE("CEquipED42::GetCvChargement(TKeyManagement *keyManagement)");
-
 	return (keyManagement->updateCount == 255);
 }
 
@@ -3570,39 +3522,22 @@ TRAITEMENT:		Set la table Error
 *************************************************************************** */
 void CEquipED42::setErrorTable(int errorValue, bool val)
 {
-	pLogger->LOG_TRACE("CEquipED42::setErrorTable(int errorValue, bool val");
-
-	int nrCmdErrTmp = GetnrCommandInError();
-
-	ostringstream sss;
-	sss << endl;
-	sss << "\t" << "setErrorTable" << endl;
-	sss << "\t" << "errorValue:  " << errorValue << endl;
-	sss << "\t" << "val:  " << val << endl;
-	pLogger->LOG_TRACE(sss);
-	
-
 	TError errorTmp;
 
 	//Pour la commande RES
 	errorTab[COMMAND_RES] = errorTab[errorValue];
 
 	//Suppression du flag used pour toutes les erreurs
-	pLogger->LOG_TRACE("CEquipED42::Suppression du flag used pour toutes les erreurs");
 	for(int i =1;i < NB_ERROR ; i++)
 	{
-		errorTmp		= DecodeError(errorTab[i]);
-		errorTmp.used	= 0;
+		errorTmp = DecodeError(errorTab[i]);
+		errorTmp.used = 0;
 	}
 
-	errorTmp			= DecodeError(errorTab[errorValue]);
-	errorTmp.used		= val;
-	errorTmp.nrCmdErr	= nrCmdErrTmp;
+	errorTmp = DecodeError(errorTab[errorValue]);
+	errorTmp.used = val;
 
 	errorTab[errorValue] = EncodeError(errorTmp);
-
-	pLogger->LOG_TRACE(errorTab[errorValue]);
-	pLogger->LOG_TRACE("Fin CEquipED42::setErrorTable(int errorValue, bool val, int nrCmdError)");
 
 }
 
@@ -3865,8 +3800,7 @@ void CEquipED42::RAZTable()
 {
 	int cpt =0;
 
-	OutputDebugString("Dans : debut CEquipED42::RAZTable() !\n");
-	pLogger->LOG_TRACE("Dans : debut CEquipED42::RAZTable() !");
+	OutputDebugString("Dans : début CEquipED42::RAZTable() !\n");
 
 	//Pour errorTab
 	for(cpt=0;cpt<NB_ERROR;cpt++)
@@ -3898,8 +3832,7 @@ void CEquipED42::RAZTable()
 		setBitManuallyTable(cpt,FALSE);
 	}
 
-	OutputDebugString("Fin CEquipED42::RAZTable() !\n");
-	pLogger->LOG_TRACE("Fin CEquipED42::RAZTable() !");
+	OutputDebugString("Dans : fin CEquipED42::RAZTable() !\n");
 }
 
 /* **************************************************************************
@@ -3989,27 +3922,6 @@ TRAITEMENT:
 int CEquipED42::GetZeroizePassWord()
 {
 	return this->statusED42.zeroizePassWord;
-}
-
-
-/* **************************************************************************
-METHODE :		SetnrCommandInError()
-TRAITEMENT:		
-*************************************************************************** */
-
-void CEquipED42::SetnrCommandInError(int val)
-{
-	this->statusED42.nrCommandInError = val;
-}
-
-/* **************************************************************************
-METHODE :		GetnrCommandInError()
-TRAITEMENT:		
-*************************************************************************** */
-
-int CEquipED42::GetnrCommandInError()
-{
-	return this->statusED42.nrCommandInError;
 }
 
 /* **************************************************************************

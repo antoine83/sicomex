@@ -12,8 +12,6 @@
 /EqpTORCard.cpp////*////
 /EqpTemp.cpp////*////
 /EqpTemp.h////*////
-/EquipED42.cpp////*////
-/EquipED42.h////*////
 /EquipM1752.cpp////*////
 /EquipM1752.h////*////
 /EquipTest.cpp////*////
@@ -60,3 +58,5 @@
 /sequence.h////*////
 /synchro.cpp////*////
 /synchro.h////*////
+/EquipED42.h////*////
+/EquipED42.cpp////*////
