@@ -299,6 +299,8 @@ TRAITEMENT:		Action sur le bouton NL
 ***************************************************************************	*/
 void CDlgED42::OnNl()
 {
+	pLogger.LOG_TRACE("Dans CDlgED42::OnNl()");
+
 	int	iResult = m_nl.Inverse_etat();
 
  	eqp->ChangeNl(iResult);
@@ -306,11 +308,22 @@ void CDlgED42::OnNl()
 
 	RazEd42();
 	//remoteMode = FALSE;
-	eqp->setRemoteStatus(FALSE);
-	eqp->SetRemoteTC(LOCAL_TC);
+	//eqp->setRemoteStatus(FALSE);			// TODO avec l'équipement
+	eqp->SetRemoteTC(LOCAL_TC);			// TODO avec l'équipement
 	eqp->SetKEState(1);						// Param 28 : Flag : KE state
 	eqp->RazTableCle(true);
 	eqp->SetZeroizeStatus(true);
+	//************************************
+	// Mise à jour des flag's
+	eqp->SetOnlinePresetStatus(1);					// Param 21 : Flag : Online preset
+	eqp->SetActiveKeyState(1);						// Param 29 : Flag : Active KEY state
+	eqp->SetKeyList(1);								// Param 25 : Flag : key list
+	eqp->SetOnlinePreset(DEFAULT_INVALID_VALUE_ED42);
+	eqp->SetActivatedKey(DEFAULT_INVALID_VALUE_ED42);
+	eqp->SetStatusTx(0);
+	eqp->SetStatusRx(0);
+
+	pLogger.LOG_TRACE("Fin CDlgED42::OnNl()");
 }
 
 /* **************************************************************************
@@ -481,6 +494,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							  actionEnCours != ZEROIZE_ALARM &&
 		                      actionEnCours != ZEROIZE_ALARM_C &&
 							  actionEnCours != ZEROIZE_ALARM_S &&
+							  actionEnCours != ZEROIZE_ALARM_TC &&
 							  actionEnCours != ACTIV_LOCAL_CTRL &&
 							  actionEnCours != ACTIV_LOCAL_CTRL_1 &&
 							  actionEnCours != ACTIV_LOCAL_CTRL_2 &&
@@ -577,6 +591,14 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					OutputDebugString("Dans : case ZEROIZE_ALARM_S: !\n");
 					pLogger.LOG_TRACE("Dans : case ZEROIZE_ALARM_S: !");
 					break;
+				case ZEROIZE_ALARM_TC:
+					OutputDebugString("Dans : case ZEROIZE_ALARM_TC: !\n");
+					pLogger.LOG_TRACE("Dans : case ZEROIZE_ALARM_TC: !");
+					if (!eqp->GetResetEd42Tc())
+					{
+						eqp->SetOperatingStatus(OFFLINE);
+					}
+					break;
 				case ZEROIZE_ALARM:
 					OutputDebugString("Dans : case ZEROIZE_ALARM: !\n");
 					pLogger.LOG_TRACE("Dans : case ZEROIZE_ALARM: !");
@@ -585,6 +607,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 					{
 						OutputDebugString("Dans : case ZEROIZE_ALARM: et if (etat) !\n");
 						pLogger.LOG_TRACE("Dans : case ZEROIZE_ALARM: et if (etat) !");
+
 						m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_1)->SetWindowText(OPERATING_STATUS[ZEROIZE_ALARM].c_str());
 						m_dlgTab->m_Info->GetDlgItem(IDC_ED42_DCP_2)->SetWindowText(OPERATING_STATUS[RESTART_WITH_RESET].c_str());
 						eqp->SetOperatingStatus(ZEROIZE_ALARM_S);			// actionEnCours = ZEROIZE_ALARM_S;
@@ -610,6 +633,16 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 					GetDlgItem(IDC_ED42_DCP_BTN_ST)->EnableWindow(true);
 					GetDlgItem(IDC_ED42_DCP_BTN_FW)->EnableWindow(true);
+
+
+					if (eqp->GetResetEd42Tc())
+					{
+						sortieDebug("Dans : case ENTER_ZEROIZE_PW: et if (eqp->GetResetEd42Tc() && eqp->GetRemoteTC() == REMOTE_TC)", actionEnCours);
+						pLogger.LOG_TRACE("Dans : CDlgED42::OnTimer(UINT nIDEvent) et case ENTER_ZEROIZE_PW: et if (eqp->GetResetEd42Tc() && eqp->GetRemoteTC() == REMOTE_TC)");
+						eqp->SetChaineClavier("");
+						eqp->SetOperatingStatus(ZEROIZE_ALARM_TC);
+						break;
+					}
 
 					initAffichageUn(OPERATING_STATUS[actionEnCours].c_str(), OPERATING_STATUS[DEF_PW].c_str(), 1);
 
@@ -709,6 +742,9 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 									
 							SetClavier(FALSE);
 						}
+
+					OutputDebugString("Fin : case ENTER_ZEROIZE_PW: !\n");
+					pLogger.LOG_TRACE("Fin : case ENTER_ZEROIZE_PW !");
 					break;
 				case DEF_PW:
 					//*******************************
@@ -1783,6 +1819,7 @@ void CDlgED42::OnEd42DcpBtnRs()
 	//eqp->SetClavier(TRUE);
 	eqp->SetResetEd42(true);
 	eqp->SetOperatingStatus(RESTART_WITH_RESET);			// actionEnCours = RESTART_WITH_RESET;
+	eqp->SetResetEd42Tc(FALSE);
 }
 
 CString CDlgED42::createAffiche(CString motIn, CString motAjout, int lenAjout)
@@ -2404,7 +2441,8 @@ BOOL CDlgED42::MiseEnMarche()
 
 	SetTimer(1,DUREETIMER,NULL);
 
-	OutputDebugString("Dans : fin CDlgED42::MiseEnMarche() !\n");
+	OutputDebugString("Fin CDlgED42::MiseEnMarche() !\n");
+	pLogger.LOG_TRACE("Fin : CDlgED42::MiseEnMarche() !");
 
 	return ret;
 }
@@ -2549,7 +2587,10 @@ void CDlgED42::affichgeExploitation()
 
 		//Mise à jour de Data Rate
 		itoa(eqp->GetOnlinePreset(),buffer,10);
-		m_dlgTab->m_Info->GetDlgItem(IDC_DAT_RATE)->SetWindowText(DATA_RATE_SHORT[eqp->GetGeneralParameters(buffer).data_rate].c_str());
+		if (strcmp(buffer,"255") == 0)
+			m_dlgTab->m_Info->GetDlgItem(IDC_DAT_RATE)->SetWindowText("-");
+		else
+			m_dlgTab->m_Info->GetDlgItem(IDC_DAT_RATE)->SetWindowText(DATA_RATE_SHORT[eqp->GetGeneralParameters(buffer).data_rate].c_str());
 
 		BuildComposant(IDC_TRANS_MODE, pra);
 		BuildComposant(IDC_TRANS_PRECED, pra);

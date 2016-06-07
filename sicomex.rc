@@ -75,7 +75,7 @@ STYLE WS_POPUP | WS_CAPTION
 CAPTION "A propos de Sicomex"
 FONT 8, "MS Sans Serif"
 BEGIN
-    CTEXT           "SICOMEX Version 4.0.2RC1",IDC_STATIC,35,5,130,8
+    CTEXT           "SICOMEX Version 4.0.3RC1",IDC_STATIC,35,5,130,8
     DEFPUSHBUTTON   "Ok",IDOK,70,82,57,14,WS_GROUP
     CTEXT           "Simulateur d'équipements - TRANS EXT",IDC_STATIC,35,15,
                     130,10

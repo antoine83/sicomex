@@ -9,3 +9,7 @@ EquipED42.sbr
 *.vcxproj
 *.vcxproj.filters
 *.VC.db
+.gitattributes
+.gitignore
+.git
+sync.ffs_db

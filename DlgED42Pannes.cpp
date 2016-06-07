@@ -406,6 +406,7 @@ void DlgED42Pannes::SaveData()
 	alarm = equip->DecodeAlarm(alarmList[23]);
 	alarm.used = m_CryptoalarmTamper.GetCheck()==BST_CHECKED;
 	alarmList[23] = equip->EncodeAlarm(alarm);
+	equip->SetKeStatus(TAMPER);
 
 	//Pour "CRYPTOALARM_GLOBAL"
 	alarm = equip->DecodeAlarm(alarmList[24]);

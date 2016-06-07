@@ -1465,6 +1465,11 @@ int CEquipED42::ChangeNl(int valeur, BOOL genere_TS)
 				SetKeStatus(ZEROIZED);
 				SetZeroizeStatus(TRUE);
 			}
+			if(valeur == 0)
+			{
+				SetKeStatus(KE_IDLE);
+				SetZeroizeStatus(FALSE);
+			}
 			SetZeroizePassWord(2);
 		LeaveCriticalSection(&crit);
 
@@ -2865,7 +2870,7 @@ string	CEquipED42::EncodeError(TError val)
 	sss << "\t" << "val.used:  " << val.used << endl;
 	sss << "\t" << "val.errorNumbers:  " << val.errorNumbers << endl;
 	sss << "\t" << "val.extendedCodes:  " << val.extendedCodes << endl;
-	pLogger->LOG_TRACE(sss);
+	pLogger->LOG_DEBUG(sss);
 
 	stringstream resultat;
 
@@ -3570,7 +3575,7 @@ TRAITEMENT:		Set la table Error
 *************************************************************************** */
 void CEquipED42::setErrorTable(int errorValue, bool val)
 {
-	pLogger->LOG_TRACE("CEquipED42::setErrorTable(int errorValue, bool val");
+	pLogger->LOG_TRACE("Dans CEquipED42::setErrorTable(int errorValue, bool val");
 
 	int nrCmdErrTmp = GetnrCommandInError();
 
@@ -3579,7 +3584,7 @@ void CEquipED42::setErrorTable(int errorValue, bool val)
 	sss << "\t" << "setErrorTable" << endl;
 	sss << "\t" << "errorValue:  " << errorValue << endl;
 	sss << "\t" << "val:  " << val << endl;
-	pLogger->LOG_TRACE(sss);
+	pLogger->LOG_DEBUG(sss);
 	
 
 	TError errorTmp;
@@ -3592,7 +3597,7 @@ void CEquipED42::setErrorTable(int errorValue, bool val)
 	for(int i =1;i < NB_ERROR ; i++)
 	{
 		errorTmp		= DecodeError(errorTab[i]);
-		errorTmp.used	= 0;
+		errorTmp.used	= FALSE;								//errorTmp.used	= 0;
 	}
 
 	errorTmp			= DecodeError(errorTab[errorValue]);
@@ -3602,7 +3607,8 @@ void CEquipED42::setErrorTable(int errorValue, bool val)
 	errorTab[errorValue] = EncodeError(errorTmp);
 
 	pLogger->LOG_TRACE(errorTab[errorValue]);
-	pLogger->LOG_TRACE("Fin CEquipED42::setErrorTable(int errorValue, bool val, int nrCmdError)");
+	pLogger->LOG_TRACE("Fin CEquipED42::setErrorTable(int errorValue, bool val)");
+
 
 }
 
@@ -3612,6 +3618,8 @@ TRAITEMENT:		Retourne l'état de l'error
 *************************************************************************** */
 BOOL CEquipED42::getErrorTable(int errorValue)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::getErrorTable(int errorValue) !");
+
 	TError errorTmp;
 
 	errorTmp = DecodeError(errorTab[errorValue]);
@@ -3625,6 +3633,8 @@ TRAITEMENT:		Set la table Alarm
 *************************************************************************** */
 void CEquipED42::setAlarmTable(int alarmValue, bool val)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::setAlarmTable(int alarmValue, bool val) !");
+
 	TAlarm alarmTmp;
 
 	//Suppression du flag used pour toutes les alarmes
@@ -3647,6 +3657,8 @@ TRAITEMENT:		Retourne l'état de l'Alarm
 *************************************************************************** */
 BOOL CEquipED42::getAlarmTable(int alarmValue)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::getAlarmTable(int alarmValue) !");
+
 	TAlarm alarmTmp;
 
 	alarmTmp = DecodeAlarm(alarmTab[alarmValue]);
@@ -3660,6 +3672,8 @@ TRAITEMENT:		Decode une chaine de caractère en TPowerBitError.
 *************************************************************************** */
 TPowerBitError	CEquipED42::DecodePowerBit(string val)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::DecodePowerBit(string val) !");
+
 	string res="";
 	int cpt = 0;
 	TPowerBitError resultat;
@@ -3704,6 +3718,8 @@ TRAITEMENT:		Encode TPowerBitError en une chaine de caractère.
 *************************************************************************** */
 string	CEquipED42::EncodePowerBit(TPowerBitError val)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::EncodePowerBit(TPowerBitError val) !");
+
 	stringstream resultat;
 
 	resultat << val.used  << ";"  << val.meaning;
@@ -3717,6 +3733,8 @@ TRAITEMENT:		Decode une chaine de caractère en TManuallyBitError.
 *************************************************************************** */
 TManuallyBitError	CEquipED42::DecodeManuallyBit(string val)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::DecodeManuallyBit(string val) !");
+
 	string res="";
 	int cpt = 0;
 	TManuallyBitError resultat;
@@ -3850,6 +3868,8 @@ TRAITEMENT:		Retourne le resultat du bit manually
 *************************************************************************** */
 BOOL CEquipED42::getBitManuallyResultTable(int errorValue)
 {
+	pLogger->LOG_TRACE("Dans : CEquipED42::getBitManuallyResultTable(int errorValue) !");
+
 	TManuallyBitError bitManuallyErrorTmp;
 
 	bitManuallyErrorTmp = DecodeManuallyBit(bitManually[errorValue]);
@@ -3908,6 +3928,8 @@ TRAITEMENT:		Retourne le status du S20
 *************************************************************************** */
 int CEquipED42::GetStatusS20()
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::GetStatusS20()");
+
 	return this->statusED42.statusS20;
 }
 
@@ -3917,6 +3939,8 @@ TRAITEMENT:		Set le status du S20
 *************************************************************************** */
 void CEquipED42::SetStatusS20(int val)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::SetStatusS20(int val)");
+
 	this->statusED42.statusS20 = val;
 }
 
@@ -3945,6 +3969,7 @@ TRAITEMENT:		Activation du preset ONLpreset
 
 void CEquipED42::activationPreset(string preset)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::activationPreset(string preset)");
 
 	TGeneralParameters presetEnCours = GetGeneralParameters(preset);
 
@@ -3980,6 +4005,8 @@ TRAITEMENT:
 *************************************************************************** */
 void CEquipED42::SetZeroizePassWord(int val)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::GetZeroizePassWord(int val)");
+
 	this->statusED42.zeroizePassWord = val;
 }
 /* **************************************************************************
@@ -3988,6 +4015,8 @@ TRAITEMENT:
 *************************************************************************** */
 int CEquipED42::GetZeroizePassWord()
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::GetZeroizePassWord()");
+
 	return this->statusED42.zeroizePassWord;
 }
 
@@ -3999,6 +4028,8 @@ TRAITEMENT:
 
 void CEquipED42::SetnrCommandInError(int val)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::SetnrCommandInError(int val)");
+
 	this->statusED42.nrCommandInError = val;
 }
 
@@ -4009,6 +4040,8 @@ TRAITEMENT:
 
 int CEquipED42::GetnrCommandInError()
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::DetnrCommandInError()");
+
 	return this->statusED42.nrCommandInError;
 }
 
@@ -4019,6 +4052,8 @@ TRAITEMENT:		Si cle_kek = TRUE efface la cle KEK également
 
 void CEquipED42::RazTableCle(bool cle_kek)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::RazTableCle(bool cle_kek)");
+
 	TKeyManagement keyManagement;
 
 	char buffer[3] ={0};
