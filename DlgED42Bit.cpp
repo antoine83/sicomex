@@ -4,12 +4,18 @@
 #include "stdafx.h"
 #include "sicomex.h"
 #include "DlgED42Bit.h"
+#include "Divers\Logger.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+using namespace std;
+using namespace CPlusPlusLogging;
+
+extern Logger pLogger;
 
 /////////////////////////////////////////////////////////////////////////////
 // DlgED42Bit dialog
@@ -75,6 +81,8 @@ BOOL DlgED42Bit::OnInitDialog()
 
 void DlgED42Bit::LoadData()
 {
+	pLogger.LOG_TRACE("Dans DlgED42Bit::LoadData()!");
+
 	//Partie Power on bit
 	c_ramTest.EnableWindow(!eqp->GetMarcheEd42());
 	c_integritySoftware.EnableWindow(!eqp->GetMarcheEd42());
@@ -101,10 +109,14 @@ void DlgED42Bit::LoadData()
 	c_batteryTest.SetCheck(eqp->getBitManuallyTable(BIT_MANUALLY_BATTERY_TEST));
 	c_bitControlUnit.SetCheck(eqp->getBitManuallyTable(BIT_MANUALLY_BIT_CONTROL_UNIT));
 
+	pLogger.LOG_TRACE("Fin DlgED42Bit::LoadData()!");
+
 }
 
 void DlgED42Bit::SaveData()
 {
+	pLogger.LOG_TRACE("Dans DlgED42Bit::SaveData()!");
+
 	eqp->setPowerBitTable(POWER_ON_BIT_RAM_TEST,c_ramTest.GetCheck()==BST_CHECKED);
 	eqp->setPowerBitTable(POWER_ON_BIT_INTEGRITY_SOFTWARE,c_integritySoftware.GetCheck()==BST_CHECKED);
 	eqp->setPowerBitTable(POWER_ON_BIT_FLASH_MEMORY_TEST,c_flashMemoryTest.GetCheck()==BST_CHECKED);
@@ -134,10 +146,12 @@ void DlgED42Bit::SaveData()
 		//Pour l'alarme 
 		eqp->setAlarmTable(ZSS_FLASH_ERROR,TRUE);
 		//Position du flag de l'alarme
-		eqp->SetAlarm(TRUE);
+		eqp->SetAlarm(1);						//eqp->SetAlarm(TRUE);
 	}
 
 	eqp->setModifErreurPanne(FALSE);
+
+	pLogger.LOG_TRACE("Fin DlgED42Bit::SaveData()!");
 }
 
 void DlgED42Bit::OnOK() 

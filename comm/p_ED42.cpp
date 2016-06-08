@@ -174,7 +174,7 @@ int CProtoED42::TraiteTC(char *mess)
 
 			if (found!=std::string::npos)
 			{
-				pLogger.LOG_TRACE("Dans CProtoED42::TraiteTC(char *mess) et if (found!=std::string::npos)");
+				pLogger.LOG_TRACE("Dans : CProtoED42::TraiteTC(char *mess) et if (found!=std::string::npos)");
 
 				lenMsg = message.length();
 				string rcsMsg = message.substr (lenMsg-2,2);
@@ -1082,7 +1082,7 @@ int CProtoED42:: ALM(string trame)
 
 		//Mise à zero de l'alarme
 		//Position du flag de l'alarme
-		equip->SetAlarm(FALSE);
+		equip->SetAlarm(0);							//equip->SetAlarm(FALSE);
 	}
 	else
 		strcat(bufCmd, "0,0");
@@ -1100,11 +1100,13 @@ int CProtoED42:: CES(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: CES(string trame)");
 
-	int ret = NOT_ERROR;
+	int ret = SUCCESS;
 
-	
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if((equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)  && !equip->GetStatusNl())
+	//if((equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)  && !equip->GetStatusNl())
+	if((tmpS20 >= 2)  && !equip->GetStatusNl())
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -1114,7 +1116,7 @@ int CProtoED42:: CES(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0  && !equip->GetStatusNl())
+	if(tmpS20 != 0  && !equip->GetStatusNl())
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		//Force le RES
@@ -1247,8 +1249,11 @@ int CProtoED42:: CV(string trame)
 	//OutputDebugString("Dans : CProtoED42:: CV(string trame)!\n");
 	pLogger.LOG_TRACE("Dans CProtoED42:: CV(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -1257,7 +1262,7 @@ int CProtoED42:: CV(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -1927,8 +1932,11 @@ TRAITEMENT:		requête d'une vue sur les clés (page 179)
 {
 	 pLogger.LOG_TRACE("Dans CProtoED42:: CVLR(string trame)");
 
+	 int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -1937,7 +1945,7 @@ TRAITEMENT:		requête d'une vue sur les clés (page 179)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -2874,6 +2882,8 @@ int CProtoED42:: OFL(string trame)
 
 	if (testTrameFirst(trame, 0, 1, '0', &ret))
 	{
+		pLogger.LOG_TRACE("Fin CProtoED42:: OFL(string trame) et return ERR_NON_CONFORME");
+
 		equip->setStatusErrorTable(ret, TRUE);
 		return ERR_NON_CONFORME;
 	}
@@ -2909,7 +2919,7 @@ int CProtoED42:: OFL(string trame)
 	equip->SetStatusTx(0);
 	equip->SetStatusRx(0);
 
-	pLogger.LOG_TRACE("Fin CProtoED42:: OFL(string trame)");
+	pLogger.LOG_TRACE("Fin CProtoED42:: OFL(string trame) et return SUCCESS");
 	
 	return SUCCESS;
 }
@@ -2926,8 +2936,11 @@ int CProtoED42:: ONL(string trame)
 	pLogger.LOG_TRACE("Dans CProtoED42:: ONL(string trame)");
 	pLogger.LOG_TRACE(trame);
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -2936,7 +2949,7 @@ int CProtoED42:: ONL(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -2947,7 +2960,7 @@ int CProtoED42:: ONL(string trame)
 
 	//Envoi d'un RES
 	isRES = TRUE;
-	int ret = NOT_ERROR;
+	int ret = SUCCESS;
 
 	if(!(equip->getAuthentified()))
 	{
@@ -2964,6 +2977,7 @@ int CProtoED42:: ONL(string trame)
 
 	if(equip->GetRemoteTC() == LOCAL_TC)
 	{
+		pLogger.LOG_TRACE("Dans CProtoED42:: ONL(string trame) et if(equip->GetRemoteTC() == LOCAL_TC)");
 		//Parametre invalide
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		return NOT_REMOTE_MODE;
@@ -2973,17 +2987,21 @@ int CProtoED42:: ONL(string trame)
 	if(atoi(trame.c_str()) < 0 || atoi(trame.c_str()) > 31 
 		|| (atoi(trame.c_str()) == 0 && trame.compare("0") != 0)) 
 	{
+		pLogger.LOG_TRACE("Dans CProtoED42:: ONL(string trame) et return ERR_NON_CONFORME");
+
 		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
 		return ERR_NON_CONFORME;
 	}
 
+	/*
 	if (equip->GetStatusBusy() == 1)
 	{
 		OutputDebugString("Dans : CProtoED42:: ONL(string trame) et if (equip->GetStatusBusy() == 1)!\n");
+		pLogger.LOG_TRACE("Dans : CProtoED42:: ONL(string trame) et if (equip->GetStatusBusy() == 1)");
 		return IN_BUSY;
 	}
 		
-
+	*/
 	if (equip->GetKeStatus() == CIK_NOT_PLUGED)
 		return CIK_NOT_PLUGED;
 
@@ -3010,6 +3028,7 @@ int CProtoED42:: ONL(string trame)
 
 	if (tmpMemIdx == DEFAULT_INVALID_VALUE_ED42 && (equip->GetOperatingMode() == 0 || equip->GetOperatingMode() == 1)) //TODO
 	{
+		pLogger.LOG_TRACE("Dans : CProtoED42:: ONL(string trame) et if (tmpMemIdx == DEFAULT_INVALID_VALUE_ED42....");
 		equip->setErrorTable(VARIABLE_NOT_DEFINED, TRUE);
 		return ERR_NON_CONFORME; 
 	}
@@ -3022,7 +3041,7 @@ int CProtoED42:: ONL(string trame)
 	equip->SetOperatingStatus(ONLINE);
 	equip->setED42Lock(false);
 
-	pLogger.LOG_TRACE("Fin CProtoED42:: ONL(string trame)");
+	pLogger.LOG_TRACE("Fin CProtoED42:: ONL(string trame) et return SUCCESS;");
 
 	return SUCCESS;
 }
@@ -3388,8 +3407,11 @@ int CProtoED42:: PWCHK(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: PWCHK(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -3500,7 +3522,7 @@ int CProtoED42:: PWCHK(string trame)
 	}
 
 	//Vérification si on est en présence d'une erreur S#20 (sequence conflict)
-	if(equip->GetStatusS20() == 1)
+	if(tmpS20 == 1)
 		equip->SetStatusS20(0);
 
 	equip->setAuthentified(TRUE);
@@ -3520,8 +3542,11 @@ int CProtoED42:: REQDS(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: REQDS(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -3530,7 +3555,7 @@ int CProtoED42:: REQDS(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -3591,8 +3616,11 @@ int CProtoED42:: REQHD(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: REQHD(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -3601,7 +3629,7 @@ int CProtoED42:: REQHD(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -3795,8 +3823,11 @@ int CProtoED42:: REQPS(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: REQPS(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -3805,7 +3836,7 @@ int CProtoED42:: REQPS(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -3898,8 +3929,11 @@ int CProtoED42:: REQUL(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: REQUL(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -3908,7 +3942,7 @@ int CProtoED42:: REQUL(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -4656,8 +4690,11 @@ int CProtoED42:: SETPS(string trame)
 	//OutputDebugString("Dans : CProtoED42:: SETPS(string trame)!\n");
 	pLogger.LOG_TRACE("Dans CProtoED42:: SETPS(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -4666,7 +4703,7 @@ int CProtoED42:: SETPS(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -5625,9 +5662,10 @@ int CProtoED42:: SYS(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: SYS(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
 	
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if((equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2) && !equip->GetStatusNl())		// TODO pour le  && !equip->GetStatusNl()
+	if((tmpS20 >= 2) && !equip->GetStatusNl())		// TODO pour le  && !equip->GetStatusNl()
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -5638,7 +5676,7 @@ int CProtoED42:: SYS(string trame)
 
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 && !equip->GetStatusNl())										// TODO pour le  && !equip->GetStatusNl()
+	if(tmpS20 != 0 && !equip->GetStatusNl())										// TODO pour le  && !equip->GetStatusNl()
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		//Force le RES
@@ -5889,8 +5927,11 @@ int CProtoED42:: VER(string trame)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42:: VER(string trame)");
 
+	int tmpS20 = equip->GetStatusS20();
+
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	//if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
+	if(tmpS20 >= 2)
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -5899,7 +5940,7 @@ int CProtoED42:: VER(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
+	if(tmpS20 != 0)
 	{
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -6137,7 +6178,7 @@ string CProtoED42::IntToHexaString(int reponse, int format)
     sss << endl;
     sss << "\t" << "reponse: " << reponse << endl;
 	sss << "\t" << "format: " << format << endl;
-    pLogger.LOG_TRACE(sss);
+    pLogger.LOG_DEBUG(sss);
 
     stringstream elementHex;
 
@@ -6148,6 +6189,7 @@ string CProtoED42::IntToHexaString(int reponse, int format)
 
     string res = elementHex.str();
 
+	pLogger.LOG_TRACE("Fin CProtoED42::IntToHexaString(int reponse, int format)");
 	pLogger.LOG_TRACE(res);
 
     return res;
@@ -6231,12 +6273,19 @@ string CProtoED42::KeyMemoryIndex(TMapKeyManagement confKey, int minPlage, int m
 	elementHex << setfill('0') << setw(4);
 	elementHex << hex << strtol(elementBin.str().c_str(),NULL,2);
 
+	pLogger.LOG_TRACE("Fin CProtoED42::KeyMemoryIndex");
+
 	return elementHex.str();
 }
 
-void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,TDigitalDCE digitalDceEnCours,
-								   TDigitalDTE digitalDteEnCours,TAnalogDCE analogDceEnCours,
-								   TAnalogDTE analogDteEnCours)
+//***************************************************************
+// Construction du REQPSx
+//***************************************************************
+void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
+								 TDigitalDCE digitalDceEnCours,
+								 TDigitalDTE digitalDteEnCours,
+								 TAnalogDCE analogDceEnCours,
+								 TAnalogDTE analogDteEnCours)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42::buildTrameREQPS");
 
@@ -6579,17 +6628,20 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,TDigitalDCE di
 	pLogger.LOG_TRACE("Fin CProtoED42::buildTrameREQPS");
 }
 
-
+//***************************************************************************************************
+// Return false si pas de problème sinon return true si un problème avec le nr de l'error dans le ret
+//***************************************************************************************************
 bool CProtoED42::testTrameFirst(string trame, int sizeMin, int sizeMax, char usedSep, int *ret, bool option, int typeOption, bool isOnline)
 {
 	pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst");
 
 	if (isOnline && equip->GetOperatingStatus() == ONLINE)
 	{
+		pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst et if (isOnline && equip->GetOperatingStatus() == ONLINE)");
+
 		*ret =  WRONG_COMMAND;
 		return true;
 	}
-
 
 	if (option)
 	{
@@ -6637,11 +6689,13 @@ bool CProtoED42::testTrameFirst(string trame, int sizeMin, int sizeMax, char use
 
 	if (trame[0] != usedSep && typeOption != 10 && typeOption != 3 && typeOption != 4 && typeOption != 5 && typeOption != 6 && typeOption != 1)
 	{
+		pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst et if (trame[0] != usedSep &&.....");
+
 		*ret = WRONG_COMMAND;
 		return true;
 	}
 
-	pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst et return false;");
+	pLogger.LOG_TRACE("Dans CProtoED42::testTrameFirst et return false; donc error=false");
 
 	return false;
 }

@@ -2206,6 +2206,8 @@ TRAITEMENT:		Set le preset list
 *************************************************************************** */
 void CEquipED42::SetPresetList(string preset,char operation)
 {
+	pLogger->LOG_TRACE("Dans CEquipED42::SetPresetList(string preset,char operation)");
+
 	/*
 	La valeur de presetList est la valeur décimal des valeurs définies 
 	dans la commande PSS (page 190)
@@ -2255,6 +2257,8 @@ void CEquipED42::SetPresetList(string preset,char operation)
 			break;
 		}
 	}
+
+	pLogger->LOG_TRACE("Fin CEquipED42::SetPresetList(string preset,char operation)");
 }
 
 /* **************************************************************************

@@ -4,12 +4,18 @@
 #include "stdafx.h"
 #include "sicomex.h"
 #include "DlgED42StatusERR.h"
+#include "Divers\Logger.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+using namespace std;
+using namespace CPlusPlusLogging;
+
+extern Logger pLogger;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgED42StatusERR dialog
@@ -79,7 +85,9 @@ BOOL CDlgED42StatusERR::OnInitDialog()
 }
 
 void CDlgED42StatusERR::LoadData() 
-{	
+{
+	pLogger.LOG_TRACE("Dans : CDlgED42StatusERR::LoadData()!");
+
 	TStatusError statusError;
 	TVectorStatusError errorStatusList = eqp->getStatusErrors();
 
@@ -191,10 +199,14 @@ void CDlgED42StatusERR::LoadData()
 	c_secureMode.SetCurSel(eqp->getSecureMode());	
 
 	UpdateData(FALSE);
+
+	pLogger.LOG_TRACE("Fin : CDlgED42StatusERR::LoadData()!");
 }
 
 void CDlgED42StatusERR::SaveData() 
 {
+	pLogger.LOG_TRACE("Dans : CDlgED42StatusERR::SaveData()!");
+
 	TStatusError statusError;
 	TVectorStatusError errorStatusList = eqp->getStatusErrors();
 
@@ -338,6 +350,8 @@ void CDlgED42StatusERR::SaveData()
 	eqp->setStatusErrors(errorStatusList);
 
 	eqp->setModifErreurPanne(FALSE);
+
+	pLogger.LOG_TRACE("Fin : CDlgED42StatusERR::SaveData()!");
 }
 
 void CDlgED42StatusERR::OnCheckInvalidParameter() 

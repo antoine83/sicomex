@@ -4,12 +4,19 @@
 #include "stdafx.h"
 #include "sicomex.h"
 #include "DlgED42Pannes.h"
+#include "Divers\Logger.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+using namespace std;
+using namespace CPlusPlusLogging;
+
+
+extern Logger pLogger;
 
 /////////////////////////////////////////////////////////////////////////////
 // DlgED42Pannes dialog
@@ -100,6 +107,8 @@ BOOL DlgED42Pannes::OnInitDialog()
 
 void DlgED42Pannes::LoadData()
 {
+	pLogger.LOG_TRACE("Dans : DlgED42Pannes::LoadData()!");
+
 	TAlarm alarm;
 	TVectorAlarm alarmList = equip->getAlarms();
 
@@ -280,10 +289,14 @@ void DlgED42Pannes::LoadData()
 
 	UpdateData(FALSE);
 
+	pLogger.LOG_TRACE("Fin : DlgED42Pannes::LoadData()!");
+
 }
 
 void DlgED42Pannes::SaveData()
 {
+	pLogger.LOG_TRACE("Dans : DlgED42Pannes::SaveData()!");
+
 	TAlarm alarm;
 	TVectorAlarm alarmList = equip->getAlarms();
 
@@ -406,7 +419,6 @@ void DlgED42Pannes::SaveData()
 	alarm = equip->DecodeAlarm(alarmList[23]);
 	alarm.used = m_CryptoalarmTamper.GetCheck()==BST_CHECKED;
 	alarmList[23] = equip->EncodeAlarm(alarm);
-	equip->SetKeStatus(TAMPER);
 
 	//Pour "CRYPTOALARM_GLOBAL"
 	alarm = equip->DecodeAlarm(alarmList[24]);
@@ -418,15 +430,17 @@ void DlgED42Pannes::SaveData()
 	equip->setModifErreurPanne(FALSE);
 
 	//Recherche si il y a au moins une erreur
-	equip->SetAlarm(FALSE);
+	equip->SetAlarm(0);								//equip->SetAlarm(FALSE);
 	for(int i=0;i<equip->getAlarms().size();i++)
 	{
 		alarm = equip->DecodeAlarm(alarmList[i]);
 		if (alarm.used)
 		{
-			equip->SetAlarm(TRUE);
+			equip->SetAlarm(1);					//equip->SetAlarm(TRUE);
 		}
 	}
+
+	pLogger.LOG_TRACE("Fin : DlgED42Pannes::SaveData()!");
 }
 
 void DlgED42Pannes::OnOK()
@@ -1135,6 +1149,8 @@ void DlgED42Pannes::OnCheckCryptoalarmNotl()
 
 void DlgED42Pannes::OnCheckCryptoalarmTamper()
 {
+	pLogger.LOG_TRACE("Dans : DlgED42Pannes::OnCheckCryptoalarmTamper()!");
+
 	equip->setModifErreurPanne(TRUE);
 
 	m_ZssManagCrc.SetCheck(BST_UNCHECKED);

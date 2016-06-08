@@ -309,7 +309,7 @@ void CDlgED42::OnNl()
 	RazEd42();
 	//remoteMode = FALSE;
 	//eqp->setRemoteStatus(FALSE);			// TODO avec l'équipement
-	eqp->SetRemoteTC(LOCAL_TC);			// TODO avec l'équipement
+	eqp->SetRemoteTC(LOCAL_TC);				// TODO avec l'équipement
 	eqp->SetKEState(1);						// Param 28 : Flag : KE state
 	eqp->RazTableCle(true);
 	eqp->SetZeroizeStatus(true);
@@ -429,7 +429,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 	chaineSep = eqp->GetChaineClavier().c_str();
 
 	if (eqp->GetStatusBusy() == 1)
-		SetTimer(11,DUREEBUSY,NULL);
+		eqp->SetStatusBusy(0);
+		//SetTimer(11,DUREEBUSY,NULL);
 
 	//IDC_CHECK_FULL
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_FULL)->ShowWindow(eqp->GetMarcheEd42() && !eqp->GetResetEd42() && !eqp->GetStatusNl());

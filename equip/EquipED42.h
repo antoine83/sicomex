@@ -1272,8 +1272,8 @@ struct TStatus {
 	int cikStatus;					//CIK utilisé pour le CIK Page 183/184 tableau 47
 	int cikUser;
 	int cikCounter;					//Compteur d'activités sur la programmation du CIK
-	int KEState;					// Pour le SYS param : 28
-	int KEStatus;					// Pour le CES (page 165) par le tableau 39 page 160
+	int KEState;					// Pour le SYS param : 28 (0 = KE state in unchanged, 1 = KE state has been changed).
+	int KEStatus;					// Pour le CES (page 165) par le tableau 39 page 160 (TAMPER, ALARM.....).
 	bool nlStatus;
 	bool zeroizeStatus;
 	bool egStatus;
