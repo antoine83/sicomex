@@ -170,7 +170,7 @@ CEquipM1752::CEquipM1752(int idx):CEquip(idx)
 	//mise à false de la variable test carte	//CC
 	equip_test_carte=false;
 
-	for(int i=0; i<NB_TESTS; i++) {
+	for(i=0; i<NB_TESTS; i++) {
 		test_map[TESTS[i]] = FALSE;
 	}
 

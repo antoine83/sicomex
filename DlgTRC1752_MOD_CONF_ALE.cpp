@@ -218,7 +218,7 @@ void CDlgTRC1752_MOD_CONF_ALE::LoadData()
 
 	// Selfaddresses
 	c_SelfAdresse.ResetContent();
-	for(int i=0; i<modem.selfaddress.size();i++)
+	for(i=0; i<modem.selfaddress.size();i++)
 		c_SelfAdresse.AddString(modem.selfaddress[i].c_str());
 
 	if(modem.current_selfaddress < modem.selfaddress.size()) c_SelfAdresse.SetCurSel(modem.current_selfaddress);

@@ -135,6 +135,10 @@ BOOL CDlgED42KeyDisplay::OnInitDialog()
 
 void CDlgED42KeyDisplay::LoadData() 
 {
+
+	if (eqp->GetKeStatus() == CIK_NOT_PLUGED)
+		return;
+
 	char buffer[4]={0};
 	CString strText;
 	TKeyManagement keyManagement;

@@ -508,7 +508,7 @@ void CDlgTRC1752_MOD_CONF_ARQ::LoadData()
 	c_AdaptEntrelacement.SelectString(0, arq.codage.c_str());
 
 	c_ArqFm.ResetContent();
-	for(int i=0; i<arq.adresses_locales.size();i++)
+	for(i=0; i<arq.adresses_locales.size();i++)
 		c_ArqFm.AddString(arq.adresses_locales[i].c_str());
 
 	if(arq.current_adresse_locale < arq.adresses_locales.size())

@@ -242,7 +242,6 @@ void CDlgED42Parametres::LoadData()
 	else
 		c_remoteCtrl.SetCurSel(1);
 
-
 	UpdateData(FALSE);
 }
 
@@ -340,7 +339,13 @@ void CDlgED42Parametres::OnSetDsInterface()
 
 void CDlgED42Parametres::OnSetFactoryDefault()
 {
-	// TODO: Add your control notification handler code here
+	eqp->setRemoteAdress("1");
+	eqp->SetDeviceID("123456");
+	eqp->SetInterfaceKeyDownload(DS102);
+	eqp->setHDLCAddress("127");
+	eqp->setRemoteMode(REMOTE);
+	
+	LoadData();
 
 }
 

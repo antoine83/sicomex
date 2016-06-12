@@ -428,9 +428,8 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 	chaineSep = eqp->GetChaineClavier().c_str();
 
-	if (eqp->GetStatusBusy() == 1)
-		eqp->SetStatusBusy(0);
-		//SetTimer(11,DUREEBUSY,NULL);
+	if (eqp->GetStatusBusy() == 1 && eqp->GetDureeBusy() !=0  )
+		SetTimer(11,eqp->GetDureeBusy(),NULL);
 
 	//IDC_CHECK_FULL
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_FULL)->ShowWindow(eqp->GetMarcheEd42() && !eqp->GetResetEd42() && !eqp->GetStatusNl());
@@ -1191,14 +1190,14 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 							case ACTIV_LOCAL_CTRL_1:		// SUCCESS
 								OutputDebugString("Dans : case ACTIV_LOCAL_CTRL_1:!\n");
 								pLogger.LOG_TRACE("Dans : case ACTIV_LOCAL_CTRL_1:!");
-								eqp->SetStatusBusy(1);
+								//eqp->SetStatusBusy(1);
 								KillTimer(1);
 								SetTimer(7,DUREE10S,NULL);
 								break;
 							case ACTIV_LOCAL_CTRL_2:		// INCORRECT
 								OutputDebugString("Dans : case ACTIV_LOCAL_CTRL_2:!\n");
 								pLogger.LOG_TRACE("Dans : case ACTIV_LOCAL_CTRL_2:!");
-								eqp->SetStatusBusy(1);
+								//eqp->SetStatusBusy(1);
 								KillTimer(1);
 								SetTimer(7,DUREE10S,NULL);
 								break;
@@ -1503,7 +1502,7 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 				//eqp->ChangeNl(0);
 				*/
 				break;
-			case 11:	// Timer11								// After Zeroize/Emergency Clear page 83
+			case 11:	// Timer11								// Traitement du Busy
 				OutputDebugString("Dans : case 11: fin Busy!\n");
 				pLogger.LOG_TRACE("Dans : case 11: fin Busy!");
 				KillTimer(11);
@@ -2428,7 +2427,7 @@ BOOL CDlgED42::MiseEnMarche()
 		}
 	}
 
-	eqp->SetMarcheEd42(true);
+	//eqp->SetMarcheEd42(true);
 	eqp->SetResetEd42(false);
 	eqp->setRepetition(false);
 	eqp->setLastNumber(0);
@@ -2440,6 +2439,7 @@ BOOL CDlgED42::MiseEnMarche()
 	//Effacement des tables
 	eqp->RAZTable();
 
+	eqp->SetMarcheEd42(true);
 	SetTimer(1,DUREETIMER,NULL);
 
 	OutputDebugString("Fin CDlgED42::MiseEnMarche() !\n");
@@ -2539,6 +2539,7 @@ void CDlgED42::affichgeExploitation()
 		switch(eqp->GetOperatingMode())
 		{
 		OutputDebugString("Dans : début CDlgED42::affichgeExploitation() et switch(eqp->GetOperatingMode())!\n");
+		pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode())!");
 		case DATA_CRYPRO:
 		case OPE_MASTER:
 			// Mise à jour de Activate key et update.
@@ -2593,10 +2594,12 @@ void CDlgED42::affichgeExploitation()
 		else
 			m_dlgTab->m_Info->GetDlgItem(IDC_DAT_RATE)->SetWindowText(DATA_RATE_SHORT[eqp->GetGeneralParameters(buffer).data_rate].c_str());
 
+
 		BuildComposant(IDC_TRANS_MODE, pra);
 		BuildComposant(IDC_TRANS_PRECED, pra);
 		BuildComposant(IDC_TRAF_MODE, pra);
 		BuildComposant(IDC_DAT_RATE, pra);
+		
 
 		//Pour le bouton Activation désactivation
 		m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_ACT_DESACT)->SetWindowText("Désactiver");

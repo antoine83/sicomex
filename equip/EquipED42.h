@@ -1308,6 +1308,7 @@ struct TStatus {
 	int statusRx;
 	int statusTx;
 	int statusBusy;
+	int dureeBussy;
 	string versionRed;
 	string versionBlack;
 	string versionPldRed;
@@ -1387,6 +1388,7 @@ struct TStatus {
 		statusRx = 0;
 		statusTx = 0;
 		statusBusy = 0;
+		dureeBussy = 0;
 		versionRed= DEFAULT_STRING_VALUE_ED42;
 		versionBlack= DEFAULT_STRING_VALUE_ED42;
 		versionPldRed= DEFAULT_STRING_VALUE_ED42;
@@ -1744,6 +1746,9 @@ TRAITEMENT:		Destructeur
 
 	int GetStatusBusy();
 	void SetStatusBusy(int val);
+
+	int GetDureeBusy();
+	void SetDureeBusy(int val);
 
 	string GetVersionRed();
 	void SetVersionRed(string val);

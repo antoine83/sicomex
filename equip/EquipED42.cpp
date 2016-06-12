@@ -983,6 +983,11 @@ BOOL CEquipED42::Charge_Contexte(char *fichier)
 	if(iResult>=0)
 		pLogger->updateLogLevel((LogLevel)atoi(ligne+5));
 
+	// Traitement de la duree du Bussy
+	iResult = Extrait_ligne(contenu,"P031=",ligne,TAILLE_MAX_LIGNE);
+	if(iResult>=0)
+		SetDureeBusy(atoi(ligne+5));
+
 	// Key Management
 	strcat(bufKey, "P10..");
 
@@ -1202,6 +1207,9 @@ BOOL CEquipED42::Sauve_Contexte(char *fichier)
 	file << ligne << endl;
 
 	sprintf(ligne,"P030=%d", pLogger->getLogLevel());
+	file << ligne << endl;
+
+	sprintf(ligne,"P031=%d", GetDureeBusy());
 	file << ligne << endl;
 
 
@@ -2551,6 +2559,7 @@ TRAITEMENT:		Retourne la valeur de busy
 int CEquipED42::GetStatusBusy()
 {
 	OutputDebugString("Dans : CEquipED42::GetStatusBusy()!\n");
+	pLogger->LOG_TRACE("Dans : CEquipED42::GetStatusBusy()!");
 
 	return this->statusED42.statusBusy;
 }
@@ -2562,9 +2571,35 @@ TRAITEMENT:		Set la valeur de busy
 void CEquipED42::SetStatusBusy(int val)
 {
 	OutputDebugString("Dans : CEquipED42::SetStatusBusy(int val)!\n");
+	pLogger->LOG_TRACE("Dans : CEquipED42::SetStatusBusy(int val)!");
 
 	this->statusED42.statusBusy = val;
 }
+
+/* **************************************************************************
+METHODE :		GetDureeBusy()
+TRAITEMENT:		Retourne la valeur dureeBussy
+*************************************************************************** */
+int CEquipED42::GetDureeBusy()
+{
+	OutputDebugString("Dans : CEquipED42::GetDureeBusy()!\n");
+	pLogger->LOG_TRACE("Dans : CEquipED42::GetDureeBusy()!");
+
+	return this->statusED42.dureeBussy;
+}
+
+/* **************************************************************************
+METHODE :		SetDureeBusy()
+TRAITEMENT:		Set la valeur de dureeBussy
+*************************************************************************** */
+void CEquipED42::SetDureeBusy(int val)
+{
+	OutputDebugString("Dans : CEquipED42::SetDureeBusy(int val)!\n");
+	pLogger->LOG_TRACE("Dans : CEquipED42::SetDureeBusy(int val)!");
+
+	this->statusED42.dureeBussy = val;
+}
+
 
 /* **************************************************************************
 METHODE :		GetVersionRed()

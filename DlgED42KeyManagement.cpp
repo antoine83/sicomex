@@ -156,9 +156,16 @@ void CDlgED42KeyManagement::SaveData()
 
 		if (eqp->GetOperatingStatus() == ONLINE)
 		{
-			MessageBox("Impossible de supprimer un CV si on est ONLINE.","Attention",MB_ICONWARNING);
+			MessageBox("Impossible de charger un CV si on est ONLINE.","Attention",MB_ICONWARNING);
 			break;
 		}
+
+		if (eqp->GetKeStatus() == CIK_NOT_PLUGED)
+		{
+			MessageBox("Impossible de charger un CV si on est pas en CIK_MODE.","Attention",MB_ICONWARNING);
+			break;
+		}
+
 		keyManagement.days			= c_days.GetCurSel()+1;
 		keyManagement.months		= c_months.GetCurSel()+1;
 		keyManagement.years			= c_years.GetCurSel();
@@ -217,6 +224,13 @@ void CDlgED42KeyManagement::SaveData()
 			break;
 		}
 
+		if (eqp->GetKeStatus() == CIK_NOT_PLUGED)
+		{
+			MessageBox("Impossible de supprimer un CV si on est pas en CIK_MODE.","Attention",MB_ICONWARNING);
+			break;
+		}
+
+
 		//Si aucun preset est taggé alors on peut supprimer.
 		if(keyManagement.tag.compare("--------") == 0)
 		{
@@ -240,6 +254,28 @@ void CDlgED42KeyManagement::SaveData()
 		}
 		break;
 	case 3: //Delete All CV
+
+		// Uniquement en "OFFLINE"
+		if (eqp->GetOperatingStatus() == ONLINE)
+		{
+			MessageBox("Impossible de supprimer les CV si on est ONLINE.","Attention",MB_ICONWARNING);
+			c_action.SetCurSel(0);
+			break;
+		}
+		// Uniquement si "The password lock time has not expired"
+		if (eqp->getED42Lock())
+		{
+			MessageBox("Impossible de supprimer les CV si on est LOCK.","Attention",MB_ICONWARNING);
+			c_action.SetCurSel(0);
+			break;
+		}
+
+		if (eqp->GetKeStatus() == CIK_NOT_PLUGED)
+		{
+			MessageBox("Impossible de supprimer les CV si on est pas en CIK_MODE.","Attention",MB_ICONWARNING);
+			c_action.SetCurSel(0);
+			break;
+		}
 		eqp->RazTableCle();
 
 		//Quand on supprime un CV, on positionne le combo Action à LOAD CV

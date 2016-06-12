@@ -114,7 +114,7 @@ void CDlgED42KeyManagementTab::LoadData()
 {
 	switch(c_tab.GetCurSel())
 	{
-	case 0:	
+	case 0:
 		m_KeyDisplay->LoadData();
 		break;
 	case 1:

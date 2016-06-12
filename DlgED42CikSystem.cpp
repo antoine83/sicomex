@@ -60,7 +60,12 @@ END_MESSAGE_MAP()
 
 BOOL CDlgED42CikSystem::OnInitDialog() 
 {
-	CDialog::OnInitDialog();	
+	CDialog::OnInitDialog();
+	
+	GetDlgItem(IDC_BUTTON_KEK)->EnableWindow(FALSE);
+
+	if (eqp->GetInterfaceKeyDownload() == DS101)
+		GetDlgItem(IDC_BUTTON_KEK)->EnableWindow(TRUE);
 	
 	return TRUE;  
 }
@@ -75,6 +80,11 @@ void CDlgED42CikSystem::LoadData()
 		eqp->ChangeCik(WAITING_CIK_STATE,FALSE);
 	else
 		eqp->ChangeCik(VALID_CIK_STATE,FALSE);
+
+	GetDlgItem(IDC_BUTTON_KEK)->EnableWindow(FALSE);
+
+	if (eqp->GetInterfaceKeyDownload() == DS101)
+		GetDlgItem(IDC_BUTTON_KEK)->EnableWindow(TRUE);
 
 }
 
