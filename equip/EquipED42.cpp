@@ -233,6 +233,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	default_general_parameters["0"].application_type = DEFAULT_INT_VALUE_ED42;
 	default_general_parameters["0"].output_selection = TXWBV11;
 	default_general_parameters["0"].synchronisation_mode = SYN_SYN;
+	default_general_parameters["0"].param6 = DEFAULT_INVALID_VALUE_ED42;
 	default_general_parameters["0"].clock_mode = SELF;
 	default_general_parameters["0"].nb_of_data_bite = BITS_8;
 	default_general_parameters["0"].parity = NONE;
@@ -255,6 +256,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	default_general_parameters["1"].application_type = DEFAULT_INT_VALUE_ED42;
 	default_general_parameters["1"].output_selection = TXWBV11;
 	default_general_parameters["1"].synchronisation_mode = SYN_SYN;
+	default_general_parameters["0"].param6 = DEFAULT_INVALID_VALUE_ED42;
 	default_general_parameters["1"].clock_mode = DCE;
 	default_general_parameters["1"].nb_of_data_bite = BITS_7;
 	default_general_parameters["1"].parity = NONE;
@@ -277,6 +279,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	default_general_parameters["2"].application_type = DEFAULT_INT_VALUE_ED42;
 	default_general_parameters["2"].output_selection = TXWBV11;
 	default_general_parameters["2"].synchronisation_mode = SYN_SYN;
+	default_general_parameters["0"].param6 = DEFAULT_INVALID_VALUE_ED42;
 	default_general_parameters["2"].clock_mode = SELF;
 	default_general_parameters["2"].nb_of_data_bite = BITS_7;
 	default_general_parameters["2"].parity = NONE;
@@ -299,6 +302,7 @@ CEquipED42::CEquipED42(int idx):CEquip(idx)
 	default_general_parameters["3"].application_type = DEFAULT_INT_VALUE_ED42;
 	default_general_parameters["3"].output_selection = TXWBV11;
 	default_general_parameters["3"].synchronisation_mode = SYN_SYN;
+	default_general_parameters["0"].param6 = DEFAULT_INVALID_VALUE_ED42;
 	default_general_parameters["3"].clock_mode = DCE;
 	default_general_parameters["3"].nb_of_data_bite = BITS_7;
 	default_general_parameters["3"].parity = NONE;
@@ -1333,6 +1337,8 @@ TRAITEMENT:		Mise en route de l'equipement
 ***************************************************************************	*/
 BOOL CEquipED42::Power()
 {
+	pLogger->trace("Dans CEquipED42::Power()");
+
 	BOOL	activite;
 	CEquip::Power();
 
@@ -1344,6 +1350,7 @@ BOOL CEquipED42::Power()
 		//SetMarcheEd42(activite);
 	} else
 	{
+		
 		ReinitED42();
 	}
 
@@ -1530,6 +1537,8 @@ int CEquipED42::ChangeEg(int valeur,BOOL genere_TS)
 
 void CEquipED42::ReinitED42()
 {
+	pLogger->trace("Dans CEquipED42::ReinitED42()");
+
 	SetMarcheEd42(false);
 }
 
@@ -1683,6 +1692,8 @@ TRAITEMENT:		Set le status de marche
 *************************************************************************** */
 void CEquipED42::SetMarcheEd42(bool val)
 {
+	pLogger->trace("Dans CEquipED42::SetMarcheEd42(bool val)");
+
 	this->statusED42.marche = val;
 }
 

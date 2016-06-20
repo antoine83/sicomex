@@ -742,7 +742,7 @@ void CProtoED42:: sendAcq(int val)
 	pLogger.LOG_TRACE(sss.str());
 
 	// Reset du Busy
-	equip->SetStatusBusy(0);
+	//equip->SetStatusBusy(0);		// Déplacement dans le OnTimer de DlgED42
 
 	EnvoyerTS((char*)LPCTSTR(CString(reponse.c_str())));
 
@@ -811,27 +811,6 @@ int CProtoED42:: ACV(string trame)
 	OutputDebugString("Dans : CProtoED42:: ACV(string trame) !\n");
 	pLogger.LOG_TRACE("Dans CProtoED42:: ACV(string trame)");
 
-	/*
-	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
-	if(equip->GetStatusS20() == 3 || equip->GetStatusS20() == 2)
-	{
-		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
-		//Force le RES
-		isRES = TRUE;
-		return NOT_REMOTE_MODE;
-	}
-
-	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0)
-	{
-		equip->setStatusErrorTable(CONFLICT, TRUE);
-		
-		//Force le RES
-		isRES = TRUE;
-		return CONFLICT;
-	}
-	*/
-
 	int ret = SUCCESS;
 	int tmpMemIdx;
 
@@ -848,23 +827,6 @@ int CProtoED42:: ACV(string trame)
 		return ERR_NON_CONFORME;
 	}
 
-	/*
-	if(trame.size() == 0)
-	{
-		equip->setStatusErrorTable(WRONG_COMMAND, TRUE);
-		return ERR_NON_CONFORME;
-	}
-
-	//La taille du message est trop grande ou vide
-	if(trame.size() > 1 )
-	{
-		equip->setStatusErrorTable(MAX_MSG_LENGTH, TRUE);
-		return ERR_NON_CONFORME;
-	}
-
-	if (trame[0] == '?')
-	{
-	*/
 
 	OutputDebugString("Dans : CProtoED42:: ACV(string trame) et début!\n");
 
@@ -1185,7 +1147,7 @@ int CProtoED42:: CIK(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1267,7 +1229,7 @@ int CProtoED42:: CV(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(tmpS20 != 0 )
+	if(tmpS20 != 0  || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans CProtoED42:: CV(string trame) et if(tmpS20 != 0 || equip->GetStatusBusy() == 1");
 		equip->setStatusErrorTable(CONFLICT, TRUE);
@@ -1458,7 +1420,7 @@ int CProtoED42:: CVBTA(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1561,7 +1523,7 @@ int CProtoED42:: CVBUD(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1657,7 +1619,7 @@ int CProtoED42:: CVDEL(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1758,7 +1720,7 @@ int CProtoED42:: CVDLA(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1848,7 +1810,7 @@ int CProtoED42:: CVLG(string trame)
 	}
 
 	//Cas d'une erreur CONFLICT (S#20)
-	if(equip->GetStatusS20() != 0 )
+	if(equip->GetStatusS20() != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		pLogger.LOG_TRACE("Dans if(equip->GetStatusS20() != 0 || equip->GetStatusBusy() == 1");
 
@@ -1870,32 +1832,6 @@ int CProtoED42:: CVLG(string trame)
 		equip->setErrorTable(WRONG_PASSWORD, TRUE);
 		return ERR_NON_CONFORME;
 	}
-
-	/*
-	if(trame.size() == 0)
-	{
-		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
-		//Pour l'erreur
-		equip->setErrorTable(FORMAT_ERROR, TRUE);
-		//Position du flag de l'erreur
-		equip->SetError(TRUE);
-
-		return ERR_NON_CONFORME;
-	}
-
-
-	//La taille du message est trop grande ou vide.
-	if(trame.size() > 1 )
-	{
-		equip->setStatusErrorTable(MAX_MSG_LENGTH, TRUE);
-		//Pour l'erreur
-		equip->setErrorTable(FORMAT_ERROR, TRUE);
-		//Position du flag de l'erreur
-		equip->SetError(TRUE);
-
-		return ERR_NON_CONFORME;
-	}
-	*/
 
 	if(equip->GetRemoteTC() == LOCAL_TC)
 	{
@@ -2889,7 +2825,11 @@ int CProtoED42:: OFL(string trame)
 	if (equip->GetOperatingStatus() == OFFLINE)
 		return ERR_NON_CONFORME;
 
-	equip->SetStatusBusy(1);
+	if (equip->GetDureeBusy() != 0)
+	{
+		pLogger.LOG_TRACE("Fin CProtoED42:: OFL(string trame) et SetStatusBusy(1)");
+		equip->SetStatusBusy(1);
+	}
 
 	// Mise à jour des flag's
 	equip->SetOnlinePresetStatus(1);					// Param 21 : Flag : Online preset
@@ -3008,7 +2948,8 @@ int CProtoED42:: ONL(string trame)
 		return ERR_NON_CONFORME; 
 	}
 
-	equip->SetStatusBusy(1);
+	//if (equip->GetDureeBusy() != 0)
+	//	equip->SetStatusBusy(1);
 
 	equip->SetOnlinePreset(atoi(trame.c_str()));
 	equip->SetOnlinePresetStatus(1);						// Param 21 : Flag : Online preset
@@ -3373,7 +3314,7 @@ int CProtoED42:: PWCHK(string trame)
 
 	//Vérification si on est en présence d'une erreur S#10 (NOT_REMOTE_MODE)
 	//if(equip->GetStatusS20() >= 2)
-	if(tmpS20 >= 2)
+	if(tmpS20 >= 2 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
 		equip->setStatusErrorTable(NOT_REMOTE_MODE, TRUE);
 		//Force le RES
@@ -4669,7 +4610,7 @@ int CProtoED42:: SETPS(string trame)
 	//Cas d'une erreur CONFLICT (S#20)
 	if(tmpS20 != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))
 	{
-		pLogger.LOG_TRACE("Dans if(tmpS20 != 0 || equip->GetStatusBusy() == 1");
+		pLogger.LOG_TRACE("Dans if(tmpS20 != 0 || (equip->GetStatusBusy() == 1 && equip->GetDureeBusy() != 0))");
 
 		equip->setStatusErrorTable(CONFLICT, TRUE);
 		
@@ -4708,7 +4649,8 @@ int CProtoED42:: SETPS(string trame)
 		return ERR_NO_REMOTE_MODE;
 	}
 
-	equip->SetStatusBusy(1);
+	//if (equip->GetDureeBusy() != 0)
+	//	equip->SetStatusBusy(1);
 
 
 	//********************
@@ -4760,7 +4702,6 @@ int CProtoED42:: SETPS(string trame)
 	}
 
 	presetEnCours.operation_mode = tmp_val;
-	//equip->SetOperatingMode(tmp_val);		//TODO
 
 	// param : 3 transmissionMode
 	getline(cmd, commande, ',');
@@ -4778,7 +4719,6 @@ int CProtoED42:: SETPS(string trame)
 	presetEnCours.transmission_mode = tmp_val;
 	//equip->SetTransmissionMode(tmp_val);		//TODO
 
-	//(cmd.str()).substr(0,2);
 	// param : 4 transmissionProc
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4793,9 +4733,8 @@ int CProtoED42:: SETPS(string trame)
 	}
 
 	presetEnCours.transmission_procedure = tmp_val;
-	//equip->SetTransmissionProcedure(tmp_val);		//TODO
 
-	//(cmd.str()).substr(0,2);
+
 	// param : 5 trafficMode
 	getline(cmd, commande, ',');
 	tmp_val  = atoi(commande.c_str());
@@ -4809,22 +4748,20 @@ int CProtoED42:: SETPS(string trame)
 	}
 
 	presetEnCours.trafic_mode = tmp_val;
-	//equip->SetTraficMode(tmp_val);			//TODO
 
-	//(cmd.str()).substr(0,3);
 	// param : 6 reserved
 	getline(cmd, commande, ',');
-
-	//Vérification de la valeur reserved
-	/*
-	if(commande.compare("255") != 0)
+	tmp_val  = atoi(commande.c_str());
+	
+	//Vérification de la valeur du reserved
+	if(tmp_val < 0 || tmp_val > 255)			//TODO
 	{
-		equip->setStatusErrorTable(INVALID_PARAMETER, TRUE);
-
+		equip->setErrorTable(CONFIGURATION_ERROR, TRUE);
 		return ERR_NON_CONFORME;
 	}
-	*/
-	//(cmd.str()).substr(0,2);
+
+	presetEnCours.param6 = tmp_val;
+
 	// param : 7 syncMode
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4839,12 +4776,32 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.synchronisation_mode = tmp_val;
 
-	//(cmd.str()).substr(0,2);
+	// param : 8 clockMode
 	getline(cmd, commande, ',');
-	//(cmd.str()).substr(0,2);
-	getline(cmd, commande, ',');
+	tmp_val = atoi(commande.c_str());
+	//Vérification de la valeur du clock mode
+	if(tmp_val < 0 || tmp_val > 1
+		|| (tmp_val == 0 && commande.compare("0") != 0))
+	{
+		equip->setErrorTable(CONFIGURATION_ERROR, TRUE);
+		return ERR_NON_CONFORME;
+	}
 
-	//(cmd.str()).substr(0,2);
+	presetEnCours.clock_mode = tmp_val;
+
+	// param : 9 nb_of_data_bite
+	getline(cmd, commande, ',');
+	tmp_val = atoi(commande.c_str());
+	//Vérification de la valeur du clock mode
+	if(tmp_val < 0 || tmp_val > 2
+		|| (tmp_val == 0 && commande.compare("0") != 0))
+	{
+		equip->setErrorTable(CONFIGURATION_ERROR, TRUE);
+		return ERR_NON_CONFORME;
+	}
+
+	presetEnCours.nb_of_data_bite = tmp_val;
+
 	// param : 10 parity
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4859,7 +4816,6 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.parity = tmp_val;
 
-	//(cmd.str()).substr(0,2);
 	// param : 11 numberOfStopBits
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4874,7 +4830,6 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.nb_of_stop_bite = tmp_val;
 
-	//(cmd.str()).substr(0,2);
 	// param : 12 outputSelect
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4889,12 +4844,11 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.output_selection = tmp_val;
 
-	//(cmd.str()).substr(0,2);
 	// param : 13 antispoof
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
 	
-	//Vérification de la valeur du antispoof
+	//Vérification de la valeur du antispoof ( 0 = On = TRUE)
 	if(tmp_val < 0 || tmp_val > 1
 		|| (tmp_val == 0 && commande.compare("0") != 0))
 	{
@@ -4902,9 +4856,8 @@ int CProtoED42:: SETPS(string trame)
 		return ERR_NON_CONFORME;
 	}
 
-	presetEnCours.antispoof = (tmp_val == 1);
+	presetEnCours.antispoof = (tmp_val == 0);
 
-	//(cmd.str()).substr(0,2);
 	// param : 14 dataRate
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4919,7 +4872,6 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.data_rate = tmp_val;
 
-	//(cmd.str()).substr(0,3);
 	// param : 15 FEC
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4934,7 +4886,6 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.fec = (tmp_val == 1);
 
-	//(cmd.str()).substr(0,2);
 	// param : 16 LeadTime
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -4948,7 +4899,6 @@ int CProtoED42:: SETPS(string trame)
 
 	presetEnCours.lead_time = tmp_val;
 
-	//(cmd.str()).substr(0,3);
 	// param : 17 Interface selection
 	getline(cmd, commande, ',');
 
@@ -4989,7 +4939,6 @@ int CProtoED42:: SETPS(string trame)
 		digitalDceEnCours.activateDigitalDceInterface	= (tmp_dceDigitalInterface == 1);
 	}
 
-	//(cmd.str()).substr(0,5);
 	// param : 18 DCE outputlevel
 	getline(cmd, commande, ',');
 	tmp_val = atoi(commande.c_str());
@@ -5004,7 +4953,6 @@ int CProtoED42:: SETPS(string trame)
 
 	digitalDceEnCours.outputLevel = tmp_val;
 
-	//(cmd.str()).substr(0,2);
 	// param : 19 DCE Digital polarity
 	getline(cmd, commande, ',');
 
@@ -6286,7 +6234,8 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	strcat(bufCmd,",");
 
 	// param : 6 reserved
-	strcat(bufCmd, "0");
+	itoa(presetEnCours.param6,buffer,10);
+	strcat(bufCmd, buffer);
 	//Mise en place du séparateur
 	strcat(bufCmd,",");
 
@@ -6296,13 +6245,15 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	//Mise en place du séparateur
 	strcat(bufCmd,",");
 
-	// param : 8 unknown
-	strcat(bufCmd, "0");
+	// param : 8 clockMode
+	itoa(presetEnCours.clock_mode,buffer,10);
+	strcat(bufCmd, buffer);
 	//Mise en place du séparateur
 	strcat(bufCmd,",");
 
-	// param : 9 unknown
-	strcat(bufCmd, "0");
+	// param : 9 Number of Data Bits
+	itoa(presetEnCours.nb_of_data_bite,buffer,10);
+	strcat(bufCmd, buffer);
 	//Mise en place du séparateur
 	strcat(bufCmd,",");
 
@@ -6373,6 +6324,8 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	//Mise à zéro de elementBin
 	elementBin.str("");
 
+	elementBin << 1;
+	elementBin << 1;
 	elementBin << digitalDceEnCours.polarityOutputSignalTXD;
 	elementBin << digitalDceEnCours.polarityOutputSignalRTS;
 	elementBin << digitalDceEnCours.polarityOutputSignalDTR;
@@ -6405,6 +6358,9 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	//Mise à zéro de elementBin
 	elementBin.str("");
 
+	elementBin << 1;
+	elementBin << 1;
+	elementBin << 0;
 	elementBin << digitalDteEnCours.polarityInputSignalTXD;
 	elementBin << digitalDteEnCours.polarityInputSignalRTS;
 	elementBin << digitalDteEnCours.polarityInputSignalDTR;
@@ -6450,15 +6406,22 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 
 	itoa(analogDceEnCours.confTypeSQUELCH,buffer,10);
 	result.append(buffer);
+	strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),2).c_str());
+	result="";
 	itoa(analogDceEnCours.confTypeSQG,buffer,10);
 	result.append(buffer);
+	strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),2).c_str());
+	result="";
 	itoa(analogDceEnCours.confTypeSQM,buffer,10);
 	result.append(buffer);
+	strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),2).c_str());
+	result="";
 	itoa(analogDceEnCours.confTypeDPTT,buffer,10);
 	result.append(buffer);
 
 	//Mise en place du format de la réponse en hexadécimal "XXXXXXXX"
-	strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),8).c_str());
+	//strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),8).c_str());
+	strcat(bufCmd, IntToHexaString(strtol(result.c_str(),NULL,10),2).c_str());
 	//Mise en place du séparateur
 	strcat(bufCmd,",");
 
@@ -6492,8 +6455,9 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	//Mise à zéro de elementBin
 	elementBin.str("");
 
-	elementBin << analogDteEnCours.microSupply;
+	//elementBin << analogDteEnCours.microSupply;
 	elementBin << analogDteEnCours.activateMonitoring;
+	elementBin << analogDteEnCours.microSupply;
 	elementBin << "00";
 
 	//Mise en place du format de la réponse en hexadécimal "XX"
@@ -6544,7 +6508,7 @@ void CProtoED42::buildTrameREQPS(TGeneralParameters presetEnCours,
 	strcat(bufCmd,",");
 
 	// param : 34 TXCTR level
-	itoa(analogDteEnCours.rxctrLevel+50,buffer,10);
+	itoa(analogDteEnCours.txctrLevel+50,buffer,10);
 	strcat(bufCmd, buffer);
 	//Mise en place du séparateur
 	strcat(bufCmd,",");

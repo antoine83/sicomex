@@ -428,8 +428,10 @@ void CDlgED42::OnTimer(UINT nIDEvent)
 
 	chaineSep = eqp->GetChaineClavier().c_str();
 
-	if (eqp->GetStatusBusy() == 1 && eqp->GetDureeBusy() !=0  )
+	// Gestion du Busy
+	if (eqp->GetStatusBusy() == 1 && eqp->GetDureeBusy() !=0)
 		SetTimer(11,eqp->GetDureeBusy(),NULL);
+
 
 	//IDC_CHECK_FULL
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_FULL)->ShowWindow(eqp->GetMarcheEd42() && !eqp->GetResetEd42() && !eqp->GetStatusNl());
@@ -1559,6 +1561,8 @@ void CDlgED42::RazAffichage()
 	UpdateData(FALSE);
 
 	GestionBoutonLockUnlock();
+
+	pLogger.LOG_TRACE("Fin : CDlgED42::RazAffichage() !");
 }
 
 //*****************************
@@ -1824,7 +1828,7 @@ void CDlgED42::OnEd42DcpBtnRs()
 
 CString CDlgED42::createAffiche(CString motIn, CString motAjout, int lenAjout)
 {
-	pLogger.LOG_TRACE("Dans CDlgED42::createAffiche(CString motIn, CString motAjout, int lenAjout) !");
+	pLogger.LOG_TRACE("Dans CDlgED42::createAffiche(...) !");
 
 	CString chaineTmp;
 
@@ -1843,7 +1847,7 @@ CString CDlgED42::createAffiche(CString motIn, CString motAjout, int lenAjout)
 		}
 	}
 
-	pLogger.LOG_TRACE("Fin : CDlgED42::OnEd42DcpBtnRs() !");
+	pLogger.LOG_TRACE("Fin CDlgED42::createAffiche(...) !");
 
 	return chaineTmp;
 }
@@ -2540,9 +2544,12 @@ void CDlgED42::affichgeExploitation()
 		{
 		OutputDebugString("Dans : début CDlgED42::affichgeExploitation() et switch(eqp->GetOperatingMode())!\n");
 		pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode())!");
+
 		case DATA_CRYPRO:
 		case OPE_MASTER:
-			// Mise à jour de Activate key et update.
+			// Mise à jour de Activate key et update
+			pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode()) et DATA_CRYPRO ou OPE_MASTER!");
+
 			if(eqp->GetTransmissionMode() == DIGITAL || eqp->GetTransmissionMode() == DIG5BIT)
 			{
 				m_dlgTab->m_Info->GetDlgItem(IDC_ACT_KEY)->SetWindowText("XX");
@@ -2560,6 +2567,8 @@ void CDlgED42::affichgeExploitation()
 			break;
 		case DATA_PLAIN:
 			//Mise à jour du preset Online
+			pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode()) et DATA_PLAIN!");
+
 			presetExploitString = "DP";
 			// Mise à jour de Activate key et update.
 			m_dlgTab->m_Info->GetDlgItem(IDC_ACT_KEY)->SetWindowText("PLAIN");
@@ -2567,6 +2576,8 @@ void CDlgED42::affichgeExploitation()
 			break;
 		case VOICE_PLAIN:
 			//Mise à jour du preset Online
+			pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode()) et VOICE_PLAIN!");
+
 			presetExploitString = "VP";
 			// Mise à jour de Activate key et update.
 			m_dlgTab->m_Info->GetDlgItem(IDC_ACT_KEY)->SetWindowText("PLAIN");
@@ -2574,6 +2585,8 @@ void CDlgED42::affichgeExploitation()
 			break;
 		case VOICE_CRYPRO:
 			// Mise à jour de Activate key et update.
+			pLogger.LOG_TRACE("Dans : CDlgED42::affichgeExploitation() et if(eqp->GetOperatingStatus() == ONLINE) et switch(eqp->GetOperatingMode()) et VOICE_CRYPRO!");
+
 			itoa(eqp->GetActivatedKey(),buffer,10);
 			m_dlgTab->m_Info->GetDlgItem(IDC_ACT_KEY)->SetWindowText(buffer);
 			itoa(eqp->GetKeyManagement(buffer).updateCount,buffer,10);
@@ -2595,16 +2608,18 @@ void CDlgED42::affichgeExploitation()
 			m_dlgTab->m_Info->GetDlgItem(IDC_DAT_RATE)->SetWindowText(DATA_RATE_SHORT[eqp->GetGeneralParameters(buffer).data_rate].c_str());
 
 
+		// Mise à jour de l'affichage des paramètres
 		BuildComposant(IDC_TRANS_MODE, pra);
 		BuildComposant(IDC_TRANS_PRECED, pra);
 		BuildComposant(IDC_TRAF_MODE, pra);
 		BuildComposant(IDC_DAT_RATE, pra);
 		
 
-		//Pour le bouton Activation désactivation
+		//Pour le bouton Activation désactivation comme est REMOTE
 		m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_ACT_DESACT)->SetWindowText("Désactiver");
 		m_dlgTab->m_Info->c_operationMode.EnableWindow(FALSE);
 		m_dlgTab->m_Info->c_preset.EnableWindow(FALSE);
+
 	}
 	else if(actionEnCoursTmp == OFFLINE && equip->Actif())
 	{
@@ -2628,7 +2643,7 @@ void CDlgED42::affichgeExploitation()
 		m_dlgTab->m_Info->c_dataRateString.ShowWindow(FALSE);
 
 
-		//Pour le bouton Activation désactivation
+		//Pour le bouton Activation désactivation comme on est LOCAL
 		m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_ACT_DESACT)->SetWindowText("Activer");
 		m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_ACT_DESACT)->EnableWindow(eqp->GetRemoteTC() == LOCAL_TC &&
 																		 !eqp->getED42Lock() &&
@@ -2688,6 +2703,8 @@ void CDlgED42::GestionAffichageEmRec(bool val)
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_REC)->ShowWindow(val);
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_CALL)->ShowWindow(val);
 	m_dlgTab->m_Info->GetDlgItem(IDC_CHECK_SYNC)->ShowWindow(val);
+
+	pLogger.LOG_TRACE("Fin : CDlgED42::GestionAffichageEmRec(bool val) !");
 }
 
 //******************************************
@@ -2870,6 +2887,9 @@ void CDlgED42::BuildComposant(int composant, int preset)
 	}
 }
 
+// ***********************************************
+// GestionBoutonLockUnlock
+// ***********************************************
 void CDlgED42::GestionBoutonLockUnlock()
 {
 	OutputDebugString("Dans : CDlgED42::GestionBoutonLockUnlock() !\n");
@@ -2885,7 +2905,7 @@ void CDlgED42::GestionBoutonLockUnlock()
 				m_dlgTab->m_Info->c_lockUnlock.EnableWindow(FALSE);
 				if (eqp->GetChaineClavier() == "V" && eqp->GetOperatingStatus() != ED42_UNLOCK)
 				{
-					eqp->SetOperatingStatus(ED42_UNLOCK);		//actionEnCours = ED42_UNLOCK;
+					eqp->SetOperatingStatus(ED42_UNLOCK);
 				}
 			}else{
 				m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->SetWindowText("ED4-2 LOCK");
@@ -2896,8 +2916,11 @@ void CDlgED42::GestionBoutonLockUnlock()
 			m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
 	}
 
-		if (eqp->GetOperatingStatus() == RESTART_WITH_RESET)
-			m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
+	if (eqp->GetOperatingStatus() == RESTART_WITH_RESET)
+		m_dlgTab->m_Info->GetDlgItem(IDC_BUTTON_UNLOCK)->ShowWindow(FALSE);
+
+	pLogger.LOG_TRACE("Fin : CDlgED42::GestionBoutonLockUnlock() !");
+
 }
 
 

@@ -1377,7 +1377,7 @@ void CDlgED42GeneralParameter::SetCurSelValueToCombo(int composant)
 		break;
 	//--------------Sélectionne de la valeur du combo number of stop bits--------------
 	case IDC_COMBO_NUM_STOP_BIT:
-		result = m_numStopBit.SelectString(0,NUMBERS_OF_STOP_BITS[generalParameter.nb_of_stop_bite].c_str());
+		result = m_numStopBit.SelectString(0,NUMBERS_OF_STOP_BITS_SHORT[generalParameter.nb_of_stop_bite].c_str());
 		//Vérifie si la valeur a été trouvée.
 		if(result == CB_ERR)
 			m_numStopBit.SetCurSel(0);//Premier élément par défaut

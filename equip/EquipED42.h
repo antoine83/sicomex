@@ -1045,33 +1045,34 @@ enum BIT_MANUALLY_ERROR {
 };
 
 typedef struct{
-	int preset;			// 0..31
-	int operation_mode;
-	int transmission_mode;
-	int transmission_procedure;
-	int trafic_mode;
+	int preset;						// param : 1 Preset index
+	int operation_mode;				// param : 2 Preset type
+	int transmission_mode;			// param : 3 transmissionMode
+	int transmission_procedure;		// param : 4 transmissionProc
+	int trafic_mode;				// param : 5 trafficMode
 	int application_type;
-	int output_selection;
-	int synchronisation_mode;
-	int clock_mode;
-	int nb_of_data_bite;
-	int parity;
-	int nb_of_stop_bite;
-	int lead_time;
-	bool fec;
-	bool antispoof;
-	int data_rate;
-	bool dteAnalogInterf;
-	bool dteDigitalInterface;
-	bool dceAnalogInterf;
-	bool dceDigitalInterface;
+	int output_selection;			// param : 12 outputSelect
+	int param6;						// param : 6 Reserved
+	int synchronisation_mode;		// param : 7 syncMode
+	int clock_mode;					// param : 8 clockMode
+	int nb_of_data_bite;			// param : 9 Number of Data Bits
+	int parity;						// param : 10 parity
+	int nb_of_stop_bite;			// param : 11 numberOfStopBits
+	int lead_time;					// param : 16 LeadTime
+	bool fec;						// param : 15 FEC
+	bool antispoof;					// param : 13 antispoof
+	int data_rate;					// param : 14 dataRate
+	bool dteAnalogInterf;			// param : 17 Interface selection
+	bool dteDigitalInterface;		// param : 17 Interface selection
+	bool dceAnalogInterf;			// param : 17 Interface selection
+	bool dceDigitalInterface;		// param : 17 Interface selection
 }TGeneralParameters;
 
 typedef struct  {
 	int preset;			// 0..31
 	bool activateDigitalDceInterface;
-	int outputLevel;
-	bool polarityOutputSignalTXD;
+	int outputLevel;				// param : 18 DCE outputlevel
+	bool polarityOutputSignalTXD;	// param : 19 DCE Digital polarity
 	bool polarityOutputSignalRTS;
 	bool polarityOutputSignalDTR;
 	bool polarityOutputSignalTCK;
@@ -1100,17 +1101,17 @@ typedef struct  {
 	int confTypeSQM;
 	int confTypeDPTT;
 	int confTypeSQUELCH;
-	int levelTXNB;
-	int levelRXNB;
-	int levelTXWB;
-	int levelRXWB;
+	int levelTXNB;				// param : 25 TXNB Level
+	int levelRXNB;				// param : 24 RXNB Level
+	int levelTXWB;				// param : 27 TXWB Level
+	int levelRXWB;				// param : 26 RXWB Level
 }TAnalogDCE;
 
 typedef struct  {
 	int preset;			// 0..31
 	bool activateDigitalDteInterface;
-	int outputLevel;
-	bool polarityInputSignalTXD;
+	int outputLevel;					// param : 20 DTE Digital
+	bool polarityInputSignalTXD;		// param : 21 DTE Digital polarity
 	bool polarityInputSignalRTS;
 	bool polarityInputSignalDTR;
 	bool polarityInputSignalRTL;
@@ -1127,25 +1128,25 @@ typedef struct  {
 
 typedef struct  {
 	int preset;			// 0..31
-	bool activateAnalogDteInterface;
-	bool activateLocalAudioInterface;
+	bool activateAnalogDteInterface;		// param : 41 Audio selection
+	bool activateLocalAudioInterface;		// param : 41 Audio selection
 	int confTypePTT42;
-	int microLevel;
-	int phoneLevel;
-	int microRi;
-	bool microSupply;
+	int microLevel;							// param : 32 Micro level
+	int phoneLevel;							// param : 33 Phone level
+	int microRi;							// param : 30 Internal RI
+	bool microSupply;						// param : 31 Micro supply voltage
 	int microType;
 	int voltageSupply;
 	bool activateCentralAudioInterface;
 	int confTypePTTCTR;
-	int txctrLevel;
-	int rxctrLevel;
+	int txctrLevel;							// param : 34 TXCTR level
+	int rxctrLevel;							// param : 35 RXCTR level
 	bool activateMonitoring;
-	int monitorLevel;
-	int sidetoneLevel;
-	int alarmeLevel;
-	int txbypassLevel;
-	int rxbypassLevel;
+	int monitorLevel;						// param : 38 Monitor level
+	int sidetoneLevel;						// param : 39 Sidetone adaption
+	int alarmeLevel;						// param : 40 Alarme adaption
+	int txbypassLevel;					   // param : 36 TX Plain level
+	int rxbypassLevel;					   // param : 37 Bypass level
 }TAnalogDTE;
 
 

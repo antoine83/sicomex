@@ -177,7 +177,8 @@ void DlgED42Info::OnButtonActDesact()
 
 	char buffer[3] = {0};
 
-	//eqp->SetStatusBusy(1);
+	if (eqp->GetDureeBusy() != 0)
+		eqp->SetStatusBusy(1);
 
 	int presetOnline = c_operationMode.GetCurSel() * 8 + c_preset.GetCurSel();
 
